@@ -25,7 +25,7 @@ const nodeTypes = { player: Player };
 
 const pelicanNode = {
   id: "1",
-  data: { name: "Pelican", inputs: [], outputs: [] },
+  data: { name: "Pelican", inputs: [{ type: "default" }], outputs: [{ type: "default" }] },
   position: { x: 0, y: 0 },
   type: "player",
 };
