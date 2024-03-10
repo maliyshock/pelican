@@ -17,7 +17,7 @@ import {
   EdgeChange,
 } from "reactflow";
 import "reactflow/dist/style.css";
-import Player from "./components/player-node.tsx";
+import Player from "./components/node/player-node.tsx";
 import { set } from "./slices/screen-size.ts";
 import { useDispatch } from "react-redux";
 import { Timer } from "./components/timer.tsx";
@@ -26,7 +26,7 @@ const nodeTypes = { player: Player };
 
 const pelicanNode = {
   id: "1",
-  data: { name: "Pelican", inputs: [{ type: "default" }], outputs: [{ type: "default" }] },
+  data: { name: "Pelican", inputs: [{ type: "input" }], outputs: [{ type: "output" }] },
   position: { x: 0, y: 0 },
   type: "player",
 };

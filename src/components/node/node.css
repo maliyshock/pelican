@@ -6,15 +6,15 @@
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 0 12px rgba(0,0,0, 0.06);
+    width: 240px;
 }
+
 .node__body {
-    width: 220px;
-    height: 320px;
+    width: 100%;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 4px;
 }
 
 .node__connectors {
@@ -33,14 +33,19 @@
     position: static;
     transform: none;
 
-    height: 12px;
-    width: 12px;
-    border: unset;
-    background: unset;
-    color: black;
+    height: 28px;
+    width: 28px;
+    padding: 4px;
+    border-radius: 4px;
+    background: var(--blue);
+    color: white;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.handle.input {
+    background: var(--yellow);
 }
 
 .handle *{
@@ -49,16 +54,24 @@
 
 .node__inputs {
     right: 100%;
+    transform: translateX(50%);
 }
 
 .node__outputs {
     left: 100%;
+    transform: translateX(-50%);
 }
 
-.node__header {
+.node__header, .node__footer {
     width: 100%;
     padding: 20px;
 }
+
+.node__footer {
+    display: flex;
+    justify-content: space-between;
+}
+
 .node__header * {
     margin: 0;
 }

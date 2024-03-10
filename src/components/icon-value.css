@@ -1,0 +1,11 @@
+.icon-value {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px
+}
+
+.icon-value__value {
+    margin: 0;
+    font-size: 1.5em;
+}

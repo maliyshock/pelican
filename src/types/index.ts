@@ -3,7 +3,7 @@ type ObjectType = "object" | "creature";
 type Socket = {
   id: string;
   name: string;
-  type: "default";
+  type: "input | output";
 };
 
 export type GameObject = {
