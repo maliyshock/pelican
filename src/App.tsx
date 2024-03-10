@@ -1,5 +1,5 @@
 import "./App.css";
-import { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   addEdge,
   applyEdgeChanges,
@@ -20,6 +20,7 @@ import "reactflow/dist/style.css";
 import Player from "./components/player-node.tsx";
 import { set } from "./slices/screen-size.ts";
 import { useDispatch } from "react-redux";
+import { Timer } from "./components/timer.tsx";
 
 const nodeTypes = { player: Player };
 
@@ -35,7 +36,7 @@ const initialNodes = [
   {
     id: "2",
     data: { label: "World" },
-    position: { x: 100, y: 100 },
+    position: { x: 400, y: 100 },
   },
 ];
 
@@ -101,7 +102,8 @@ function App() {
   return (
     <div className="app">
       <div className="node-sandbox">
-        {/*<CenterCamera />*/}
+        <Timer />
+        {/*<CenterCameraButton />*/}
         <ReactFlow
           ref={ref}
           isValidConnection={isValidConnection}
