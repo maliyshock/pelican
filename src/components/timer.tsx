@@ -22,7 +22,7 @@ export function Timer({ initHours = 12, initMinutes = 45 }: TimerProps) {
       () =>
         setMinutes(prev => {
           if (prev + 1 === 60) {
-            setHours(prev => prev + 1);
+            setHours(prev => (prev + 1 === 24 ? 0 : prev + 1));
             return 0;
           }
           return prev + 1;

@@ -3,7 +3,7 @@ import "./node.css";
 import { GameObject } from "../../types";
 import { useEffect, useRef, useState } from "react";
 import { useCenterCamera } from "../../hooks/useCenterCamera.ts";
-import { ArrowRightFromLine, ArrowRightToLine, Heart, Sword } from "lucide-react";
+import { ArrowRightFromLine, ArrowRightToLine } from "lucide-react";
 import { Footer } from "./footer.tsx";
 
 export default function PlayerNode({ id, data, isConnectable, xPos, yPos }: NodeProps<GameObject>) {
@@ -25,9 +25,9 @@ export default function PlayerNode({ id, data, isConnectable, xPos, yPos }: Node
 
   return (
     <div className="node-wrapper" ref={ref}>
-      <header className="node__header">
-        <h3>{data.name}</h3>
-      </header>
+      {/*<header className="node__header">*/}
+      {/*  <h3>{data.name}</h3>*/}
+      {/*</header>*/}
       <div className="node__body" style={{ backgroundColor: data.color }}>
         <img className="img" alt="pelican" src="/public/assets/pelican.jpg" />
       </div>
@@ -42,7 +42,7 @@ export default function PlayerNode({ id, data, isConnectable, xPos, yPos }: Node
             key={`handle-output-${index}`}
             id={`handle-output-${index}`}
           >
-            <ArrowRightToLine strokeWidth={3} width="100%" height="100%" />
+            <ArrowRightFromLine strokeWidth={3} width="100%" height="100%" />
           </Handle>
         ))}
       </div>
@@ -56,7 +56,7 @@ export default function PlayerNode({ id, data, isConnectable, xPos, yPos }: Node
             key={`handle-input-${index}`}
             id={`handle-input-${index}`}
           >
-            <ArrowRightFromLine strokeWidth={3} width="100%" height="100%" />
+            <ArrowRightToLine strokeWidth={3} width="100%" height="100%" />
           </Handle>
         ))}
       </div>
