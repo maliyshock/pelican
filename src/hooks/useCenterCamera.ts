@@ -1,51 +1,23 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 import { useReactFlow } from "reactflow";
-import { useSelector } from "react-redux";
-import { RootState } from "../store";
+import { Size } from "~/slices/screen-size.ts";
 
-export type Size = {
-  width?: number;
-  height?: number;
-};
-
-interface UserCamera {
-  ref: React.MutableRefObject<HTMLElement | null>;
-}
-
-export function useCenterCamera({ ref }: UserCamera) {
+export function useCenterCamera() {
   const { setViewport } = useReactFlow();
-  const screenSize = useSelector((state: RootState) => state.screenSize);
 
-  const [size, setSize] = useState<Size>({
-    width: undefined,
-    height: undefined,
-  });
-
-  useEffect(() => {
-    const nodeSize = ref.current?.getBoundingClientRect();
-    if (nodeSize) {
-      setSize({
-        width: nodeSize?.width,
-        height: nodeSize?.height,
-      });
-    }
-  }, [ref]);
-
-  const callback = useCallback(
-    (xPos: number, yPos: number) => {
-      if (size.width && size.height && screenSize.width && screenSize.height) {
+  return useCallback(
+    (xPos: number, yPos: number, screenSize: Size) => {
+      if (screenSize.width && screenSize.height) {
         setViewport(
           {
-            x: xPos - size.width / 2 + screenSize.width / 2,
-            y: yPos - size.height / 2 + screenSize.height / 2,
+            x: xPos + screenSize.width / 2,
+            y: yPos + screenSize.height / 2,
             zoom: 1,
           },
           { duration: 800 },
         );
       }
     },
-    [screenSize.height, screenSize.width, setViewport, size.height, size.width],
+    [setViewport],
   );
-
-  return size.width && size.height && screenSize.width && screenSize.height ? callback : undefined;
 }

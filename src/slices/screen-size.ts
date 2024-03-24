@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type Size = {
+export type Size = {
   width?: number;
   height?: number;
 };

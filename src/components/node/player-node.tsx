@@ -1,35 +1,24 @@
 import { Handle, Position, NodeProps, useUpdateNodeInternals } from "reactflow";
 import "./node.css";
-import { GameObject } from "../../types";
-import { useEffect, useRef, useState } from "react";
-import { useCenterCamera } from "../../hooks/useCenterCamera.ts";
+import { GameObject } from "~/types";
+import { useEffect } from "react";
 import { ArrowRightFromLine, ArrowRightToLine } from "lucide-react";
 import { Footer } from "./footer.tsx";
 
-export default function PlayerNode({ id, data, isConnectable, xPos, yPos }: NodeProps<GameObject>) {
+export default function PlayerNode({ id, data, isConnectable }: NodeProps<GameObject>) {
   const updateNodeInternals = useUpdateNodeInternals();
-  const ref = useRef<HTMLDivElement | null>(null);
-  const centerCamera = useCenterCamera({ ref });
-  const [cameraIsCentered, setCameraIsCentered] = useState(false);
 
   useEffect(() => {
     updateNodeInternals(id);
   }, [id, updateNodeInternals]);
 
-  useEffect(() => {
-    if (centerCamera && !cameraIsCentered) {
-      centerCamera(xPos, yPos);
-      setCameraIsCentered(true);
-    }
-  }, [cameraIsCentered, centerCamera, xPos, yPos]);
-
   return (
-    <div className="node-wrapper" ref={ref}>
+    <div className="node-wrapper">
       {/*<header className="node__header">*/}
       {/*  <h3>{data.name}</h3>*/}
       {/*</header>*/}
       <div className="node__body" style={{ backgroundColor: data.color }}>
-        <img className="img" alt="pelican" src="/public/assets/pelican.jpg" />
+        <img className="img" alt="pelican" src="/assets/pelican.jpg" />
       </div>
       <Footer />
       <div className="node__connectors node__outputs">

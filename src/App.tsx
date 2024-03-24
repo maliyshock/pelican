@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   addEdge,
   applyEdgeChanges,
@@ -19,13 +19,15 @@ import {
 import "reactflow/dist/style.css";
 import Player from "./components/node/player-node.tsx";
 import { set } from "./slices/screen-size.ts";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Timer } from "./components/timer.tsx";
+import { useCenterCamera } from "~/hooks/useCenterCamera.ts";
+import { RootState } from "~/store";
 
 const nodeTypes = { player: Player };
 
 const pelicanNode = {
-  id: "1",
+  id: "player",
   data: { name: "Pelican", inputs: [{ type: "input" }], outputs: [{ type: "output" }] },
   position: { x: 0, y: 0 },
   type: "player",
@@ -45,12 +47,14 @@ function App() {
   const edgeUpdateSuccessful = useRef(true);
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
   const [edges, setEdges] = useState<Edge[]>([]);
+  const [cameraIsCentered, setCameraIsCentered] = useState(false);
   const { getNodes, getEdges } = useReactFlow();
-  const ref = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
   const onNodesChange = useCallback((changes: NodeChange[]) => setNodes(nds => applyNodeChanges(changes, nds)), [setNodes]);
   const onEdgesChange = useCallback((changes: EdgeChange[]) => setEdges(eds => applyEdgeChanges(changes, eds)), [setEdges]);
   const onConnect = useCallback((connection: Connection) => setEdges((eds: Edge[]) => addEdge(connection, eds)), [setEdges]);
+  const centerCamera = useCenterCamera();
+  const screenSize = useSelector((state: RootState) => state.screenSize);
 
   // TODO: can be incapsulate with hook
   const isValidConnection = useCallback(
@@ -92,12 +96,25 @@ function App() {
     edgeUpdateSuccessful.current = true;
   }, []);
 
+  const ref = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (node) {
+        const screenSize = node.getBoundingClientRect();
+        if (screenSize?.width && screenSize?.height) {
+          dispatch(set({ width: screenSize.width, height: screenSize.height }));
+        }
+      }
+    },
+    [dispatch],
+  );
+
   useEffect(() => {
-    const screenSize = ref.current?.getBoundingClientRect();
-    if (screenSize?.width && screenSize?.height) {
-      dispatch(set({ width: screenSize.width, height: screenSize.height }));
+    if (!cameraIsCentered) {
+      const player = nodes.find(node => node.id === "player")!;
+      centerCamera(player.position.x, player.position.y, screenSize);
+      setCameraIsCentered(true);
     }
-  }, [dispatch]);
+  }, [cameraIsCentered, centerCamera, nodes, screenSize]);
 
   return (
     <div className="app">

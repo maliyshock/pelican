@@ -15,8 +15,6 @@ export function Timer({ initHours = 12, initMinutes = 45 }: TimerProps) {
   const [hours, setHours] = useState(initHours);
   const [minutes, setMinutes] = useState(initMinutes);
 
-  console.log("minutes", minutes);
-
   useEffect(() => {
     const minutesCountdown = setInterval(
       () =>
