@@ -1,6 +1,8 @@
 .timer {
     position: absolute;
+    z-index: 1;
     top: 10px;
     left: 50%;
     transform: translateX(-50%);
+    color: var(--almost-black);
 }

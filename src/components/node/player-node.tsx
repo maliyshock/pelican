@@ -1,5 +1,5 @@
 import { Handle, Position, NodeProps, useUpdateNodeInternals } from "reactflow";
-import "./node.css";
+import "./player-node.css";
 import { GameObject } from "~/types";
 import { useEffect } from "react";
 import { ArrowRightFromLine, ArrowRightToLine } from "lucide-react";
@@ -25,7 +25,7 @@ export default function PlayerNode({ id, data, isConnectable }: NodeProps<GameOb
         {data.outputs.map((output, index) => (
           <Handle
             className="handle"
-            type="target"
+            type="source"
             position={Position.Right}
             isConnectable={isConnectable}
             key={`handle-output-${index}`}
@@ -39,7 +39,7 @@ export default function PlayerNode({ id, data, isConnectable }: NodeProps<GameOb
         {data.inputs.map((input, index) => (
           <Handle
             className="handle input"
-            type="source"
+            type="target"
             position={Position.Left}
             isConnectable={isConnectable}
             key={`handle-input-${index}`}

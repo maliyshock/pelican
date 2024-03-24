@@ -15,14 +15,16 @@ import {
   NodeChange,
   Connection,
   EdgeChange,
+  OnConnectEnd,
 } from "reactflow";
 import "reactflow/dist/style.css";
 import Player from "./components/node/player-node.tsx";
 import { set } from "./slices/screen-size.ts";
 import { useDispatch, useSelector } from "react-redux";
-import { Timer } from "./components/timer.tsx";
+import { Timer } from "./components/timer/timer.tsx";
 import { useCenterCamera } from "~/hooks/useCenterCamera.ts";
 import { RootState } from "~/store";
+import CustomEdge from "~/components/custom-edge/custom-edge.tsx";
 
 const nodeTypes = { player: Player };
 
@@ -38,9 +40,13 @@ const initialNodes = [
   {
     id: "2",
     data: { label: "World" },
-    position: { x: 400, y: 100 },
+    position: { x: 100, y: 100 },
   },
 ];
+
+const edgeTypes = {
+  "custom-edge": CustomEdge,
+};
 
 // TODO: this file is quite big, it would be a good idea to thing how it can be splited
 function App() {
@@ -52,7 +58,13 @@ function App() {
   const dispatch = useDispatch();
   const onNodesChange = useCallback((changes: NodeChange[]) => setNodes(nds => applyNodeChanges(changes, nds)), [setNodes]);
   const onEdgesChange = useCallback((changes: EdgeChange[]) => setEdges(eds => applyEdgeChanges(changes, eds)), [setEdges]);
-  const onConnect = useCallback((connection: Connection) => setEdges((eds: Edge[]) => addEdge(connection, eds)), [setEdges]);
+  const onConnect = useCallback(
+    (connection: Connection) => {
+      const edge = { ...connection, type: "custom-edge" };
+      setEdges(eds => addEdge(edge, eds));
+    },
+    [setEdges],
+  );
   const centerCamera = useCenterCamera();
   const screenSize = useSelector((state: RootState) => state.screenSize);
 
@@ -85,12 +97,16 @@ function App() {
 
   const onEdgeUpdate = useCallback((oldEdge: Edge, newConnection: Connection) => {
     edgeUpdateSuccessful.current = true;
+    console.log("onEdgeUpdate");
+    console.log("newConnection", newConnection);
     setEdges(els => updateEdge(oldEdge, newConnection, els));
   }, []);
 
   const onEdgeUpdateEnd = useCallback((_: MouseEvent | TouchEvent, edge: Edge) => {
     if (!edgeUpdateSuccessful.current) {
       setEdges(eds => eds.filter(e => e.id !== edge.id));
+      console.log("onEdgeUpdateEnd");
+      console.log("edge", edge);
     }
 
     edgeUpdateSuccessful.current = true;
@@ -133,6 +149,7 @@ function App() {
           onEdgeUpdate={onEdgeUpdate}
           onEdgeUpdateStart={onEdgeUpdateStart}
           onEdgeUpdateEnd={onEdgeUpdateEnd}
+          edgeTypes={edgeTypes}
         >
           <Background />
           <Controls />

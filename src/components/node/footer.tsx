@@ -1,5 +1,5 @@
 import { Heart, Sword } from "lucide-react";
-import { IconValue } from "../icon-value.tsx";
+import { IconValue } from "../icon-value/icon-value.tsx";
 
 export function Footer() {
   return (
