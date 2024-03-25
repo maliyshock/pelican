@@ -15,10 +15,9 @@ import {
   NodeChange,
   Connection,
   EdgeChange,
-  OnConnectEnd,
 } from "reactflow";
 import "reactflow/dist/style.css";
-import Player from "./components/node/player-node.tsx";
+import CustomNode from "~/components/custom-node/custom-node.tsx";
 import { set } from "./slices/screen-size.ts";
 import { useDispatch, useSelector } from "react-redux";
 import { Timer } from "./components/timer/timer.tsx";
@@ -26,21 +25,29 @@ import { useCenterCamera } from "~/hooks/useCenterCamera.ts";
 import { RootState } from "~/store";
 import CustomEdge from "~/components/custom-edge/custom-edge.tsx";
 
-const nodeTypes = { player: Player };
+const nodeTypes = { node: CustomNode };
 
 const pelicanNode = {
   id: "player",
-  data: { name: "Pelican", inputs: [{ type: "input" }], outputs: [{ type: "output" }] },
+  data: {
+    inputs: [{ type: "input" }],
+    outputs: [{ type: "output" }],
+    img: <img className="img" alt="pelican" src="/assets/pelican.jpg" />,
+    dmg: 1,
+    health: 10,
+    objectType: "player",
+  },
   position: { x: 0, y: 0 },
-  type: "player",
+  type: "node",
 };
 
 const initialNodes = [
   pelicanNode,
   {
     id: "2",
-    data: { label: "World" },
+    data: { inputs: [{ type: "input" }], name: "World" },
     position: { x: 100, y: 100 },
+    type: "node",
   },
 ];
 

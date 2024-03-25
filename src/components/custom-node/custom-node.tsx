@@ -1,11 +1,11 @@
 import { Handle, Position, NodeProps, useUpdateNodeInternals } from "reactflow";
-import "./player-node.css";
+import "./custom-node.css";
 import { GameObject } from "~/types";
 import { useEffect } from "react";
-import { ArrowRightFromLine, ArrowRightToLine } from "lucide-react";
-import { Footer } from "./footer.tsx";
+import { ArrowRightFromLine, ArrowRightToLine, Heart, Sword } from "lucide-react";
+import { IconValue } from "~/components/icon-value/icon-value.tsx";
 
-export default function PlayerNode({ id, data, isConnectable }: NodeProps<GameObject>) {
+export default function CustomNode({ id, data, isConnectable }: NodeProps<GameObject>) {
   const updateNodeInternals = useUpdateNodeInternals();
 
   useEffect(() => {
@@ -14,15 +14,26 @@ export default function PlayerNode({ id, data, isConnectable }: NodeProps<GameOb
 
   return (
     <div className="node-wrapper">
-      {/*<header className="node__header">*/}
-      {/*  <h3>{data.name}</h3>*/}
-      {/*</header>*/}
-      <div className="node__body" style={{ backgroundColor: data.color }}>
-        <img className="img" alt="pelican" src="/assets/pelican.jpg" />
-      </div>
-      <Footer />
+      {data.name && (
+        <header className="node__header">
+          <h3>{data.name}</h3>
+        </header>
+      )}
+      {data.img && (
+        <div className="node__body" style={{ backgroundColor: data.color }}>
+          <img className="img" alt="pelican" src="/assets/pelican.jpg" />
+        </div>
+      )}
+      {(data.dmg || data.health) && (
+        <footer className="node__footer">
+          {data.dmg && <IconValue value={1} right={<Sword className="silver" strokeWidth={2} />} />}
+
+          {data.health && <IconValue value={10} right={<Heart className="red" strokeWidth={2} />} />}
+        </footer>
+      )}
+
       <div className="node__connectors node__outputs">
-        {data.outputs.map((output, index) => (
+        {data.outputs?.map((_output, index) => (
           <Handle
             className="handle"
             type="source"
@@ -36,7 +47,7 @@ export default function PlayerNode({ id, data, isConnectable }: NodeProps<GameOb
         ))}
       </div>
       <div className="node__connectors node__inputs">
-        {data.inputs.map((input, index) => (
+        {data.inputs?.map((_input, index) => (
           <Handle
             className="handle input"
             type="target"

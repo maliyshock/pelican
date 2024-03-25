@@ -1,4 +1,6 @@
-type ObjectType = "object" | "creature";
+import React from "react";
+
+type ObjectType = "player" | "object" | "creature";
 
 type Socket = {
   id: string;
@@ -8,11 +10,14 @@ type Socket = {
 
 export type GameObject = {
   id: string;
-  name: string;
+  name?: string;
   color?: string;
-  ObjectType: ObjectType;
-  inputs: Socket[];
-  outputs: Socket[];
+  img?: React.ReactNode;
+  objectType: ObjectType;
+  inputs?: Socket[];
+  outputs?: Socket[];
+  dmg?: number;
+  health?: number;
 };
 
 export type AutocompleteResult<T> = {

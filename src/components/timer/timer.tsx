@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { formatTime } from "../../utils/format-tIme.ts";
+import { formatTime } from "~/utils/format-tIme.ts";
 import "./timer.css";
 
 interface TimerProps {
