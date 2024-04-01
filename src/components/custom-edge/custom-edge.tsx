@@ -1,4 +1,4 @@
-import { BaseEdge, EdgeLabelRenderer, getSimpleBezierPath, useReactFlow } from "reactflow";
+import { BaseEdge, EdgeLabelRenderer, getSimpleBezierPath, Position, useReactFlow } from "reactflow";
 import { CircleX } from "lucide-react";
 
 type CustomEdgeProps = {
@@ -9,8 +9,6 @@ type CustomEdgeProps = {
   targetY: number;
 };
 
-// <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-arrow-up"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
-
 export default function CustomEdge({ id, sourceX, sourceY, targetX, targetY }: CustomEdgeProps) {
   const { setEdges } = useReactFlow();
   const [edgePath, labelX, labelY] = getSimpleBezierPath({
@@ -18,6 +16,8 @@ export default function CustomEdge({ id, sourceX, sourceY, targetX, targetY }: C
     sourceY,
     targetX,
     targetY,
+    sourcePosition: Position.Right,
+    targetPosition: Position.Left,
   });
 
   return (
