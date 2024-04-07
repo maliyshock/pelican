@@ -14,10 +14,10 @@ export const screenSizeSlice = createSlice({
   name: "screenSize",
   initialState,
   reducers: {
-    set: (state, action: PayloadAction<Size>) => {
+    setScreenSize: (state, action: PayloadAction<Size>) => {
       return { ...state, ...action.payload };
     },
   },
 });
 
-export const { set } = screenSizeSlice.actions;
+export const { setScreenSize } = screenSizeSlice.actions;

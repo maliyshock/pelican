@@ -4,33 +4,53 @@ import { GameObject } from "~/types";
 import { useEffect } from "react";
 import { ArrowRightFromLine, ArrowRightToLine, Heart, Sword } from "lucide-react";
 import { IconValue } from "~/components/icon-value/icon-value.tsx";
+import { motion } from "framer-motion";
+import { useGetAction } from "~/hooks/useGetAction.ts";
 
-export default function CustomNode({ id, data, isConnectable }: NodeProps<GameObject>) {
+export default function CustomNode({ id, data, isConnectable, dragging }: NodeProps<GameObject>) {
   const updateNodeInternals = useUpdateNodeInternals();
+  const { callback, timer } = useGetAction({ target: id });
+
+  useEffect(() => {
+    let timerId: NodeJS.Timeout;
+    id === "world" && console.log("callback", callback);
+    id === "world" && console.log("timer", timer);
+    if (callback && timer) {
+      timerId = setInterval(callback, timer);
+    }
+
+    return () => timerId && clearInterval(timerId);
+  }, [callback, timer]);
 
   useEffect(() => {
     updateNodeInternals(id);
   }, [id, updateNodeInternals]);
 
   return (
-    <div className="node-wrapper">
-      {data.name && (
-        <header className="node__header">
-          <h3>{data.name}</h3>
-        </header>
-      )}
-      {data.img && (
-        <div className="node__body" style={{ backgroundColor: data.color }}>
-          <img className="img" alt="pelican" src="/assets/pelican.jpg" />
-        </div>
-      )}
-      {(data.dmg || data.health) && (
-        <footer className="node__footer">
-          {data.dmg && <IconValue value={1} right={<Sword className="silver" strokeWidth={2} />} />}
+    <motion.div className={`node-wrapper ${dragging ? "dragging" : ""} ${data.grabbable ? "grabbable" : ""}`} whileHover={{ scale: 1.1 }}>
+      <motion.div
+        className="node__inner"
+        initial={{ boxShadow: "0 0px 12px rgba(0, 0, 0, 0.06)" }}
+        whileHover={{ boxShadow: "0 16px 12px rgba(0, 0, 0, 0.03)", outline: "4px solid var(--blue)" }}
+      >
+        {data.name && (
+          <header className="node__header">
+            <h3>{data.name}</h3>
+          </header>
+        )}
+        {data.img && (
+          <div className="node__body" style={{ backgroundColor: data.color }}>
+            <img className="img" alt={data.img.alt} src={data.img.src} />
+          </div>
+        )}
+        {(data.dmg || data.health) && (
+          <footer className="node__footer">
+            {data.dmg && <IconValue value={1} right={<Sword className="silver" strokeWidth={2} />} />}
 
-          {data.health && <IconValue value={10} right={<Heart className="red" strokeWidth={2} />} />}
-        </footer>
-      )}
+            {data.health && <IconValue value={10} right={<Heart className="red" strokeWidth={2} />} />}
+          </footer>
+        )}
+      </motion.div>
 
       <div className="node__connectors node__outputs">
         {data.outputs?.map((_output, index) => (
@@ -60,6 +80,6 @@ export default function CustomNode({ id, data, isConnectable }: NodeProps<GameOb
           </Handle>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 }

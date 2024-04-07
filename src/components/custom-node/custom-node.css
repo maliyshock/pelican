@@ -4,9 +4,20 @@
     flex-wrap: wrap;
     justify-content: center;
     background-color: white;
+}
+
+.node__inner {
     border-radius: 8px;
-    box-shadow: 0 0 12px rgba(0,0,0, 0.06);
     width: 240px;
+    overflow: hidden;
+}
+
+.node-wrapper.grabbable {
+    cursor: grab
+}
+
+.node-wrapper.dragging {
+    cursor: grabbing;
 }
 
 .node__body {
