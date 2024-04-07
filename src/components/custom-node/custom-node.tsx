@@ -5,9 +5,25 @@ import { useEffect } from "react";
 import { ArrowRightFromLine, ArrowRightToLine, Heart, Sword } from "lucide-react";
 import { IconValue } from "~/components/icon-value/icon-value.tsx";
 import { motion } from "framer-motion";
+import { useGetAction } from "~/hooks/useGetAction.ts";
 
 export default function CustomNode({ id, data, isConnectable, dragging }: NodeProps<GameObject>) {
   const updateNodeInternals = useUpdateNodeInternals();
+  // const actions = useSelector((state: RootState) => state.actions);
+  const { callback, timer } = useGetAction({ target: id });
+
+  // if i subscribe to actions all of the nodes will be rerendered
+
+  useEffect(() => {
+    let timerId: NodeJS.Timeout;
+    id === "world" && console.log("callback", callback);
+    id === "world" && console.log("timer", timer);
+    if (callback && timer) {
+      timerId = setInterval(callback, timer);
+    }
+
+    return () => timerId && clearInterval(timerId);
+  }, [callback, timer]);
 
   useEffect(() => {
     updateNodeInternals(id);

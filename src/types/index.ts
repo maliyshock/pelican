@@ -1,6 +1,7 @@
 import { Node } from "reactflow";
 
-type ObjectType = "player" | "object" | "creature" | "world";
+export type Action = "explore" | "harvest";
+export type ObjectType = "player" | "object" | "creature" | "world" | "resource";
 
 type ReactFlowNode = Omit<Node, "data">;
 
@@ -27,6 +28,11 @@ export type GameObject = {
   dmg?: number;
   health?: number;
   grabbable?: boolean;
+  action?: {
+    actionName: Action;
+    source: string;
+    actionTime: number;
+  };
 };
 
 export type AutocompleteResult<T> = {

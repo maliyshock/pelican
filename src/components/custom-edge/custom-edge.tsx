@@ -1,5 +1,9 @@
 import { BaseEdge, EdgeLabelRenderer, getSimpleBezierPath, Position, useReactFlow } from "reactflow";
 import { CircleX } from "lucide-react";
+import { dictionary } from "~/constants/dictionary.ts";
+import { Action } from "~/types";
+import "./custom-edge.css";
+import { Actions } from "~/components/custom-edge/actions.tsx";
 
 type CustomEdgeProps = {
   id: string;
@@ -7,10 +11,12 @@ type CustomEdgeProps = {
   sourceY: number;
   targetX: number;
   targetY: number;
+  source: string;
+  target: string;
 };
 
-export default function CustomEdge({ id, sourceX, sourceY, targetX, targetY }: CustomEdgeProps) {
-  const { setEdges } = useReactFlow();
+// TODO: delete connection
+export default function CustomEdge({ id, sourceX, sourceY, targetX, targetY, source, target }: CustomEdgeProps) {
   const [edgePath, labelX, labelY] = getSimpleBezierPath({
     sourceX,
     sourceY,
@@ -19,28 +25,19 @@ export default function CustomEdge({ id, sourceX, sourceY, targetX, targetY }: C
     sourcePosition: Position.Right,
     targetPosition: Position.Left,
   });
+  const { setEdges } = useReactFlow();
+  const actionsList: Action[] | undefined = dictionary[source]?.[target];
 
   return (
     <>
       <BaseEdge id={id} path={edgePath} style={{ strokeWidth: "4px" }} />
       <EdgeLabelRenderer>
-        <button
-          style={{
-            left: 0,
-            cursor: "pointer",
-            display: "flex",
-            justifyContent: "center",
-            top: 0,
-            position: "absolute",
-            transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
-            pointerEvents: "all",
-          }}
-          onClick={() => {
-            setEdges(es => es.filter(e => e.id !== id));
-          }}
-        >
-          <CircleX />
-        </button>
+        <div className="edge-actions" style={{ transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)` }}>
+          {actionsList && actionsList.length > 0 && <Actions actionsList={actionsList} source={source} target={target} />}
+          <button className="button" onClick={() => setEdges(edges => edges.filter(edg => edg.id !== id))}>
+            <CircleX />
+          </button>
+        </div>
       </EdgeLabelRenderer>
     </>
   );

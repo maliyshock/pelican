@@ -1,6 +1,6 @@
 import "./App.css";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { Background, Controls, Edge, ReactFlow, Node, useReactFlow, getOutgoers, NodeChange, Connection, EdgeChange } from "reactflow";
+import { useCallback, useEffect, useState } from "react";
+import { Background, Controls, ReactFlow, Connection, useNodesState, useEdgesState, addEdge } from "reactflow";
 import "reactflow/dist/style.css";
 import CustomNode from "~/components/custom-node/custom-node.tsx";
 import { setScreenSize } from "./slices/screen-size.ts";
@@ -8,9 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Timer } from "./components/timer/timer.tsx";
 import { useCenterCamera } from "~/hooks/useCenterCamera.ts";
 import { RootState } from "~/store";
-import { setNodeChanges } from "~/slices/nodes.ts";
 import CustomEdge from "~/components/custom-edge/custom-edge.tsx";
-import { addEdge, removeEdge, setEdgeChanges, updateEdge } from "~/slices/edges.ts";
+import { useEdges } from "~/hooks/useEdges.ts";
+import { initNodes } from "~/constants/constants.tsx";
 
 const nodeTypes = { node: CustomNode };
 
@@ -20,68 +20,14 @@ const edgeTypes = {
 
 // TODO: this file is quite big, it would be a good idea to thing how it can be splited
 function App() {
-  const edgeUpdateSuccessful = useRef(true);
-  const screenSize = useSelector((state: RootState) => state.screenSize);
-  const nodes = useSelector((state: RootState) => state.nodes);
-  const edges = useSelector((state: RootState) => state.edges);
-  const [cameraIsCentered, setCameraIsCentered] = useState(false);
-  const { getNodes, getEdges } = useReactFlow();
   const dispatch = useDispatch();
-  const onNodesChange = useCallback((changes: NodeChange[]) => dispatch(setNodeChanges(changes)), [dispatch]);
-  const onEdgesChange = useCallback((changes: EdgeChange[]) => dispatch(setEdgeChanges(changes)), [dispatch]);
-  const onConnect = useCallback(
-    (connection: Connection) => {
-      dispatch(addEdge(connection));
-    },
-    [dispatch],
-  );
+  const screenSize = useSelector((state: RootState) => state.screenSize);
+  const [nodes, , onNodesChange] = useNodesState(initNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const { isValidConnection, onEdgeUpdate, onEdgeUpdateStart, onEdgeUpdateEnd } = useEdges();
+  const [cameraIsCentered, setCameraIsCentered] = useState(false);
+  const onConnect = useCallback((connection: Connection) => setEdges(oldEdges => addEdge({ ...connection, type: "custom-edge" }, oldEdges)), [setEdges]);
   const centerCamera = useCenterCamera();
-
-  // TODO: can be incapsulate with hook
-  const isValidConnection = useCallback(
-    (connection: Connection) => {
-      const nodes = getNodes();
-      const edges = getEdges();
-      const target = nodes.find(node => node.id === connection.target);
-      const hasCycle = (node: Node, visited = new Set()) => {
-        if (visited.has(node.id)) return false;
-
-        visited.add(node.id);
-
-        for (const outgoer of getOutgoers(node, nodes, edges)) {
-          if (outgoer.id === connection.source) return true;
-          if (hasCycle(outgoer, visited)) return true;
-        }
-      };
-
-      if (target?.id === connection.source) return false;
-      return !!target && !hasCycle(target);
-    },
-    [getNodes, getEdges],
-  );
-
-  const onEdgeUpdateStart = useCallback(() => {
-    edgeUpdateSuccessful.current = false;
-  }, []);
-
-  const onEdgeUpdate = useCallback(
-    (oldEdge: Edge, newConnection: Connection) => {
-      edgeUpdateSuccessful.current = true;
-      dispatch(updateEdge({ oldEdge, newConnection }));
-    },
-    [dispatch],
-  );
-
-  const onEdgeUpdateEnd = useCallback(
-    (_: MouseEvent | TouchEvent, edge: Edge) => {
-      if (!edgeUpdateSuccessful.current) {
-        dispatch(removeEdge(edge.id));
-      }
-
-      edgeUpdateSuccessful.current = true;
-    },
-    [dispatch],
-  );
 
   const ref = useCallback(
     (node: HTMLDivElement | null) => {

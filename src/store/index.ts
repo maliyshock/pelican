@@ -1,13 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { screenSizeSlice } from "../slices/screen-size.ts";
-import { nodesSlice } from "~/slices/nodes.ts";
-import { edgesSlice } from "~/slices/edges.ts";
+import { actionsSlice } from "~/slices/actions.ts";
+import { playerSlice } from "~/slices/player.ts";
 
 export const store = configureStore({
   reducer: {
     screenSize: screenSizeSlice.reducer,
-    nodes: nodesSlice.reducer,
-    edges: edgesSlice.reducer,
+    // nodes: nodesSlice.reducer,
+    // edges: edgesSlice.reducer,
+    actions: actionsSlice.reducer,
+    player: playerSlice.reducer,
   },
 });
 
