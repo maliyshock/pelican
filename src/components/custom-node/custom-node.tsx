@@ -9,10 +9,7 @@ import { useGetAction } from "~/hooks/useGetAction.ts";
 
 export default function CustomNode({ id, data, isConnectable, dragging }: NodeProps<GameObject>) {
   const updateNodeInternals = useUpdateNodeInternals();
-  // const actions = useSelector((state: RootState) => state.actions);
   const { callback, timer } = useGetAction({ target: id });
-
-  // if i subscribe to actions all of the nodes will be rerendered
 
   useEffect(() => {
     let timerId: NodeJS.Timeout;

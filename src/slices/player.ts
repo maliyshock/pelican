@@ -21,8 +21,6 @@ type PlayerChange = {
   [key in keyof Player]: Player[key];
 };
 
-// get rate chance
-
 const initialState: Player = {
   attackSpeed: 2000,
   health: 10,

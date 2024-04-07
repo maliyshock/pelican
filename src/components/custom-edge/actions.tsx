@@ -22,6 +22,7 @@ export function Actions({ actionsList, target }: ActionsProps) {
   const dispatch = useDispatch();
   const actions = useSelector((state: RootState) => state.actions);
 
+  // if there is only 1 action trigger it by default
   useEffect(() => {
     if (actionsList.length === cutoff && !actions[target]) {
       const action = actionsList[0];

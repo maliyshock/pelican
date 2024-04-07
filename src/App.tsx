@@ -18,7 +18,6 @@ const edgeTypes = {
   "custom-edge": CustomEdge,
 };
 
-// TODO: this file is quite big, it would be a good idea to thing how it can be splited
 function App() {
   const dispatch = useDispatch();
   const screenSize = useSelector((state: RootState) => state.screenSize);
