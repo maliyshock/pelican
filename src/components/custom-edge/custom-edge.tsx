@@ -4,6 +4,7 @@ import { dictionary } from "~/constants/dictionary.ts";
 import { Action } from "~/types";
 import "./custom-edge.css";
 import { Actions } from "~/components/custom-edge/actions.tsx";
+import { useCallback } from "react";
 
 type CustomEdgeProps = {
   id: string;
@@ -15,7 +16,6 @@ type CustomEdgeProps = {
   target: string;
 };
 
-// TODO: delete connection
 export default function CustomEdge({ id, sourceX, sourceY, targetX, targetY, source, target }: CustomEdgeProps) {
   const [edgePath, labelX, labelY] = getSimpleBezierPath({
     sourceX,
@@ -27,6 +27,7 @@ export default function CustomEdge({ id, sourceX, sourceY, targetX, targetY, sou
   });
   const { setEdges } = useReactFlow();
   const actionsList: Action[] | undefined = dictionary[source]?.[target];
+  const handleClose = useCallback(() => setEdges(edges => edges.filter(edg => edg.id !== id)), [id, setEdges]);
 
   return (
     <>
@@ -34,7 +35,7 @@ export default function CustomEdge({ id, sourceX, sourceY, targetX, targetY, sou
       <EdgeLabelRenderer>
         <div className="edge-actions" style={{ transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)` }}>
           {actionsList && actionsList.length > 0 && <Actions actionsList={actionsList} source={source} target={target} />}
-          <button className="button" onClick={() => setEdges(edges => edges.filter(edg => edg.id !== id))}>
+          <button className="button" onClick={handleClose}>
             <CircleX />
           </button>
         </div>
