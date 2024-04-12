@@ -31,8 +31,6 @@ function createNode(): GameNode {
 export function useGetAction({ target }: UseGetAction) {
   const selectActionForNode = (nodeId: string = "") => createSelector([state => state.actions], actions => actions[nodeId]);
   const nodeSpecificAction: string | undefined = useSelector(selectActionForNode(target));
-
-  target === "world" && console.log("nodeSpecificAction", nodeSpecificAction);
   const player = useSelector((state: RootState) => state.player);
   const { addNodes } = useReactFlow();
   return useMemo(() => {
@@ -40,12 +38,9 @@ export function useGetAction({ target }: UseGetAction) {
     let callback;
 
     if (target) {
-      // console.log("target", target);
-      // console.log("actions", actions[target]);
       if (nodeSpecificAction === "explore") {
         timer = player.exploreSpeed;
         callback = () => {
-          console.log("test");
           addNodes(createNode());
         };
       }

@@ -12,9 +12,8 @@ export default function CustomNode({ id, data, isConnectable, dragging }: NodePr
   const { callback, timer } = useGetAction({ target: id });
 
   useEffect(() => {
+    // TODO: change this approach
     let timerId: NodeJS.Timeout;
-    id === "world" && console.log("callback", callback);
-    id === "world" && console.log("timer", timer);
     if (callback && timer) {
       timerId = setInterval(callback, timer);
     }

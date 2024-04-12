@@ -3,7 +3,7 @@ import { Compass, Grab } from "lucide-react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "~/store";
-import { setAction } from "~/slices/actions.ts";
+import { removeAction, setAction } from "~/slices/actions.ts";
 
 interface ActionsProps {
   actionsList: Action[];
@@ -30,6 +30,12 @@ export function Actions({ actionsList, target }: ActionsProps) {
       dispatch(setAction({ target, actionName: action }));
     }
   }, [actions, actionsList, dispatch, target]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(removeAction({ target }));
+    };
+  }, [dispatch, target]);
 
   return (
     <>
