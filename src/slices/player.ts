@@ -26,7 +26,7 @@ const initialState: Player = {
   health: 10,
   damage: 1,
   weapon: null,
-  exploreSpeed: 5000,
+  exploreSpeed: 15000,
   battleRank: 0,
   experience: 0,
   nextLevel: 50,
