@@ -8,9 +8,10 @@ import { motion } from "framer-motion";
 import { useGetAction } from "~/hooks/useGetAction.ts";
 import { Timer } from "~/components/timer/timer.tsx";
 
-export default function CustomNode({ id, data, isConnectable, dragging }: NodeProps<GameObject>) {
+export default function CustomNode(props: NodeProps<GameObject>) {
+  const { id, data, isConnectable, dragging } = props;
   const updateNodeInternals = useUpdateNodeInternals();
-  const { callback, timer } = useGetAction({ target: id });
+  const { callback, timer, actionName } = useGetAction({ node: props });
   const isTimer = callback && timer;
 
   useEffect(() => {
@@ -24,7 +25,7 @@ export default function CustomNode({ id, data, isConnectable, dragging }: NodePr
         initial={{ boxShadow: "0 0px 12px rgba(0, 0, 0, 0.06)" }}
         whileHover={{ boxShadow: "0 16px 12px rgba(0, 0, 0, 0.03)", outline: "4px solid var(--blue)" }}
       >
-        {isTimer && <Timer time={timer} callback={callback} />}
+        {isTimer && <Timer time={timer} callback={callback} label={actionName} />}
         {data.name && (
           <header className="node__header">
             <h3>{data.name}</h3>

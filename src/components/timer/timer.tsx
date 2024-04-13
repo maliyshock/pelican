@@ -3,19 +3,17 @@ import "./timer.css";
 import { Line } from "~/components/timer/line.tsx";
 import { useSelector } from "react-redux";
 import { RootState } from "~/store";
+import { getProgress } from "~/utils/getProgress.ts";
 
 interface TimerProps {
   time: number;
+  label?: string;
   callback(): void;
-}
-
-function getProgress(elapsedTime: number, time: number) {
-  return (elapsedTime / time) * 100;
 }
 
 // counts time separately from the view
 // makes synchronisation ot pause or on timer expiration
-export function Timer({ time, callback }: TimerProps) {
+export function Timer({ time, callback, label }: TimerProps) {
   const [key, setKey] = useState(Date.now());
   const [timeProgress, setTimeProgress] = useState<number | null>(null);
   const clocks = useSelector((state: RootState) => state.time);
@@ -67,5 +65,10 @@ export function Timer({ time, callback }: TimerProps) {
     clocks.play ? (startTimer(), setInit(true)) : pauseTimer();
   }, [clocks.play, pauseTimer, startTimer]);
 
-  return <div className="timer">{init && <Line key={key} duration={time} elapsedTime={elapsedTimeRef.current} percentage={timeProgress || undefined} />}</div>;
+  return (
+    <div className="timer">
+      <div className="timer__label">{label}</div>
+      {init && <Line key={key} duration={time} elapsedTime={elapsedTimeRef.current} percentage={timeProgress || undefined} />}
+    </div>
+  );
 }

@@ -9,7 +9,7 @@ import { useCenterCamera } from "~/hooks/useCenterCamera.ts";
 import { RootState } from "~/store";
 import CustomEdge from "~/components/custom-edge/custom-edge.tsx";
 import { useEdges } from "~/hooks/useEdges.ts";
-import { initNodes } from "~/constants/constants.tsx";
+import { INIT_NODES } from "~/constants/constants.tsx";
 import { Clocks } from "~/components/clocks/clocks.tsx";
 
 const nodeTypes = { node: CustomNode };
@@ -21,7 +21,7 @@ const edgeTypes = {
 function App() {
   const dispatch = useDispatch();
   const screenSize = useSelector((state: RootState) => state.screenSize);
-  const [nodes, , onNodesChange] = useNodesState(initNodes);
+  const [nodes, , onNodesChange] = useNodesState(INIT_NODES);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const { isValidConnection, onEdgeUpdate, onEdgeUpdateStart, onEdgeUpdateEnd } = useEdges();
   const [cameraIsCentered, setCameraIsCentered] = useState(false);
