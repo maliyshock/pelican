@@ -6,20 +6,12 @@ import { ArrowRightFromLine, ArrowRightToLine, Heart, Sword } from "lucide-react
 import { IconValue } from "~/components/icon-value/icon-value.tsx";
 import { motion } from "framer-motion";
 import { useGetAction } from "~/hooks/useGetAction.ts";
+import { Timer } from "~/components/timer/timer.tsx";
 
 export default function CustomNode({ id, data, isConnectable, dragging }: NodeProps<GameObject>) {
   const updateNodeInternals = useUpdateNodeInternals();
   const { callback, timer } = useGetAction({ target: id });
-
-  useEffect(() => {
-    // TODO: change this approach
-    let timerId: NodeJS.Timeout;
-    if (callback && timer) {
-      timerId = setInterval(callback, timer);
-    }
-
-    return () => timerId && clearInterval(timerId);
-  }, [callback, timer]);
+  const isTimer = callback && timer;
 
   useEffect(() => {
     updateNodeInternals(id);
@@ -32,6 +24,7 @@ export default function CustomNode({ id, data, isConnectable, dragging }: NodePr
         initial={{ boxShadow: "0 0px 12px rgba(0, 0, 0, 0.06)" }}
         whileHover={{ boxShadow: "0 16px 12px rgba(0, 0, 0, 0.03)", outline: "4px solid var(--blue)" }}
       >
+        {isTimer && <Timer time={timer} callback={callback} />}
         {data.name && (
           <header className="node__header">
             <h3>{data.name}</h3>

@@ -5,12 +5,12 @@ import "reactflow/dist/style.css";
 import CustomNode from "~/components/custom-node/custom-node.tsx";
 import { setScreenSize } from "./slices/screen-size.ts";
 import { useDispatch, useSelector } from "react-redux";
-import { Timer } from "./components/timer/timer.tsx";
 import { useCenterCamera } from "~/hooks/useCenterCamera.ts";
 import { RootState } from "~/store";
 import CustomEdge from "~/components/custom-edge/custom-edge.tsx";
 import { useEdges } from "~/hooks/useEdges.ts";
 import { initNodes } from "~/constants/constants.tsx";
+import { Clocks } from "~/components/clocks/clocks.tsx";
 
 const nodeTypes = { node: CustomNode };
 
@@ -51,7 +51,7 @@ function App() {
   return (
     <div className="app">
       <div className="node-sandbox">
-        <Timer />
+        <Clocks />
         {/*<CenterCameraButton />*/}
         <ReactFlow
           ref={ref}
