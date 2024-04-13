@@ -1,39 +1,71 @@
-import { useEffect, useState } from "react";
-import { formatTime } from "~/utils/format-tIme.ts";
+import { useCallback, useEffect, useRef, useState } from "react";
 import "./timer.css";
+import { Line } from "~/components/timer/line.tsx";
+import { useSelector } from "react-redux";
+import { RootState } from "~/store";
 
 interface TimerProps {
-  initHours?: number;
-  initMinutes?: number;
+  time: number;
+  callback(): void;
 }
 
-// TODO: probably should be connected to the store or signals
-// TODO: stop time
-// TODO: speed up time
-// TODO: speed down time
-export function Timer({ initHours = 12, initMinutes = 45 }: TimerProps) {
-  const [hours, setHours] = useState(initHours);
-  const [minutes, setMinutes] = useState(initMinutes);
+function getProgress(elapsedTime: number, time: number) {
+  return (elapsedTime / time) * 100;
+}
+
+// counts time separately from the view
+// makes synchronisation ot pause or on timer expiration
+export function Timer({ time, callback }: TimerProps) {
+  const [key, setKey] = useState(Date.now());
+  const [timeProgress, setTimeProgress] = useState<number | null>(null);
+  const clocks = useSelector((state: RootState) => state.time);
+  const [init, setInit] = useState(clocks.play);
+  const startTimeRef = useRef<number | null>(null);
+  const elapsedTimeRef = useRef<number>(0);
+  const requestRef = useRef<number | null>(null);
+  const newProgress = useRef<number>(0);
+
+  // force remount
+  const updateKey = () => {
+    setKey(Date.now());
+  };
+
+  const updateProgress = useCallback(() => {
+    if (startTimeRef.current !== null) {
+      elapsedTimeRef.current = Date.now() - startTimeRef.current;
+      newProgress.current = getProgress(elapsedTimeRef.current, time);
+      if (elapsedTimeRef.current >= time) {
+        callback();
+        updateKey();
+        elapsedTimeRef.current = 0;
+        startTimeRef.current = Date.now();
+      }
+      requestRef.current = requestAnimationFrame(updateProgress);
+    }
+  }, [callback, time]);
+
+  const pauseTimer = useCallback(() => {
+    if (requestRef.current !== null) {
+      cancelAnimationFrame(requestRef.current);
+    }
+
+    if (startTimeRef.current !== null) {
+      elapsedTimeRef.current = Date.now() - startTimeRef.current;
+      newProgress.current = getProgress(elapsedTimeRef.current, time);
+      setTimeProgress(-(100 - Math.round(newProgress.current)));
+    }
+  }, [time]);
+
+  const startTimer = useCallback(() => {
+    setTimeProgress(null);
+    startTimeRef.current = Date.now() - elapsedTimeRef.current;
+    requestRef.current = requestAnimationFrame(updateProgress);
+  }, [updateProgress]);
 
   useEffect(() => {
-    const minutesCountdown = setInterval(
-      () =>
-        setMinutes(prev => {
-          if (prev + 1 === 60) {
-            setHours(prev => (prev + 1 === 24 ? 0 : prev + 1));
-            return 0;
-          }
-          return prev + 1;
-        }),
-      1000,
-    );
+    // we need initialization in case there the time is paused in the beginning
+    clocks.play ? (startTimer(), setInit(true)) : pauseTimer();
+  }, [clocks.play, pauseTimer, startTimer]);
 
-    return () => clearInterval(minutesCountdown);
-  }, []);
-
-  return (
-    <div className="timer">
-      {formatTime(hours)} : {formatTime(minutes)}
-    </div>
-  );
+  return <div className="timer">{init && <Line key={key} duration={time} elapsedTime={elapsedTimeRef.current} percentage={timeProgress || undefined} />}</div>;
 }
