@@ -1,6 +1,6 @@
 import { GameNode } from "~/types";
 
-export const pelican: GameNode = {
+export const PELICAN: GameNode = {
   id: "player",
   data: {
     inputs: [{ id: "player_input", name: "input", type: "input" }],
@@ -15,7 +15,7 @@ export const pelican: GameNode = {
   type: "node",
 };
 
-export const world: GameNode = {
+export const WORLD: GameNode = {
   id: "world",
   data: {
     inputs: [{ id: "world_input", name: "input", type: "input" }],
@@ -27,4 +27,6 @@ export const world: GameNode = {
   type: "node",
 };
 
-export const initNodes = [pelican, world];
+export const INIT_NODES = [PELICAN, WORLD];
+
+export const APPEARANCE_RANGE = 200;

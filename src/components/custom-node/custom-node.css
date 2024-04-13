@@ -3,13 +3,13 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    background-color: white;
 }
 
 .node__inner {
     border-radius: 8px;
     width: 240px;
     overflow: hidden;
+    background-color: white;
 }
 
 .node-wrapper.grabbable {
@@ -80,7 +80,14 @@
 
 .node__footer {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+}
+
+.node__footer *:first-child {
+    margin-right: auto;
+}
+.node__footer *:last-child {
+    margin-left: auto;
 }
 
 .node__header * {
