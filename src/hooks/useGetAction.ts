@@ -32,6 +32,7 @@ function createNode({ center: { x, y } }: CreateNode): GameNode {
       health: 10,
       objectType: "resource",
       grabbable: true,
+      img: { src: "/assets/tree.jpg", alt: "tree" },
     },
     position: { x: getBool() ? targetX : -targetX, y: getBool() ? targetY : -targetY },
     type: "node",
