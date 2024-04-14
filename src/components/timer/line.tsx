@@ -1,35 +1,38 @@
 import { useEffect, useRef } from "react";
 import { useAnimate } from "framer-motion";
+import { useSelector } from "react-redux";
+import { RootState } from "~/store";
 
 interface LineProps {
   duration: number;
-  percentage?: number;
-  elapsedTime?: number;
+  onComplete?(): void;
 }
 
-export function Line({ duration, percentage, elapsedTime }: LineProps) {
+export function Line({ duration, onComplete }: LineProps) {
   const [scope, animate] = useAnimate();
-  const lastPercentage = useRef(-100); //
+  const clocks = useSelector((state: RootState) => state.time);
+  const isMounted = useRef(true);
 
   useEffect(() => {
-    animate(scope.current, { x: "0%" }, { ease: "linear", duration: duration / 1000 });
-  }, [animate, duration, scope]);
+    const animation = animate(scope.current, { x: "0%" }, { ease: "linear", duration: duration / 1000 });
 
-  useEffect(() => {
-    if (percentage) {
-      animate(scope.current, { x: percentage + "%" }, { duration: 0 });
-    } else {
-      if (elapsedTime) {
-        animate(scope.current, { x: "0%" }, { ease: "linear", duration: duration / 1000 - elapsedTime / 1000 });
+    animation.then(() => {
+      if (isMounted.current) {
+        onComplete?.();
       }
-    }
-  }, [animate, duration, elapsedTime, percentage, scope]);
+    });
+
+    return () => {
+      isMounted.current = false;
+      animation.cancel();
+    };
+  }, [animate, scope, duration, onComplete]);
 
   useEffect(() => {
-    if (percentage) {
-      lastPercentage.current = percentage;
-    }
-  }, [percentage]);
+    const animation = scope.animations[0];
 
-  return <div ref={scope} style={{ transform: `translateX(${lastPercentage}%)` }} className="timer__line" />;
+    clocks.play ? animation.play() : animation.pause();
+  }, [animate, clocks.play, scope]);
+
+  return <div ref={scope} className="timer__line" />;
 }
