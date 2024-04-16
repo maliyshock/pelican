@@ -12,6 +12,6 @@ export const FOREST = "forest";
 // resources
 export const TREE = "tree";
 export const WOOD = "wood";
-export const ROCK = "rock";
 export const STONE = "stone";
+export const PIECE_OF_STONE = "piece-of-stone";
 export const POOP = "poop";

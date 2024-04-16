@@ -41,7 +41,12 @@ export function Actions({ actionsList, target }: ActionsProps) {
     <>
       {actionsList.length > cutoff &&
         actionsList.map(item => (
-          <button disabled={!!actions[target]} className="button" onClick={() => !actions[target] && dispatch(setAction({ target, actionName: item }))}>
+          <button
+            key={`${target}_${item}`}
+            disabled={!!actions[target]}
+            className="button"
+            onClick={() => !actions[target] && dispatch(setAction({ target, actionName: item }))}
+          >
             {item} {getIcon(item)}
           </button>
         ))}
