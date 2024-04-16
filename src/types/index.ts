@@ -1,4 +1,5 @@
 import { Node } from "reactflow";
+import { Rarity } from "~/constants/resource-recepies.ts";
 
 export type Action = "explore" | "harvest";
 export type ObjectType = "player" | "object" | "creature" | "world" | "resource";
@@ -28,11 +29,7 @@ export type GameObject = {
   dmg?: number;
   health?: number;
   grabbable?: boolean;
-  action?: {
-    actionName: Action;
-    source: string;
-    actionTime: number;
-  };
+  rarity?: Rarity;
 };
 
 export type AutocompleteResult<T> = {

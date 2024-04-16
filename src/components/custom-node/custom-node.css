@@ -75,7 +75,40 @@
 
 .node__header, .node__footer {
     width: 100%;
-    padding: 20px;
+    padding: 12px;
+}
+
+.node__value-container {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--gray);
+    box-shadow: 0 0 0 2px white;
+    z-index: 1;
+}
+
+.node__value {
+    mix-blend-mode: multiply;
+}
+
+.node__dmg {
+    left: 0;
+    top: 100%;
+    transform: translate(-40%, -60%);
+    background-color: var(--silver);
+}
+
+.node__health {
+    right: 0;
+    top: 100%;
+    transform: translate(40%, -60%);
+    background-color: var(--lasagna);
 }
 
 .node__footer {

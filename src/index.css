@@ -5,6 +5,9 @@
   --dark-blue: #00679AFF;
   --silver: #8db5cc;
   --red: #FF004DFF;
+  --lasagna: #ff6c6c;
+  /*--gray: #989898;*/
+  --gray: #808080FF;
 
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

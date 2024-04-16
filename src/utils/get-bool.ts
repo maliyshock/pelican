@@ -1,4 +1,4 @@
-import { getRandom } from "~/utils/getRandom.ts";
+import { getRandom } from "~/utils/get-random.ts";
 
 export function getBool() {
   return !!getRandom(1);

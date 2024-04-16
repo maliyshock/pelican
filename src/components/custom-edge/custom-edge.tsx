@@ -1,6 +1,6 @@
 import { BaseEdge, EdgeLabelRenderer, getSimpleBezierPath, Position, useReactFlow } from "reactflow";
 import { CircleX } from "lucide-react";
-import { dictionary } from "~/constants/dictionary.ts";
+import { ACTIONS_DICTIONARY } from "~/constants/actions-dictionary.ts";
 import { Action } from "~/types";
 import "./custom-edge.css";
 import { Actions } from "~/components/custom-edge/actions.tsx";
@@ -26,7 +26,7 @@ export default function CustomEdge({ id, sourceX, sourceY, targetX, targetY, sou
     targetPosition: Position.Left,
   });
   const { setEdges } = useReactFlow();
-  const actionsList: Action[] | undefined = dictionary[source]?.[target];
+  const actionsList: Action[] | undefined = ACTIONS_DICTIONARY[source]?.[target];
   const handleClose = useCallback(() => setEdges(edges => edges.filter(edg => edg.id !== id)), [id, setEdges]);
 
   return (

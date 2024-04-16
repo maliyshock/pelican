@@ -2,8 +2,7 @@ import { Handle, Position, NodeProps, useUpdateNodeInternals } from "reactflow";
 import "./custom-node.css";
 import { GameObject } from "~/types";
 import { useEffect } from "react";
-import { ArrowRightFromLine, ArrowRightToLine, Heart, Sword } from "lucide-react";
-import { IconValue } from "~/components/icon-value/icon-value.tsx";
+import { ArrowRightFromLine, ArrowRightToLine } from "lucide-react";
 import { motion } from "framer-motion";
 import { useGetAction } from "~/hooks/useGetAction.ts";
 import { Timer } from "~/components/timer/timer.tsx";
@@ -36,12 +35,17 @@ export default function CustomNode(props: NodeProps<GameObject>) {
             <img className="img" alt={data.img.alt} src={data.img.src} />
           </div>
         )}
-        {(data.dmg || data.health) && (
-          <footer className="node__footer">
-            {data.dmg && <IconValue value={1} right={<Sword className="silver" strokeWidth={2} />} />}
 
-            {data.health && <IconValue value={10} right={<Heart className="red" strokeWidth={2} />} />}
-          </footer>
+        {data.dmg && (
+          <div className="node__value-container node__dmg">
+            <div className="node__value">{data.dmg}</div>
+          </div>
+        )}
+
+        {data.health && (
+          <div className="node__value-container node__health">
+            <div className="node__value">{data.health}</div>
+          </div>
         )}
       </motion.div>
 

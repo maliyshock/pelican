@@ -1,14 +1,14 @@
 import { Action } from "~/types";
 
 // declare all possible actions
-export type Dictionary = {
+export type ActionsDictionary = {
   [key: string]: {
     [innerKey: string]: Action[] | undefined;
   };
 };
 
-export const dictionary: Dictionary = {
+export const ACTIONS_DICTIONARY: ActionsDictionary = {
   player: {
-    world: ["explore"],
+    forest: ["explore"],
   },
 };
