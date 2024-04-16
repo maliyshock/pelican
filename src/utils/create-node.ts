@@ -12,12 +12,13 @@ interface CreateNode {
 }
 
 export function createNode({ center: { x, y }, data }: CreateNode): GameNode {
-  const targetX = getRandom(x + APPEARANCE_RANGE);
-  const targetY = getRandom(y + APPEARANCE_RANGE);
+  const rangeX = getRandom(APPEARANCE_RANGE) * (getBool() ? 1 : -1);
+  const rangeY = getRandom(APPEARANCE_RANGE) * (getBool() ? 1 : -1);
+
   return {
-    id: `tree_${Date.now()}`,
+    id: Date.now() + "",
     data,
-    position: { x: getBool() ? targetX : -targetX, y: getBool() ? targetY : -targetY },
+    position: { x: x + rangeX, y: y + rangeY },
     type: "node",
   };
 }

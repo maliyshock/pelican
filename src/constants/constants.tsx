@@ -1,32 +1,6 @@
-import { GameNode } from "~/types";
+import { PELICAN } from "~/constants/nodes/characters.ts";
+import { FOREST } from "~/constants/nodes/regions.ts";
 
-export const PELICAN: GameNode = {
-  id: "player",
-  data: {
-    inputs: [{ id: "player_input", name: "input", type: "input" }],
-    outputs: [{ id: "player_output", name: "output", type: "output" }],
-    img: { src: "/assets/pelican.jpg", alt: "pelican" },
-    dmg: 1,
-    health: 10,
-    objectType: "player",
-    grabbable: true,
-  },
-  position: { x: 0, y: 0 },
-  type: "node",
-};
-
-export const WORLD: GameNode = {
-  id: "forest",
-  data: {
-    inputs: [{ id: "world_input", name: "input", type: "input" }],
-    name: "Forest",
-    objectType: "world",
-    grabbable: true,
-  },
-  position: { x: 100, y: 100 },
-  type: "node",
-};
-
-export const INIT_NODES = [PELICAN, WORLD];
+export const INIT_NODES = [PELICAN, FOREST];
 
 export const APPEARANCE_RANGE = 200;

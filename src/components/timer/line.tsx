@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useAnimate } from "framer-motion";
 import { useSelector } from "react-redux";
 import { RootState } from "~/store";
@@ -10,29 +10,31 @@ interface LineProps {
 
 export function Line({ duration, onComplete }: LineProps) {
   const [scope, animate] = useAnimate();
+  const [isComplete, setIsComplete] = useState(false);
   const clocks = useSelector((state: RootState) => state.time);
-  const isMounted = useRef(true);
 
   useEffect(() => {
-    const animation = animate(scope.current, { x: "0%" }, { ease: "linear", duration: duration / 1000 });
+    const anDuration = duration / 1000;
+    animate(scope.current, { x: "0%" }, { ease: "linear", duration: anDuration });
+  }, [animate, duration, scope]);
 
-    animation.then(() => {
-      if (isMounted.current) {
-        onComplete?.();
-      }
-    });
+  useEffect(() => {
+    const animation = scope.animations[0];
 
-    return () => {
-      isMounted.current = false;
-      animation.cancel();
-    };
-  }, [animate, scope, duration, onComplete]);
+    animation.then(() => setIsComplete(true));
+  }, [scope.animations]);
 
   useEffect(() => {
     const animation = scope.animations[0];
 
     clocks.play ? animation.play() : animation.pause();
   }, [animate, clocks.play, scope]);
+
+  useEffect(() => {
+    if (isComplete) {
+      onComplete?.();
+    }
+  }, [isComplete, onComplete]);
 
   return <div ref={scope} className="timer__line" />;
 }

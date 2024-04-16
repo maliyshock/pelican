@@ -1,5 +1,5 @@
 import { Probability } from "~/slices/player.ts";
-import { Rarity } from "~/constants/resource-recepies.ts";
+import { Rarity } from "~/types";
 
 export function getRarity(probabilityChances: Probability, number: number): Rarity | undefined {
   let prevSum = 0;
