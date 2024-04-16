@@ -38,8 +38,6 @@ export function useGetAction({ node }: UseGetAction) {
   const { addNodes } = useReactFlow();
   const debouncedNode = useDebounce(node, 200);
 
-  //TODO: debounce it somehow
-
   return useMemo(() => {
     let timer;
     let callback;
