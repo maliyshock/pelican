@@ -16,10 +16,10 @@ export const PELICAN: GameNode = {
 };
 
 export const WORLD: GameNode = {
-  id: "world",
+  id: "forest",
   data: {
     inputs: [{ id: "world_input", name: "input", type: "input" }],
-    name: "World",
+    name: "Forest",
     objectType: "world",
     grabbable: true,
   },

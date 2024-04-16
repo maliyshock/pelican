@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { BASIC, COMMON, LEGENDARY, RARE, Rarity, REALLY_RARE, UNIQUE } from "~/constants/resource-recepies.ts";
 
 interface Player {
   attackSpeed: number;
@@ -9,16 +10,15 @@ interface Player {
   battleRank: number;
   experience: number;
   nextLevel: number;
-  exploreRate: {
-    regular: number;
-    unique: number;
-    rare: number;
-    legendary: number;
-  };
+  exploreRate: Probability;
 }
 
 type PlayerChange = {
   [key in keyof Player]: Player[key];
+};
+
+export type Probability = {
+  [k in Rarity]: number;
 };
 
 const initialState: Player = {
@@ -31,10 +31,12 @@ const initialState: Player = {
   experience: 0,
   nextLevel: 50,
   exploreRate: {
-    regular: 100,
-    unique: 0,
-    rare: 0,
-    legendary: 0,
+    [BASIC]: 80,
+    [COMMON]: 20,
+    [UNIQUE]: 0,
+    [RARE]: 0,
+    [REALLY_RARE]: 0,
+    [LEGENDARY]: 0,
   },
 };
 
