@@ -1,16 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { BASIC, COMMON, LEGENDARY, RARE, Rarity, REALLY_RARE, UNIQUE } from "~/constants/resource-recepies.ts";
+import { Rarity } from "~/types";
+import { BASIC, COMMON, LEGENDARY, RARE, REALLY_RARE, UNIQUE } from "~/constants/dictionary.ts";
 
 interface Player {
-  attackSpeed: number;
   health: number;
   damage: number;
   weapon: null;
   exploreSpeed: number;
+  harvestSpeed: number;
+  attackSpeed: number;
   battleRank: number;
   experience: number;
   nextLevel: number;
   exploreRate: Probability;
+  harvestRate: Probability;
 }
 
 type PlayerChange = {
@@ -22,15 +25,24 @@ export type Probability = {
 };
 
 const initialState: Player = {
-  attackSpeed: 2000,
   health: 10,
   damage: 1,
   weapon: null,
   exploreSpeed: 15000,
+  harvestSpeed: 10000,
+  attackSpeed: 2000,
   battleRank: 0,
   experience: 0,
   nextLevel: 50,
   exploreRate: {
+    [BASIC]: 80,
+    [COMMON]: 20,
+    [UNIQUE]: 0,
+    [RARE]: 0,
+    [REALLY_RARE]: 0,
+    [LEGENDARY]: 0,
+  },
+  harvestRate: {
     [BASIC]: 80,
     [COMMON]: 20,
     [UNIQUE]: 0,

@@ -5,10 +5,10 @@ import "reactflow/dist/style.css";
 import CustomNode from "~/components/custom-node/custom-node.tsx";
 import { setScreenSize } from "./slices/screen-size.ts";
 import { useDispatch, useSelector } from "react-redux";
-import { useCenterCamera } from "~/hooks/useCenterCamera.ts";
+import { useCenterCamera } from "~/hooks/use-center-camera.ts";
 import { RootState } from "~/store";
 import CustomEdge from "~/components/custom-edge/custom-edge.tsx";
-import { useEdges } from "~/hooks/useEdges.ts";
+import { useEdges } from "~/hooks/use-edges.ts";
 import { INIT_NODES } from "~/constants/constants.tsx";
 import { Clocks } from "~/components/clocks/clocks.tsx";
 

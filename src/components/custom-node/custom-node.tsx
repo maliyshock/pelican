@@ -4,7 +4,7 @@ import { GameObject } from "~/types";
 import { useEffect } from "react";
 import { ArrowRightFromLine, ArrowRightToLine } from "lucide-react";
 import { motion } from "framer-motion";
-import { useGetAction } from "~/hooks/useGetAction.ts";
+import { useGetAction } from "~/hooks/use-get-action.ts";
 import { Timer } from "~/components/timer/timer.tsx";
 
 export default function CustomNode(props: NodeProps<GameObject>) {
