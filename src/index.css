@@ -6,7 +6,6 @@
   --silver: #8db5cc;
   --red: #FF004DFF;
   --lasagna: #ff6c6c;
-  /*--gray: #989898;*/
   --gray: #808080FF;
 
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -29,11 +28,6 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background-color: var(--yellow);
-}
-
-h4 {
-  /*font-size: 1.2em;*/
-  /*line-height: 0.6;*/
 }
 
 .img {

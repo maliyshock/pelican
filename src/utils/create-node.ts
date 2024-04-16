@@ -11,7 +11,6 @@ interface CreateNode {
   data: GameObject;
 }
 
-// TODO: fix the hardcode later on
 export function createNode({ center: { x, y }, data }: CreateNode): GameNode {
   const targetX = getRandom(x + APPEARANCE_RANGE);
   const targetY = getRandom(y + APPEARANCE_RANGE);

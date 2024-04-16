@@ -29,8 +29,6 @@ export function useGetAction({ node }: UseGetAction) {
         timer = player.exploreSpeed;
         callback = () => {
           const rarity = getRarity(player.exploreRate, getRandom(100))!;
-          // get random by rarity related to the world tier
-          // get items by rarity
           const itemsByRegionAndRarity = getItemsByRarity(rarity, "forest")!;
           const randomItem = getRandomFromArray(itemsByRegionAndRarity);
           addNodes(createNode({ center: { x: node.xPos, y: node.yPos }, data: randomItem }));

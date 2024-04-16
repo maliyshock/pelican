@@ -41,9 +41,6 @@ const POOP: GameObject = {
   rarity: COMMON,
 };
 
-// const BASIC = [TREE, ROCK];
-// const COMMON = [POOP];
-
 export const RESOURCE_RECIPES: {
   [K in Region]: {
     [J in Rarity]?: Array<GameObject>;
