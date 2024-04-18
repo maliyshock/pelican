@@ -1,13 +1,11 @@
 import { GameObject } from "~/types";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "~/store";
-import { NodeProps, useReactFlow } from "reactflow";
+import { NodeProps } from "reactflow";
 import { useMemo } from "react";
 import { createSelector } from "@reduxjs/toolkit";
-import { createNode } from "~/utils/create-node.ts";
 import { useDebounce } from "~/hooks/use-debounce.ts";
-import { getRandomItem } from "~/utils/get-random-item.ts";
-import { add } from "~/slices/nodes-counter.ts";
+import { useGetActionCallback } from "~/hooks/use-get-action-callback.ts";
 
 interface UseGetAction {
   node: NodeProps<GameObject>;
@@ -20,24 +18,15 @@ export function useGetAction({ node }: UseGetAction) {
   const selectActionForNode = (nodeId: string = "") => createSelector([state => state.actions], actions => actions[nodeId]);
   const nodeSpecificAction: string | undefined = useSelector(selectActionForNode(node?.id));
   const player = useSelector((state: RootState) => state.player);
-  const { addNodes } = useReactFlow();
   const debouncedNode = useDebounce(node, 200);
-  const dispatch = useDispatch();
+  const actionCallback = useGetActionCallback(nodeSpecificAction);
 
   return useMemo(() => {
     let timer;
     let callback;
 
     if (debouncedNode?.id) {
-      callback = () => {
-        // TODO: we need to have a fallback in case there is no items in such rarity
-        const randomItem = getRandomItem(player.exploreRate, debouncedNode.data.objectKeyName);
-        if (randomItem) {
-          const newNode = createNode({ center: { x: debouncedNode.xPos, y: debouncedNode.yPos }, data: randomItem });
-          addNodes(newNode);
-          dispatch(add([newNode]));
-        }
-      };
+      callback = actionCallback(debouncedNode);
 
       if (nodeSpecificAction === "explore") {
         timer = player.exploreSpeed;
@@ -53,5 +42,5 @@ export function useGetAction({ node }: UseGetAction) {
       callback,
       actionName: nodeSpecificAction,
     };
-  }, [addNodes, debouncedNode, nodeSpecificAction, player.exploreRate, player.exploreSpeed, player.harvestSpeed]);
+  }, [actionCallback, debouncedNode, nodeSpecificAction, player.exploreSpeed, player.harvestSpeed]);
 }
