@@ -1,8 +1,8 @@
 import { Node } from "reactflow";
 import { BASIC, COMMON, FOREST, LEGENDARY, POOP, RARE, REALLY_RARE, STONE, TREE, UNIQUE, WOOD } from "~/constants/dictionary.ts";
 
-export type Action = "collect" | "explore" | "harvest" | "eat";
-export type ObjectType = "player" | "character" | "object" | "creature" | "region" | "resource" | "food" | "resourceDeposit";
+export type Action = "collect" | "explore" | "harvest" | "eat" | "attack" | "talk" | "combine";
+export type ObjectType = "player" | "character" | "enemy" | "object" | "building" | "creature" | "region" | "resource" | "food" | "resourceDeposit";
 
 export type Rarity = typeof BASIC | typeof COMMON | typeof UNIQUE | typeof RARE | typeof REALLY_RARE | typeof LEGENDARY;
 export type Region = typeof FOREST;

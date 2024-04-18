@@ -25,7 +25,14 @@ function App() {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const { isValidConnection, onEdgeUpdate, onEdgeUpdateStart, onEdgeUpdateEnd } = useEdges();
   const [cameraIsCentered, setCameraIsCentered] = useState(false);
-  const onConnect = useCallback((connection: Connection) => setEdges(oldEdges => addEdge({ ...connection, type: "custom-edge" }, oldEdges)), [setEdges]);
+  const onConnect = useCallback(
+    (connection: Connection) =>
+      setEdges(oldEdges => {
+        // connection has id of source and target handles and also has id of source and target nodes itself
+        return addEdge({ ...connection, type: "custom-edge" }, oldEdges);
+      }),
+    [setEdges],
+  );
   const centerCamera = useCenterCamera();
 
   const ref = useCallback(

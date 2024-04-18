@@ -19,8 +19,19 @@ export const ACTIONS_DICTIONARY: ActionsDictionary = {
     resourceDeposit: ["harvest"],
     resource: ["collect"],
     food: ["eat"],
+    character: ["attack", "talk"],
   },
   character: {
     food: ["eat"],
+    player: ["attack"],
+  },
+  enemy: {
+    player: ["attack"],
+    resourceDeposit: ["attack"],
+    resource: ["attack"],
+    building: ["attack"],
+  },
+  resource: {
+    resource: ["combine"],
   },
 };

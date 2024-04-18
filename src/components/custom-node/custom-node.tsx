@@ -35,13 +35,11 @@ export default function CustomNode(props: NodeProps<GameObject>) {
             <img className="img" alt={data.img.alt} src={data.img.src} />
           </div>
         )}
-
         {data.dmg && (
           <div className="node__value-container node__dmg">
             <div className="node__value">{data.dmg}</div>
           </div>
         )}
-
         {data.health && (
           <div className="node__value-container node__health">
             <div className="node__value">{data.health}</div>

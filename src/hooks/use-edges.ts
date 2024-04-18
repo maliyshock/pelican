@@ -9,6 +9,8 @@ export function useEdges() {
 
   const isValidConnection = useCallback(
     (connection: Connection) => {
+      // TODO: add validation of handles here
+      // output handle type of source should be === input handle type
       const target = nodes.find(node => node.id === connection.target);
       const hasCycle = (node: Node, visited = new Set()) => {
         if (visited.has(node.id)) return false;
