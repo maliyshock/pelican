@@ -1,5 +1,5 @@
 import { Node } from "reactflow";
-import { BASIC, COMMON, FOREST, LEGENDARY, POOP, RARE, REALLY_RARE, STONE, TREE, UNIQUE, WOOD } from "~/constants/dictionary.ts";
+import { BASIC, COMMON, FOREST, LEGENDARY, PIECE_OF_STONE, PLANK, POOP, RARE, REALLY_RARE, STONE, TREE, UNIQUE, WOOD } from "~/constants/dictionary.ts";
 
 export type Action = "collect" | "explore" | "harvest" | "eat" | "attack" | "talk" | "combine";
 export type ObjectType = "player" | "character" | "enemy" | "object" | "building" | "creature" | "region" | "resource" | "food" | "resourceDeposit";
@@ -7,7 +7,7 @@ export type ObjectType = "player" | "character" | "enemy" | "object" | "building
 export type Rarity = typeof BASIC | typeof COMMON | typeof UNIQUE | typeof RARE | typeof REALLY_RARE | typeof LEGENDARY;
 export type Region = typeof FOREST;
 export type ResourceDeposit = typeof TREE | typeof STONE;
-export type Resource = typeof WOOD | typeof STONE | typeof POOP;
+export type Resource = typeof WOOD | typeof PLANK | typeof STONE | typeof PIECE_OF_STONE | typeof POOP;
 export type ObjectKeyName = Region | ResourceDeposit | Resource | ObjectType;
 
 type ReactFlowNode = Omit<Node, "data">;
@@ -29,6 +29,7 @@ export type GameObject = {
     src: string;
     alt: string;
   };
+  root?: ObjectKeyName;
   objectType: ObjectType[];
   objectKeyName: ObjectKeyName;
   inputs?: Socket[];
