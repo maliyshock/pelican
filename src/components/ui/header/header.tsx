@@ -7,7 +7,9 @@ import { Icon } from "~/components/ui/icons/icon/icon.tsx";
 
 export function Header() {
   const money = useSelector((state: RootState) => state.money);
-  // use resources counter
+  const nodesCounter = useSelector((state: RootState) => state.nodesCounter);
+  const resourceKeys = nodesCounter.resourceDeposit ? Object.keys(nodesCounter.resourceDeposit) : [];
+
   return (
     <header className="header">
       <div className="header__inner wrapper">
@@ -17,7 +19,13 @@ export function Header() {
         <div className="header__clocks">
           <Clocks />
         </div>
-        <div className="header__resources"></div>
+        <div className="header__resources">
+          {resourceKeys.map(key => (
+            <div key={key}>
+              {key}: {nodesCounter.resourceDeposit![key as keyof typeof nodesCounter.resourceDeposit]}
+            </div>
+          ))}
+        </div>
       </div>
     </header>
   );
