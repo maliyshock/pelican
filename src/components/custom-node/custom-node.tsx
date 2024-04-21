@@ -1,17 +1,31 @@
-import { Handle, Position, NodeProps, useUpdateNodeInternals } from "reactflow";
+import { Handle, Position, NodeProps, useUpdateNodeInternals, useReactFlow } from "reactflow";
 import "./custom-node.css";
 import { GameObject } from "~/types";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { ArrowRightFromLine, ArrowRightToLine } from "lucide-react";
 import { motion } from "framer-motion";
 import { useGetAction } from "~/hooks/use-get-action.ts";
 import { Timer } from "~/components/timer/timer.tsx";
+import { Icon } from "~/components/ui/icons/icon/icon.tsx";
+import { Coin } from "~/components/ui/icons/coin.tsx";
+import { Button } from "antd";
+import { useDispatch } from "react-redux";
+import { addMoney } from "~/slices/money.ts";
 
 export default function CustomNode(props: NodeProps<GameObject>) {
   const { id, data, isConnectable, dragging } = props;
+  const { setNodes } = useReactFlow();
+  const dispatch = useDispatch();
   const updateNodeInternals = useUpdateNodeInternals();
   const { callback, timer, actionName } = useGetAction({ node: props });
   const isTimer = callback && timer;
+
+  const handleSell = useCallback(() => {
+    if (data.price && data.price > 0) {
+      setNodes(nodes => nodes.filter(node => node.id !== id));
+      dispatch(addMoney(data.price));
+    }
+  }, [data.price, dispatch, id, setNodes]);
 
   useEffect(() => {
     updateNodeInternals(id);
@@ -24,6 +38,11 @@ export default function CustomNode(props: NodeProps<GameObject>) {
         initial={{ boxShadow: "0 0px 12px rgba(0, 0, 0, 0.06)" }}
         whileHover={{ boxShadow: "0 16px 12px rgba(0, 0, 0, 0.03)", outline: "4px solid var(--blue)" }}
       >
+        {data.price && (
+          <Button onClick={handleSell} shape="circle" className="node__value-container node__sale">
+            <Icon size="fill" valueOnIcon icon={<Coin />} value={data.price} />
+          </Button>
+        )}
         {isTimer && <Timer time={timer} callback={callback} label={actionName} />}
         {data.name && (
           <header className="node__header">

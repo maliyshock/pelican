@@ -11,6 +11,7 @@ export const TREE_OBJECT: GameObject = {
   grabbable: true,
   img: { src: "/assets/tree.jpg", alt: "tree" },
   rarity: BASIC,
+  price: 1,
 };
 
 export const WOOD_OBJECT: GameObject = {
@@ -24,6 +25,7 @@ export const WOOD_OBJECT: GameObject = {
   grabbable: true,
   img: { src: "", alt: "wood" },
   rarity: BASIC,
+  price: 2,
 };
 
 export const PLANK_OBJECT: GameObject = {
@@ -37,6 +39,7 @@ export const PLANK_OBJECT: GameObject = {
   grabbable: true,
   img: { src: "", alt: "plank" },
   rarity: BASIC,
+  price: 3,
 };
 
 export const STONE_OBJECT: GameObject = {
@@ -49,6 +52,7 @@ export const STONE_OBJECT: GameObject = {
   grabbable: true,
   img: { src: "/assets/stone.jpg", alt: "rock" },
   rarity: BASIC,
+  price: 1,
 };
 
 export const PIECE_OF_STONE_OBJECT: GameObject = {
@@ -62,6 +66,7 @@ export const PIECE_OF_STONE_OBJECT: GameObject = {
   grabbable: true,
   img: { src: "/assets/stone-piece.jpg", alt: "stone" },
   rarity: BASIC,
+  price: 2,
 };
 
 export const POOP_OBJECT: GameObject = {
@@ -72,4 +77,5 @@ export const POOP_OBJECT: GameObject = {
   grabbable: true,
   img: { src: "/assets/poop.jpg", alt: "poop" },
   rarity: COMMON,
+  price: 1,
 };

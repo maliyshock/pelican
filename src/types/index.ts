@@ -1,5 +1,21 @@
 import { Node } from "reactflow";
-import { BASIC, COMMON, FOREST, LEGENDARY, PIECE_OF_STONE, PLANK, POOP, RARE, REALLY_RARE, STONE, TREE, UNIQUE, WOOD } from "~/constants/dictionary.ts";
+import {
+  BASIC,
+  COMMON,
+  FOREST,
+  FOX,
+  LEGENDARY,
+  PELICAN,
+  PIECE_OF_STONE,
+  PLANK,
+  POOP,
+  RARE,
+  REALLY_RARE,
+  STONE,
+  TREE,
+  UNIQUE,
+  WOOD,
+} from "~/constants/dictionary.ts";
 
 export type Action = "collect" | "explore" | "harvest" | "eat" | "attack" | "talk" | "combine";
 export type ObjectType = "player" | "character" | "enemy" | "object" | "building" | "creature" | "region" | "resource" | "food" | "resourceDeposit";
@@ -8,7 +24,8 @@ export type Rarity = typeof BASIC | typeof COMMON | typeof UNIQUE | typeof RARE 
 export type Region = typeof FOREST;
 export type ResourceDeposit = typeof TREE | typeof STONE;
 export type Resource = typeof WOOD | typeof PLANK | typeof STONE | typeof PIECE_OF_STONE | typeof POOP;
-export type ObjectKeyName = Region | ResourceDeposit | Resource | ObjectType;
+export type Creature = typeof PELICAN | typeof FOX;
+export type ObjectKeyName = Region | ResourceDeposit | Resource | ObjectType | Creature;
 
 type ReactFlowNode = Omit<Node, "data">;
 
@@ -23,6 +40,10 @@ type Socket = {
 };
 
 export type GameObject = {
+  objectType: ObjectType[];
+  objectKeyName: ObjectKeyName;
+  price?: number;
+  grabbable?: boolean;
   name?: string;
   color?: string;
   img?: {
@@ -30,13 +51,10 @@ export type GameObject = {
     alt: string;
   };
   root?: ObjectKeyName;
-  objectType: ObjectType[];
-  objectKeyName: ObjectKeyName;
   inputs?: Socket[];
   outputs?: Socket[];
   dmg?: number;
   health?: number;
   quantity?: number;
-  grabbable?: boolean;
   rarity?: Rarity;
 };

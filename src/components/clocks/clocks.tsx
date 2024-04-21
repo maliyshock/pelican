@@ -5,6 +5,7 @@ import { Pause, Play } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { pause, play } from "~/slices/time.ts";
 import { RootState } from "~/store";
+import { Button } from "antd";
 
 interface TimerProps {
   initHours?: number;
@@ -42,12 +43,8 @@ export function Clocks({ initHours = 12, initMinutes = 45 }: TimerProps) {
     <div className="clocks">
       {formatTime(hours)} : {formatTime(minutes)}
       <div className="clocks__controls">
-        <button className="clocks__button" onClick={() => dispatch(play())}>
-          <Play />
-        </button>
-        <button className="clocks__button" onClick={() => dispatch(pause())}>
-          <Pause />
-        </button>
+        <Button icon={<Play />} shape="round" className="clocks__button" onClick={() => dispatch(play())} />
+        <Button icon={<Pause />} shape="round" className="clocks__button" onClick={() => dispatch(pause())} />
       </div>
     </div>
   );
