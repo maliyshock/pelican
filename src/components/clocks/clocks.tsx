@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { formatTime } from "~/utils/format-tIme.ts";
+import { formatTime } from "~/utils/format-time.ts";
 import "./clocks.css";
 import { Pause, Play } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,8 +28,10 @@ export function Clocks({ initHours = 12, initMinutes = 45 }: TimerProps) {
           setMinutes(prev => {
             if (prev + 1 === 60) {
               setHours(prev => (prev + 1 === 24 ? 0 : prev + 1));
+
               return 0;
             }
+
             return prev + 1;
           }),
         1000,
@@ -43,8 +45,8 @@ export function Clocks({ initHours = 12, initMinutes = 45 }: TimerProps) {
     <div className="clocks">
       {formatTime(hours)} : {formatTime(minutes)}
       <div className="clocks__controls">
-        <Button icon={<Play />} shape="round" className="clocks__button" onClick={() => dispatch(play())} />
-        <Button icon={<Pause />} shape="round" className="clocks__button" onClick={() => dispatch(pause())} />
+        <Button className="clocks__button" icon={<Play />} shape="round" onClick={() => dispatch(play())} />
+        <Button className="clocks__button" icon={<Pause />} shape="round" onClick={() => dispatch(pause())} />
       </div>
     </div>
   );

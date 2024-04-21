@@ -1,6 +1,6 @@
 import { GameNode, GameObject } from "~/types";
 import { getRandom } from "~/utils/get-random.ts";
-import { APPEARANCE_RANGE } from "~/constants/constants.tsx";
+import { APPEARANCE_RANGE } from "~/constants/constants.ts";
 import { getBool } from "~/utils/get-bool.ts";
 
 interface CreateNode {

@@ -1,29 +1,48 @@
 import { Node } from "reactflow";
 import {
   BASIC,
+  BUILDING,
+  CHARACTER,
   COMMON,
+  CREATURE,
+  ENEMY,
+  FOOD,
   FOREST,
   FOX,
   LEGENDARY,
+  OBJECT,
   PELICAN,
-  PIECE_OF_STONE,
   PLANK,
+  PLAYER,
   POOP,
   RARE,
   REALLY_RARE,
+  REGION,
+  RESOURCE,
+  RESOURCE_DEPOSIT,
   STONE,
+  STONE_DEPOSIT,
   TREE,
   UNIQUE,
   WOOD,
 } from "~/constants/dictionary.ts";
 
 export type Action = "collect" | "explore" | "harvest" | "eat" | "attack" | "talk" | "combine";
-export type ObjectType = "player" | "character" | "enemy" | "object" | "building" | "creature" | "region" | "resource" | "food" | "resourceDeposit";
-
+export type ObjectType =
+  | typeof PLAYER
+  | typeof CHARACTER
+  | typeof ENEMY
+  | typeof OBJECT
+  | typeof BUILDING
+  | typeof CREATURE
+  | typeof REGION
+  | typeof RESOURCE
+  | typeof FOOD
+  | typeof RESOURCE_DEPOSIT;
 export type Rarity = typeof BASIC | typeof COMMON | typeof UNIQUE | typeof RARE | typeof REALLY_RARE | typeof LEGENDARY;
 export type Region = typeof FOREST;
-export type ResourceDeposit = typeof TREE | typeof STONE;
-export type Resource = typeof WOOD | typeof PLANK | typeof STONE | typeof PIECE_OF_STONE | typeof POOP;
+export type ResourceDeposit = typeof TREE | typeof STONE_DEPOSIT;
+export type Resource = typeof WOOD | typeof PLANK | typeof STONE | typeof POOP;
 export type Creature = typeof PELICAN | typeof FOX;
 export type ObjectKeyName = Region | ResourceDeposit | Resource | ObjectType | Creature;
 
@@ -45,7 +64,6 @@ export type GameObject = {
   price?: number;
   grabbable?: boolean;
   name?: string;
-  color?: string;
   img?: {
     src: string;
     alt: string;

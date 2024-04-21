@@ -11,8 +11,10 @@ interface ChangeValueBy {
 export function changeNodeValueBy({ nodes, id, key, value }: ChangeValueBy) {
   return nodes.reduce((acc, node) => {
     const isKey = node["data"][key] as number;
+
     if (node.id === id && isKey) {
       const result = isKey + value;
+
       if (result > 0) {
         acc.push({
           ...node,
@@ -26,6 +28,7 @@ export function changeNodeValueBy({ nodes, id, key, value }: ChangeValueBy) {
     } else {
       acc.push(node);
     }
+
     return acc;
   }, [] as GameNode[]);
 }

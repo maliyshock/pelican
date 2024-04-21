@@ -12,6 +12,11 @@ interface Player {
   battleRank: number;
   experience: number;
   nextLevel: number;
+  calories: number;
+  maxCalories: number;
+  minCalories: number;
+  hungerStack: number;
+  speedPenaltyLevel: number;
   exploreRate: Probability;
   harvestRate: Probability;
 }
@@ -24,16 +29,22 @@ export type Probability = {
   [k in Rarity]: number;
 };
 
+// TODO: normalisation should be applied to rates
 const initialState: Player = {
   health: 10,
   damage: 1,
   weapon: null,
-  exploreSpeed: 15000,
-  harvestSpeed: 10000,
+  exploreSpeed: 10000,
+  harvestSpeed: 7000,
   attackSpeed: 2000,
   battleRank: 0,
   experience: 0,
   nextLevel: 50,
+  calories: 1200, // 120 sec on 10 each second
+  maxCalories: 3000,
+  minCalories: 0, // when we hit 0 we add + 1 stack to hunger
+  hungerStack: 0,
+  speedPenaltyLevel: 1, // for example if it is 1.5 - it means timer goes 1.5 slower
   exploreRate: {
     [BASIC]: 80,
     [COMMON]: 20,
