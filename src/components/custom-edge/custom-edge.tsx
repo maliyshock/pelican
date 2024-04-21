@@ -5,6 +5,7 @@ import "./custom-edge.css";
 import { Actions } from "~/components/custom-edge/actions.tsx";
 import { useCallback } from "react";
 import { useGetActionsList } from "~/hooks/use-get-actions-list.ts";
+import { Button } from "antd";
 
 type CustomEdgeProps = {
   id: string;
@@ -36,9 +37,7 @@ export default function CustomEdge(props: CustomEdgeProps) {
       <EdgeLabelRenderer>
         <div className="edge-actions" style={{ transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)` }}>
           {actionsList && actionsList.length > 0 && <Actions actionsList={actionsList} source={source} target={target} />}
-          <button className="button" onClick={handleClose}>
-            <CircleX />
-          </button>
+          <Button icon={<CircleX />} size="large" shape="circle" className="button" onClick={handleClose} />
         </div>
       </EdgeLabelRenderer>
     </>

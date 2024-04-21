@@ -6,6 +6,7 @@ import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "~/store";
 import { NodeProps, useReactFlow } from "reactflow";
+import { changeNodeValueBy } from "~/utils/change-node-value-by.ts";
 
 export function useGetActionCallback(nodeSpecificAction: string | undefined) {
   const { addNodes, setNodes } = useReactFlow();
@@ -20,27 +21,8 @@ export function useGetActionCallback(nodeSpecificAction: string | undefined) {
       if (randomItem) {
         const newNode = createNode({ center: { x: targetNode.xPos, y: targetNode.yPos }, data: randomItem });
 
-        if (nodeSpecificAction === "harvest") {
-          setNodes((nodes: GameNode[]) =>
-            nodes.reduce((acc, node) => {
-              if (node.id === targetNode.id) {
-                const resultHealth = node["data"]["health"]! - 1;
-                if (resultHealth > 0) {
-                  acc.push({
-                    ...node,
-                    data: {
-                      // harvest should be only for resource deposits, they must have health
-                      ...node["data"],
-                      health: resultHealth,
-                    },
-                  });
-                }
-              } else {
-                acc.push(node);
-              }
-              return acc;
-            }, [] as GameNode[]),
-          );
+        if (nodeSpecificAction === "harvest" || nodeSpecificAction === "explore") {
+          setNodes((nodes: GameNode[]) => changeNodeValueBy({ nodes, id: targetNode.id, key: "health", value: -1 }));
         }
         addNodes(newNode);
         dispatch(add([newNode]));

@@ -16,3 +16,7 @@ export const PLANK = "plank";
 export const STONE = "stone";
 export const PIECE_OF_STONE = "piece-of-stone";
 export const POOP = "poop";
+
+// creatures
+export const PELICAN = "pelican";
+export const FOX = "fox";

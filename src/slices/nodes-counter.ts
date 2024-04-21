@@ -5,7 +5,7 @@ import { groupNodesByKey } from "~/utils/group-nodes-by-key.ts";
 
 // this slice does not regulate state of react flow, it is an utility to track some useful data
 export const nodesCounterSlice = createSlice({
-  name: "nodes",
+  name: "nodesCounter",
   initialState: groupNodesByKey({ nodes: INIT_NODES, initAcc: {} }),
   reducers: {
     add: (state, action: PayloadAction<GameNode[]>) => {

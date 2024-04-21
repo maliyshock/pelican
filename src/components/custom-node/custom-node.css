@@ -8,6 +8,7 @@
 .node__inner {
     border-radius: 8px;
     width: 240px;
+    min-height: 100px;
     overflow: hidden;
     background-color: white;
 }
@@ -90,7 +91,7 @@
     font-weight: bold;
     color: var(--gray);
     box-shadow: 0 0 0 2px white;
-    z-index: 1;
+    z-index: 2;
 }
 
 .node__value {
@@ -109,6 +110,22 @@
     top: 100%;
     transform: translate(40%, -60%);
     background-color: var(--lasagna);
+}
+
+.node__sale {
+    left: 0;
+    top: 0;
+    transform: translate(-40%, -30%);
+    color: var(--orange);
+    border: none;
+    background-color: var(--yellow);
+    padding: 0;
+}
+
+/*hack to rewrite ant-design styles*/
+.node__sale.node__sale.node__sale:hover {
+    border: none;
+    color: var(--orange);
 }
 
 .node__footer {

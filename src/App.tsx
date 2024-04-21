@@ -1,4 +1,4 @@
-import "./App.css";
+import "./css/app.css";
 import { useCallback, useEffect, useState } from "react";
 import { Background, Controls, ReactFlow, Connection, useNodesState, useEdgesState, addEdge } from "reactflow";
 import "reactflow/dist/style.css";
@@ -10,7 +10,7 @@ import { RootState } from "~/store";
 import CustomEdge from "~/components/custom-edge/custom-edge.tsx";
 import { useEdges } from "~/hooks/use-edges.ts";
 import { INIT_NODES } from "~/constants/constants.tsx";
-import { Clocks } from "~/components/clocks/clocks.tsx";
+import { Header } from "~/components/ui/header/header.tsx";
 
 const nodeTypes = { node: CustomNode };
 
@@ -58,7 +58,7 @@ function App() {
   return (
     <div className="app">
       <div className="node-sandbox">
-        <Clocks />
+        <Header />
         {/*<CenterCameraButton />*/}
         <ReactFlow
           ref={ref}
