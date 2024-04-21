@@ -21,6 +21,12 @@
     padding-right: 1rem;
 }
 
+.header__resources {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
 .header__money {
     color: var(--yellow);
 }
