@@ -7,6 +7,7 @@ const rarityMap = {
   "really-really-rare": 4,
   "legendary": 5,
 };
+
 export function getRarityIndex(rarity: Rarity) {
   return rarityMap[rarity];
 }

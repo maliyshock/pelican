@@ -17,17 +17,21 @@ export function useGetActionCallback(nodeSpecificAction: string | undefined) {
     (targetNode: NodeProps<GameObject>) => () => {
       // TODO: we need to have a fallback in case there is no items in such rarity
       // TODO: this is actual only for harvest and explore, it should generate different types of callbacks based on argument
-      const randomItem = getRandomItem(player.exploreRate, targetNode.data.objectKeyName);
+
+      const probability = nodeSpecificAction === "harvest" ? player.harvestRate : player.exploreRate;
+      const randomItem = getRandomItem(probability, targetNode.data.objectKeyName);
+
       if (randomItem) {
         const newNode = createNode({ center: { x: targetNode.xPos, y: targetNode.yPos }, data: randomItem });
 
         if (nodeSpecificAction === "harvest" || nodeSpecificAction === "explore") {
           setNodes((nodes: GameNode[]) => changeNodeValueBy({ nodes, id: targetNode.id, key: "health", value: -1 }));
         }
+
         addNodes(newNode);
         dispatch(add([newNode]));
       }
     },
-    [addNodes, dispatch, nodeSpecificAction, player.exploreRate, setNodes],
+    [addNodes, dispatch, nodeSpecificAction, player.exploreRate, player.harvestRate, setNodes],
   );
 }

@@ -8,7 +8,7 @@ import { Icon } from "~/components/ui/icons/icon/icon.tsx";
 export function Header() {
   const money = useSelector((state: RootState) => state.money);
   const nodesCounter = useSelector((state: RootState) => state.nodesCounter);
-  const resourceKeys = nodesCounter.resourceDeposit ? Object.keys(nodesCounter.resourceDeposit) : [];
+  const resourceKeys = nodesCounter.resourceDeposit ? Object.keys(nodesCounter.resourceDeposit).sort() : [];
 
   return (
     <header className="header">

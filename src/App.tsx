@@ -1,6 +1,6 @@
 import "./css/app.css";
 import { useCallback, useEffect, useState } from "react";
-import { Background, Controls, ReactFlow, Connection, useNodesState, useEdgesState, addEdge } from "reactflow";
+import { Background, Connection, Controls, ReactFlow, addEdge, useEdgesState, useNodesState } from "reactflow";
 import "reactflow/dist/style.css";
 import CustomNode from "~/components/custom-node/custom-node.tsx";
 import { setScreenSize } from "./slices/screen-size.ts";
@@ -9,7 +9,7 @@ import { useCenterCamera } from "~/hooks/use-center-camera.ts";
 import { RootState } from "~/store";
 import CustomEdge from "~/components/custom-edge/custom-edge.tsx";
 import { useEdges } from "~/hooks/use-edges.ts";
-import { INIT_NODES } from "~/constants/constants.tsx";
+import { INIT_NODES } from "~/constants/constants.ts";
 import { Header } from "~/components/ui/header/header.tsx";
 
 const nodeTypes = { node: CustomNode };
@@ -39,6 +39,7 @@ function App() {
     (node: HTMLDivElement | null) => {
       if (node) {
         const screenSize = node.getBoundingClientRect();
+
         if (screenSize?.width && screenSize?.height) {
           dispatch(setScreenSize({ width: screenSize.width, height: screenSize.height }));
         }
@@ -50,6 +51,7 @@ function App() {
   useEffect(() => {
     if (!cameraIsCentered) {
       const player = nodes.find(node => node.id === "player")!;
+
       centerCamera(player.position.x, player.position.y, screenSize);
       setCameraIsCentered(true);
     }
@@ -62,17 +64,17 @@ function App() {
         {/*<CenterCameraButton />*/}
         <ReactFlow
           ref={ref}
+          edges={edges}
+          edgeTypes={edgeTypes}
           isValidConnection={isValidConnection}
           nodes={nodes}
           nodeTypes={nodeTypes}
-          edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
           onConnect={onConnect}
+          onEdgesChange={onEdgesChange}
           onEdgeUpdate={onEdgeUpdate}
-          onEdgeUpdateStart={onEdgeUpdateStart}
           onEdgeUpdateEnd={onEdgeUpdateEnd}
-          edgeTypes={edgeTypes}
+          onEdgeUpdateStart={onEdgeUpdateStart}
+          onNodesChange={onNodesChange}
         >
           <Background />
           <Controls />

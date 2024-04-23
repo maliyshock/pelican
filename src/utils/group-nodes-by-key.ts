@@ -16,8 +16,10 @@ export function groupNodesByKey({ nodes, initAcc }: GroupNodesByKey): Collection
     return node.data.objectType.reduce((acc, type) => {
       const keyName = node.data.objectKeyName;
       const objType = acc[type];
+
       if (objType !== undefined) {
         const resource = objType[keyName];
+
         if (resource) {
           acc[type]![keyName]!++;
         } else {
@@ -26,6 +28,7 @@ export function groupNodesByKey({ nodes, initAcc }: GroupNodesByKey): Collection
       } else {
         acc[type] = { [keyName]: 1 };
       }
+
       return acc;
     }, accum);
   }, initAcc);
