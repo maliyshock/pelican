@@ -1,11 +1,12 @@
 import { groupNodesByKey } from "~/utils/group-nodes-by-key.ts";
 import { FOOD, POOP, RESOURCE, STONE, WOOD } from "~/constants/dictionary.ts";
+import { GameNode } from "~/types";
 
 describe("groupNodesByKey with Resource Deposits and Resources", () => {
   const initAcc = {};
 
   test("aggregates nodes based on Resource Deposit types and Resource key names", () => {
-    const nodes = [
+    const nodes: GameNode[] = [
       {
         id: "poop_id_1",
         position: {
