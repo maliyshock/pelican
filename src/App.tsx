@@ -47,7 +47,6 @@ function App() {
 
   const handleOnNodesChange = useCallback(
     (nodeChanges: NodeChange[]) => {
-      // console.log("nodeChanges", nodeChanges);
       const nodes = nodeChanges.reduce(
         (acc: { toAdd: GameNode[]; toRemove: GameNode[] }, change) => {
           if (change.type === "add") {

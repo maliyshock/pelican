@@ -12,7 +12,6 @@ interface GroupNodesByKey {
   step?: number;
 }
 
-// TODO: refactor this ![]!
 export function groupNodesByKey({ nodes, initAcc, step = 1 }: GroupNodesByKey): Collection {
   return nodes.reduce((accum, node) => {
     return node.data.objectType.reduce((acc, type) => {
