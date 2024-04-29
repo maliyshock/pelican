@@ -1,4 +1,4 @@
-import { Handle, Position, NodeProps, useUpdateNodeInternals, useReactFlow } from "reactflow";
+import { Handle, NodeProps, Position, ReactFlowState, useReactFlow, useStore, useUpdateNodeInternals } from "reactflow";
 import "./custom-node.css";
 import { GameObject } from "~/types";
 import { useCallback, useEffect } from "react";
@@ -9,16 +9,24 @@ import { Timer } from "~/components/timer/timer.tsx";
 import { Icon } from "~/components/ui/icons/icon/icon.tsx";
 import { Coin } from "~/components/ui/icons/coin.tsx";
 import { Button } from "antd";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addMoney } from "~/slices/money.ts";
+import { RootState } from "~/store";
+
+const connectionNodeIdSelector = (state: ReactFlowState) => state.connectionNodeId;
 
 export default function CustomNode(props: NodeProps<GameObject>) {
   const { id, data, isConnectable, dragging } = props;
   const { setNodes } = useReactFlow();
+  const connectionNodeId = useStore(connectionNodeIdSelector);
+  const isCmd = useSelector((state: RootState) => state.cmd);
   const dispatch = useDispatch();
   const updateNodeInternals = useUpdateNodeInternals();
   const { callback, timer, actionName } = useGetAction({ node: props });
   const isTimer = callback && timer;
+  const isConnecting = !!connectionNodeId;
+  //TODO validation?
+  const isTarget = connectionNodeId && connectionNodeId !== id;
 
   const handleSell = useCallback(() => {
     if (data.price && data.price > 0) {
@@ -29,29 +37,29 @@ export default function CustomNode(props: NodeProps<GameObject>) {
 
   useEffect(() => {
     updateNodeInternals(id);
-  }, [id, updateNodeInternals]);
+  }, [id, isTarget, updateNodeInternals, isConnecting]);
 
   return (
     <motion.div className={`node-wrapper ${dragging ? "dragging" : ""} ${data.grabbable ? "grabbable" : ""}`} whileHover={{ scale: 1.1 }}>
       <motion.div
-        className="node__inner"
+        className={`node__inner ${isCmd ? "cmd" : ""}`}
         initial={{ boxShadow: "0 0px 12px rgba(0, 0, 0, 0.06)" }}
         whileHover={{ boxShadow: "0 16px 12px rgba(0, 0, 0, 0.03)", outline: "4px solid var(--blue)" }}
       >
         {data.price && (
-          <Button onClick={handleSell} shape="circle" className="node__value-container node__sale">
-            <Icon size="fill" valueOnIcon icon={<Coin />} value={data.price} />
+          <Button className="node__value-container node__sale" shape="circle" onClick={handleSell}>
+            <Icon icon={<Coin />} size="fill" value={data.price} valueOnIcon />
           </Button>
         )}
-        {isTimer && <Timer time={timer} callback={callback} label={actionName} />}
+        {isTimer && <Timer callback={callback} label={actionName} time={timer} />}
         {data.name && (
           <header className="node__header">
             <h3>{data.name}</h3>
           </header>
         )}
         {data.img && (
-          <div className="node__body" style={{ backgroundColor: data.color }}>
-            <img className="img" alt={data.img.alt} src={data.img.src} />
+          <div className="node__body">
+            <img alt={data.img.alt} className="img" src={data.img.src} />
           </div>
         )}
         {data.dmg && (
@@ -66,31 +74,49 @@ export default function CustomNode(props: NodeProps<GameObject>) {
         )}
       </motion.div>
 
+      {isTarget && (
+        <Handle
+          key="catcher"
+          className={`handle-overlay handle-reset ${isCmd ? "" : "transparent"} ${isTarget ? "catcher" : ""}`}
+          id="catcher"
+          position={Position.Left}
+          type="target"
+        />
+      )}
+
+      <Handle
+        key="source-catcher"
+        className={`handle-overlay handle-reset ${isCmd ? "" : "transparent"}`}
+        id="source-catcher"
+        position={Position.Left}
+        type="source"
+      />
+
       <div className="node__connectors node__outputs">
         {data.outputs?.map((_output, index) => (
           <Handle
-            className="handle"
-            type="source"
-            position={Position.Right}
-            isConnectable={isConnectable}
             key={`handle-output-${index}`}
+            className="handle handle-reset"
             id={`handle-output-${index}`}
+            isConnectable={isConnectable}
+            position={Position.Right}
+            type="source"
           >
-            <ArrowRightFromLine strokeWidth={3} width="100%" height="100%" />
+            <ArrowRightFromLine height="100%" strokeWidth={3} width="100%" />
           </Handle>
         ))}
       </div>
       <div className="node__connectors node__inputs">
         {data.inputs?.map((_input, index) => (
           <Handle
-            className="handle input"
-            type="target"
-            position={Position.Left}
-            isConnectable={isConnectable}
             key={`handle-input-${index}`}
+            className="handle input handle-reset"
             id={`handle-input-${index}`}
+            isConnectable={isConnectable}
+            position={Position.Left}
+            type="target"
           >
-            <ArrowRightToLine strokeWidth={3} width="100%" height="100%" />
+            <ArrowRightToLine height="100%" strokeWidth={3} width="100%" />
           </Handle>
         ))}
       </div>

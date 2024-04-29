@@ -9,9 +9,12 @@ export const nodesCounterSlice = createSlice({
   initialState: groupNodesByKey({ nodes: INIT_NODES, initAcc: {} }),
   reducers: {
     add: (state, action: PayloadAction<GameNode[]>) => {
-      state = groupNodesByKey({ nodes: action.payload, initAcc: state });
+      return groupNodesByKey({ nodes: action.payload, initAcc: state });
+    },
+    remove: (state, action: PayloadAction<GameNode[]>) => {
+      return groupNodesByKey({ nodes: action.payload, initAcc: state, step: -1 });
     },
   },
 });
 
-export const { add } = nodesCounterSlice.actions;
+export const { add, remove } = nodesCounterSlice.actions;

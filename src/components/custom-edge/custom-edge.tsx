@@ -1,4 +1,4 @@
-import { BaseEdge, EdgeLabelRenderer, getSimpleBezierPath, Position, useReactFlow } from "reactflow";
+import { BaseEdge, EdgeLabelRenderer, Position, getSimpleBezierPath, useReactFlow } from "reactflow";
 import { CircleX } from "lucide-react";
 import { Action } from "~/types";
 import "./custom-edge.css";
@@ -37,7 +37,7 @@ export default function CustomEdge(props: CustomEdgeProps) {
       <EdgeLabelRenderer>
         <div className="edge-actions" style={{ transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)` }}>
           {actionsList && actionsList.length > 0 && <Actions actionsList={actionsList} source={source} target={target} />}
-          <Button icon={<CircleX />} size="large" shape="circle" className="button" onClick={handleClose} />
+          <Button className="button" icon={<CircleX />} shape="circle" size="large" onClick={handleClose} />
         </div>
       </EdgeLabelRenderer>
     </>
