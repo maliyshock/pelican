@@ -1,5 +1,5 @@
 import { GameObject } from "~/types";
-import { BASIC, COMMON, PIECE_OF_STONE, PLANK, POOP, STONE, TREE, WOOD } from "~/constants/dictionary.ts";
+import { BASIC, COMMON, PLANK, POOP, STONE, TREE, WOOD } from "~/constants/dictionary.ts";
 
 export const TREE_OBJECT: GameObject = {
   inputs: [{ id: "input", name: "input", type: "input" }],
@@ -62,7 +62,7 @@ export const PIECE_OF_STONE_OBJECT: GameObject = {
   root: "stone",
   quantity: 1,
   objectType: ["resource"],
-  objectKeyName: PIECE_OF_STONE,
+  objectKeyName: STONE,
   grabbable: true,
   img: { src: "/assets/stone-piece.jpg", alt: "stone" },
   rarity: BASIC,

@@ -1,7 +1,6 @@
 import { getRandomItem } from "~/utils/get-random-item.ts";
 import { createNode } from "~/utils/create-node.ts";
 import { GameNode, GameObject } from "~/types";
-import { add } from "~/slices/nodes-counter.ts";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "~/store";
@@ -29,7 +28,6 @@ export function useGetActionCallback(nodeSpecificAction: string | undefined) {
         }
 
         addNodes(newNode);
-        dispatch(add([newNode]));
       }
     },
     [addNodes, dispatch, nodeSpecificAction, player.exploreRate, player.harvestRate, setNodes],

@@ -9,24 +9,18 @@ type Collection = {
 interface GroupNodesByKey {
   nodes: GameNode[];
   initAcc: Collection;
+  step?: number;
 }
 
-export function groupNodesByKey({ nodes, initAcc }: GroupNodesByKey): Collection {
+export function groupNodesByKey({ nodes, initAcc, step = 1 }: GroupNodesByKey): Collection {
   return nodes.reduce((accum, node) => {
     return node.data.objectType.reduce((acc, type) => {
       const keyName = node.data.objectKeyName;
-      const objType = acc[type];
 
-      if (objType !== undefined) {
-        const resource = objType[keyName];
-
-        if (resource) {
-          acc[type]![keyName]!++;
-        } else {
-          acc[type]![keyName] = 1;
-        }
-      } else {
-        acc[type] = { [keyName]: 1 };
+      if (!acc[type]) {
+        acc[type] = step > 0 ? { [keyName]: step } : undefined;
+      } else if (acc[type]) {
+        acc[type]![keyName] = acc[type]![keyName] ? Math.max(0, acc[type]![keyName]! + step) : step;
       }
 
       return acc;
