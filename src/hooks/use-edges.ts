@@ -10,6 +10,12 @@ export function useEdges() {
   const isValidConnection = useCallback(
     (connection: Connection) => {
       // TODO: add validation of handles here
+      // validation rules:
+      // * можно соединять только то что описано как возможное для соединения
+      // * как вариант, описать возможные типы соединений и проверять типы
+      // * второй уровень валидации проверять тип input и output, если они указаны
+      // * ну и настроить катчер чтобы мы смотрели все вышеперечисленное и выбирали подходящее
+
       // output handle type of source should be === input handle type
       const target = nodes.find(node => node.id === connection.target);
       const hasCycle = (node: Node, visited = new Set()) => {

@@ -55,7 +55,7 @@ export interface GameNode extends ReactFlowNode {
 type Socket = {
   id: string;
   name: string;
-  type: "input" | "output";
+  type?: Resource; // type of material/resource in output (for machines)
 };
 
 export type GameObject = {
