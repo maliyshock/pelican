@@ -1,5 +1,5 @@
 import { useCallback, useRef } from "react";
-import { Connection, Edge, getOutgoers, Node, updateEdge, useReactFlow } from "reactflow";
+import { Connection, Edge, Node, getOutgoers, updateEdge, useReactFlow } from "reactflow";
 
 export function useEdges() {
   const { getEdges, getNodes, setEdges } = useReactFlow();
@@ -24,6 +24,7 @@ export function useEdges() {
       };
 
       if (target?.id === connection.source) return false;
+
       return !!target && !hasCycle(target);
     },
     [nodes, edges],

@@ -1,8 +1,8 @@
 import { GameNode } from "~/types";
-import { FOX, PELICAN } from "~/constants/dictionary.ts";
+import { CHARACTER, FOX, PELICAN, PLAYER } from "~/constants/dictionary.ts";
 
 export const PELICAN_OBJECT: GameNode = {
-  id: "player",
+  id: PLAYER,
   data: {
     inputs: [{ id: "player_input", name: "input", type: "input" }],
     outputs: [{ id: "player_output", name: "output", type: "output" }],
@@ -10,8 +10,7 @@ export const PELICAN_OBJECT: GameNode = {
     dmg: 1,
     health: 10,
     objectKeyName: PELICAN,
-    objectType: ["player"],
-    grabbable: true,
+    objectType: [PLAYER],
   },
   position: { x: 0, y: 0 },
   type: "node",
@@ -19,6 +18,7 @@ export const PELICAN_OBJECT: GameNode = {
 
 export const FOX_OBJECT: GameNode = {
   id: "fox",
+  dragHandle: `.this .handler .should .never .exist .for .character .type ._${Date.now()}`,
   data: {
     inputs: [{ id: "input", name: "input", type: "input" }],
     outputs: [{ id: "output", name: "output", type: "output" }],
@@ -26,8 +26,7 @@ export const FOX_OBJECT: GameNode = {
     dmg: 15,
     health: 35,
     objectKeyName: FOX,
-    objectType: ["creature"],
-    grabbable: true,
+    objectType: [CHARACTER],
     name: "Fox",
   },
   position: { x: 300, y: 300 },

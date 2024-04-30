@@ -9,7 +9,6 @@ export const FOREST_OBJECT: GameNode = {
     objectType: ["region"],
     objectKeyName: FOREST,
     img: { src: "/assets/forest.jpg", alt: FOREST },
-    grabbable: true,
     health: 3,
   },
   position: { x: 100, y: 100 },
