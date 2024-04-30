@@ -62,7 +62,6 @@ export type GameObject = {
   objectType: ObjectType[];
   objectKeyName: ObjectKeyName;
   price?: number;
-  grabbable?: boolean;
   name?: string;
   img?: {
     src: string;

@@ -12,6 +12,7 @@ import { Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { addMoney } from "~/slices/money.ts";
 import { RootState } from "~/store";
+import { CHARACTER } from "~/constants/dictionary.ts";
 
 const connectionNodeIdSelector = (state: ReactFlowState) => state.connectionNodeId;
 
@@ -27,6 +28,7 @@ export default function CustomNode(props: NodeProps<GameObject>) {
   const isConnecting = !!connectionNodeId;
   //TODO validation?
   const isTarget = connectionNodeId && connectionNodeId !== id;
+  const isCharacter = data.objectType.includes(CHARACTER);
 
   const handleSell = useCallback(() => {
     if (data.price && data.price > 0) {
@@ -40,9 +42,9 @@ export default function CustomNode(props: NodeProps<GameObject>) {
   }, [id, isTarget, updateNodeInternals, isConnecting]);
 
   return (
-    <motion.div className={`node-wrapper ${dragging ? "dragging" : ""} ${data.grabbable ? "grabbable" : ""}`} whileHover={{ scale: 1.1 }}>
+    <motion.div className={`node-wrapper ${dragging ? "dragging" : ""} ${!isCharacter ? "grabbable" : ""}`} whileHover={{ scale: 1.1 }}>
       <motion.div
-        className={`node__inner ${isCmd ? "cmd" : ""}`}
+        className={`node__inner ${isCmd && !isCharacter ? "cmd" : ""}`}
         initial={{ boxShadow: "0 0px 12px rgba(0, 0, 0, 0.06)" }}
         whileHover={{ boxShadow: "0 16px 12px rgba(0, 0, 0, 0.03)", outline: "4px solid var(--blue)" }}
       >
@@ -92,20 +94,6 @@ export default function CustomNode(props: NodeProps<GameObject>) {
         type="source"
       />
 
-      <div className="node__connectors node__outputs">
-        {data.outputs?.map((_output, index) => (
-          <Handle
-            key={`handle-output-${index}`}
-            className="handle handle-reset"
-            id={`handle-output-${index}`}
-            isConnectable={isConnectable}
-            position={Position.Right}
-            type="source"
-          >
-            <ArrowRightFromLine height="100%" strokeWidth={3} width="100%" />
-          </Handle>
-        ))}
-      </div>
       <div className="node__connectors node__inputs">
         {data.inputs?.map((_input, index) => (
           <Handle
@@ -117,6 +105,22 @@ export default function CustomNode(props: NodeProps<GameObject>) {
             type="target"
           >
             <ArrowRightToLine height="100%" strokeWidth={3} width="100%" />
+          </Handle>
+        ))}
+      </div>
+
+      <div className="node__connectors node__outputs">
+        {data.outputs?.map((_output, index) => (
+          <Handle
+            key={`handle-output-${index}`}
+            className="handle handle-reset"
+            id={`handle-output-${index}`}
+            isConnectable={isConnectable && !isCharacter}
+            isConnectableStart={!isCharacter}
+            position={Position.Right}
+            type="source"
+          >
+            <ArrowRightFromLine height="100%" strokeWidth={3} width="100%" />
           </Handle>
         ))}
       </div>
