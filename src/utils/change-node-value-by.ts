@@ -1,34 +1,27 @@
-import { GameNode, GameObject } from "~/types";
+import { GameNode } from "~/types";
 
 interface ChangeValueBy {
   nodes: GameNode[];
   id: string;
-  key: keyof GameObject;
+  key: "price" | "dmg" | "health" | "quantity";
   value: number;
 }
 
 // supports only numbers for now
 export function changeNodeValueBy({ nodes, id, key, value }: ChangeValueBy) {
-  return nodes.reduce((acc, node) => {
-    const isKey = node["data"][key] as number;
+  return nodes.map(node => {
+    const dataValue = node.data[key];
 
-    if (node.id === id && isKey) {
-      const result = isKey + value;
-
-      if (result > 0) {
-        acc.push({
-          ...node,
-          data: {
-            // harvest should be only for resource deposits, they must have health
-            ...node["data"],
-            [key]: result,
-          },
-        });
-      }
-    } else {
-      acc.push(node);
+    if (node.id === id && typeof dataValue === "number") {
+      return {
+        ...node,
+        data: {
+          ...node.data,
+          [key]: Math.max(0, dataValue + value),
+        },
+      };
     }
 
-    return acc;
-  }, [] as GameNode[]);
+    return node;
+  });
 }

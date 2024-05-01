@@ -14,8 +14,8 @@ describe("groupNodesByKey with Resource Deposits and Resources", () => {
           y: 0,
         },
         data: {
-          objectType: [FOOD, RESOURCE],
-          objectKeyName: POOP,
+          roles: [FOOD, RESOURCE],
+          type: POOP,
         },
       },
       {
@@ -25,8 +25,8 @@ describe("groupNodesByKey with Resource Deposits and Resources", () => {
           y: 0,
         },
         data: {
-          objectType: [RESOURCE],
-          objectKeyName: WOOD,
+          roles: [RESOURCE],
+          type: WOOD,
         },
       },
       {
@@ -36,8 +36,8 @@ describe("groupNodesByKey with Resource Deposits and Resources", () => {
           y: 0,
         },
         data: {
-          objectType: [RESOURCE],
-          objectKeyName: STONE,
+          roles: [RESOURCE],
+          type: STONE,
         },
       },
     ];

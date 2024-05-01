@@ -2,7 +2,7 @@ import { createNode } from "~/utils/create-node.ts";
 import { getBool } from "~/utils/get-bool.ts";
 import { getRandom } from "~/utils/get-random.ts";
 import { RESOURCE, TREE } from "~/constants/dictionary.ts";
-import { ObjectKeyName, ObjectType } from "~/types";
+import { EntityType, ObjectType } from "~/types";
 
 jest.mock("~/utils/get-random", () => ({
   getRandom: jest.fn(),
@@ -13,9 +13,9 @@ jest.mock("~/utils/get-bool", () => ({
 
 describe("createNode function", () => {
   const mockData = {
-    objectType: [RESOURCE] as ObjectType[],
-    objectKeyName: TREE as ObjectKeyName,
-    name: "Test Object",
+    roles: [RESOURCE] as ObjectType[],
+    type: TREE as EntityType,
+    title: "Test Object",
   };
 
   beforeEach(() => {
@@ -31,7 +31,7 @@ describe("createNode function", () => {
     (getBool as jest.Mock).mockReturnValueOnce(true).mockReturnValueOnce(false); // First call returns true, second call returns false
 
     const node = createNode({
-      center: { x: 100, y: 200 },
+      position: { x: 100, y: 200 },
       data: mockData,
     });
 
@@ -48,7 +48,7 @@ describe("createNode function", () => {
     (getBool as jest.Mock).mockReturnValueOnce(false).mockReturnValueOnce(true); // First call returns false, second call returns true
 
     const node = createNode({
-      center: { x: 300, y: 400 },
+      position: { x: 300, y: 400 },
       data: mockData,
     });
 

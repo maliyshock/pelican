@@ -7,15 +7,18 @@ export function useGetActionsList(source: string, target: string) {
   const { getNode } = useReactFlow();
   const sourceNode = getNode(source) as GameNode;
   const targetNode = getNode(target) as GameNode;
+
   return useMemo(() => {
     let actions: Action[] = [];
 
     // TODO: this is heavy. Any other data structure or Optimisation?
-    sourceNode.data.objectType.forEach(actor => {
-      targetNode.data.objectType.forEach(target => {
+    sourceNode.data.roles.forEach(actor => {
+      targetNode.data.roles.forEach(target => {
         const firstPlace = ACTIONS_DICTIONARY[actor];
+
         if (firstPlace !== undefined) {
           const secondPlace = firstPlace[target];
+
           if (secondPlace !== undefined) {
             actions = [...actions, ...secondPlace];
           }
@@ -24,5 +27,5 @@ export function useGetActionsList(source: string, target: string) {
     });
 
     return actions;
-  }, [sourceNode.data.objectType, targetNode.data.objectType]);
+  }, [sourceNode.data.roles, targetNode.data.roles]);
 }

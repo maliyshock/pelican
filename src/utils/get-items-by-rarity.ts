@@ -1,8 +1,8 @@
 import { RESOURCE_NODES } from "~/constants/resource-recepies.ts";
-import { ObjectKeyName, Rarity } from "~/types";
+import { EntityType, Rarity } from "~/types";
 import { getRarityIndex } from "~/utils/get-rarity-index.ts";
 
-export function getItemsByRarity(rarity: Rarity, place: ObjectKeyName) {
+export function getItemsByRarity(rarity: Rarity, place: EntityType) {
   // in theory it should not return undefined
   const listOfObjects = RESOURCE_NODES[place];
 

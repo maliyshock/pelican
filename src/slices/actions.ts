@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 // one specific action between source and target per time
 export type SetActionPayload = {
@@ -7,6 +7,7 @@ export type SetActionPayload = {
 };
 
 const initialState: { [key: string]: string } = {};
+
 export const actionsSlice = createSlice({
   name: "actions",
   initialState,
