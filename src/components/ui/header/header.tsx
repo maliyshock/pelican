@@ -10,11 +10,14 @@ export function Header() {
   const nodesCounter = useSelector((state: RootState) => state.nodesCounter);
   const resourceKeys = nodesCounter.resourceDeposit ? Object.keys(nodesCounter.resourceDeposit).sort() : [];
 
+  // TODO: resource deposit should includes all of the outcome resources
+  // you have to use root key here
+
   return (
     <header className="header">
       <div className="header__inner wrapper">
         <div className="header__money">
-          <Icon icon={<Coin />} value={money} size="big" />
+          <Icon icon={<Coin />} size="big" value={money} />
         </div>
         <div className="header__clocks">
           <Clocks />

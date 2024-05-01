@@ -1,4 +1,4 @@
-import { BaseEdge, EdgeLabelRenderer, Position, getSimpleBezierPath, useReactFlow } from "reactflow";
+import { BaseEdge, EdgeLabelRenderer, Position, getSimpleBezierPath } from "reactflow";
 import { CircleX } from "lucide-react";
 import { Action } from "~/types";
 import "./custom-edge.css";
@@ -6,6 +6,7 @@ import { Actions } from "~/components/custom-edge/actions.tsx";
 import { useCallback } from "react";
 import { useGetActionsList } from "~/hooks/use-get-actions-list.ts";
 import { Button } from "antd";
+import { useDeleteEdges } from "~/hooks/use-delete-edges.ts";
 
 type CustomEdgeProps = {
   id: string;
@@ -27,9 +28,9 @@ export default function CustomEdge(props: CustomEdgeProps) {
     sourcePosition: Position.Right,
     targetPosition: Position.Left,
   });
-  const { setEdges } = useReactFlow();
+  const deleteEdges = useDeleteEdges();
   const actionsList: Action[] | undefined = useGetActionsList(source, target);
-  const handleClose = useCallback(() => setEdges(edges => edges.filter(edg => edg.id !== id)), [id, setEdges]);
+  const handleClose = useCallback(() => deleteEdges([id]), [deleteEdges, id]);
 
   return (
     <>

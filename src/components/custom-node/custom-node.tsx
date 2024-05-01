@@ -1,6 +1,6 @@
-import { Handle, NodeProps, Position, ReactFlowState, useReactFlow, useStore, useUpdateNodeInternals } from "reactflow";
+import { Handle, NodeProps, Position, ReactFlowState, useStore, useUpdateNodeInternals } from "reactflow";
 import "./custom-node.css";
-import { GameObject } from "~/types";
+import { GameNodeData } from "~/types";
 import { useCallback, useEffect } from "react";
 import { ArrowRightFromLine, ArrowRightToLine } from "lucide-react";
 import { motion } from "framer-motion";
@@ -13,12 +13,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { addMoney } from "~/slices/money.ts";
 import { RootState } from "~/store";
 import { CHARACTER } from "~/constants/dictionary.ts";
+import { useDeleteNodes } from "~/hooks/use-delete-nodes.ts";
 
 const connectionNodeIdSelector = (state: ReactFlowState) => state.connectionNodeId;
 
-export default function CustomNode(props: NodeProps<GameObject>) {
+export default function CustomNode(props: NodeProps<GameNodeData>) {
   const { id, data, isConnectable, dragging } = props;
-  const { setNodes } = useReactFlow();
   const connectionNodeId = useStore(connectionNodeIdSelector);
   const isCmd = useSelector((state: RootState) => state.cmd);
   const dispatch = useDispatch();
@@ -28,18 +28,25 @@ export default function CustomNode(props: NodeProps<GameObject>) {
   const isConnecting = !!connectionNodeId;
   //TODO validation?
   const isTarget = connectionNodeId && connectionNodeId !== id;
-  const isCharacter = data.objectType.includes(CHARACTER);
+  const isCharacter = data.roles.includes(CHARACTER);
+  const deleteNodes = useDeleteNodes();
 
   const handleSell = useCallback(() => {
     if (data.price && data.price > 0) {
-      setNodes(nodes => nodes.filter(node => node.id !== id));
+      deleteNodes([id]);
       dispatch(addMoney(data.price));
     }
-  }, [data.price, dispatch, id, setNodes]);
+  }, [data.price, deleteNodes, dispatch, id]);
 
   useEffect(() => {
     updateNodeInternals(id);
   }, [id, isTarget, updateNodeInternals, isConnecting]);
+
+  useEffect(() => {
+    if (data.health === 0) {
+      deleteNodes([id]);
+    }
+  }, [data.health, deleteNodes, id]);
 
   return (
     <motion.div className={`node-wrapper ${dragging ? "dragging" : ""} ${!isCharacter ? "grabbable" : ""}`} whileHover={{ scale: 1.1 }}>
@@ -54,9 +61,9 @@ export default function CustomNode(props: NodeProps<GameObject>) {
           </Button>
         )}
         {isTimer && <Timer callback={callback} label={actionName} time={timer} />}
-        {data.name && (
+        {data.title && (
           <header className="node__header">
-            <h3>{data.name}</h3>
+            <h3>{data.title}</h3>
           </header>
         )}
         {data.img && (

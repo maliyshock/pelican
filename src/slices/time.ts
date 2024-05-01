@@ -7,6 +7,7 @@ const initialState: {
   speed: 1,
   play: true,
 };
+
 export const timeSlice = createSlice({
   name: "time",
   initialState,

@@ -18,7 +18,7 @@ export function Timer({ time, callback, label }: TimerProps) {
   return (
     <div className="timer">
       <div className="timer__label">{label}</div>;
-      <Line key={key} onComplete={onComplete} duration={time} />
+      <Line key={key} duration={time} onComplete={onComplete} />
     </div>
   );
 }

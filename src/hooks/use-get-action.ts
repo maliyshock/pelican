@@ -1,4 +1,4 @@
-import { GameObject } from "~/types";
+import { GameNodeData } from "~/types";
 import { useSelector } from "react-redux";
 import { RootState } from "~/store";
 import { NodeProps } from "reactflow";
@@ -8,7 +8,7 @@ import { useDebounce } from "~/hooks/use-debounce.ts";
 import { useGetActionCallback } from "~/hooks/use-get-action-callback.ts";
 
 interface UseGetAction {
-  node: NodeProps<GameObject>;
+  node: NodeProps<GameNodeData>;
 }
 
 // by knowing source target and action we can create a function and return it

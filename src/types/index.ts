@@ -44,34 +44,39 @@ export type Region = typeof FOREST;
 export type ResourceDeposit = typeof TREE | typeof STONE_DEPOSIT;
 export type Resource = typeof WOOD | typeof PLANK | typeof STONE | typeof POOP;
 export type Creature = typeof PELICAN | typeof FOX;
-export type ObjectKeyName = Region | ResourceDeposit | Resource | ObjectType | Creature;
+export type EntityType = Region | ResourceDeposit | Resource | ObjectType | Creature;
 
 type ReactFlowNode = Omit<Node, "data">;
 
 export interface GameNode extends ReactFlowNode {
-  data: GameObject;
+  data: GameNodeData;
 }
 
-type Socket = {
+export type Socket = {
   id: string;
   name: string;
   type?: Resource; // type of material/resource in output (for machines)
 };
 
 export type GameObject = {
-  objectType: ObjectType[];
-  objectKeyName: ObjectKeyName;
+  roles: ObjectType[];
+  type: EntityType;
   price?: number;
-  name?: string;
-  img?: {
-    src: string;
-    alt: string;
-  };
-  root?: ObjectKeyName;
-  inputs?: Socket[];
-  outputs?: Socket[];
+  title?: string;
+  root?: EntityType;
+  inputTypes?: Resource[];
+  outputTypes?: Resource[];
   dmg?: number;
   health?: number;
   quantity?: number;
   rarity?: Rarity;
 };
+
+export interface GameNodeData extends Omit<GameObject, "inputTypes | outputTypes"> {
+  img?: {
+    src: string;
+    alt: string;
+  };
+  inputs?: Socket[];
+  outputs?: Socket[];
+}

@@ -15,6 +15,7 @@ export function Line({ duration, onComplete }: LineProps) {
 
   useEffect(() => {
     const anDuration = duration / 1000;
+
     animate(scope.current, { x: "0%" }, { ease: "linear", duration: anDuration });
   }, [animate, duration, scope]);
 

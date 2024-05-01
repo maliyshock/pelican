@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Rarity } from "~/types";
 import { BASIC, COMMON, LEGENDARY, RARE, REALLY_RARE, UNIQUE } from "~/constants/dictionary.ts";
 
@@ -34,7 +34,7 @@ const initialState: Player = {
   health: 10,
   damage: 1,
   weapon: null,
-  exploreSpeed: 10000,
+  exploreSpeed: 1000,
   harvestSpeed: 7000,
   attackSpeed: 2000,
   battleRank: 0,

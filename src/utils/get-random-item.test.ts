@@ -17,7 +17,7 @@ describe("Integration Test for getRandomItem", () => {
 
     expect(item).toBeDefined();
     expect(typeof item).toBe("object");
-    expect(item).toHaveProperty("name");
+    expect(item).toHaveProperty("title");
     expect(item).toHaveProperty("rarity");
     expect(["basic", "common", "unique", "rare", "really-really-rare", "legendary"]).toContain(item!.rarity); // Check if the returned item's rarity is valid
   });

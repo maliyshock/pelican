@@ -1,8 +1,8 @@
-import { GameNode, ObjectKeyName, ObjectType } from "~/types";
+import { EntityType, GameNode, ObjectType } from "~/types";
 
 type Collection = {
   [key in ObjectType]?: {
-    [key in ObjectKeyName]?: number;
+    [key in EntityType]?: number;
   };
 };
 
@@ -14,8 +14,8 @@ interface GroupNodesByKey {
 
 export function groupNodesByKey({ nodes, initAcc, step = 1 }: GroupNodesByKey): Collection {
   return nodes.reduce((accum, node) => {
-    return node.data.objectType.reduce((acc, type) => {
-      const keyName = node.data.objectKeyName;
+    return node.data.roles.reduce((acc, type) => {
+      const keyName = node.data.type;
 
       if (!acc[type]) {
         acc[type] = step > 0 ? { [keyName]: step } : undefined;

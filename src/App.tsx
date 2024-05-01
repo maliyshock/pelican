@@ -1,6 +1,6 @@
 import "./css/app.css";
 import { useCallback, useEffect, useState } from "react";
-import { Background, Connection, Controls, NodeChange, ReactFlow, addEdge, useEdgesState, useNodesState, useReactFlow } from "reactflow";
+import { Background, Connection, Controls, NodeChange, ReactFlow, addEdge, useEdgesState, useNodesState } from "reactflow";
 import "reactflow/dist/style.css";
 import CustomNode from "~/components/custom-node/custom-node.tsx";
 import { setScreenSize } from "./slices/screen-size.ts";
@@ -27,7 +27,6 @@ function App() {
   const [nodes, , onNodesChange] = useNodesState(INIT_NODES);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const { isValidConnection, onEdgeUpdate, onEdgeUpdateStart, onEdgeUpdateEnd } = useEdges();
-  const { getNode } = useReactFlow();
   const [cameraIsCentered, setCameraIsCentered] = useState(false);
   const onConnect = useCallback(
     (connection: Connection) =>
@@ -45,38 +44,25 @@ function App() {
 
   useKeyListener();
 
+  const onNodesDelete = useCallback((nodes: GameNode[]) => dispatch(remove(nodes)), [dispatch]);
+
   const handleOnNodesChange = useCallback(
     (nodeChanges: NodeChange[]) => {
-      const nodes = nodeChanges.reduce(
-        (acc: { toAdd: GameNode[]; toRemove: GameNode[] }, change) => {
-          if (change.type === "add") {
-            acc.toAdd.push(change.item);
-          }
+      const nodes = nodeChanges.reduce((acc: GameNode[], change) => {
+        if (change.type === "add") {
+          acc.push(change.item);
+        }
 
-          if (change.type === "remove") {
-            const nodeToRemove = getNode(change.id);
+        return acc;
+      }, []);
 
-            if (nodeToRemove) {
-              acc.toRemove.push(nodeToRemove);
-            }
-          }
-
-          return acc;
-        },
-        { toAdd: [], toRemove: [] },
-      );
-
-      if (nodes.toAdd.length > 0) {
-        dispatch(add(nodes.toAdd));
-      }
-
-      if (nodes.toRemove.length > 0) {
-        dispatch(remove(nodes.toRemove));
+      if (nodes.length > 0) {
+        dispatch(add(nodes));
       }
 
       onNodesChange(nodeChanges);
     },
-    [dispatch, getNode, onNodesChange],
+    [dispatch, onNodesChange],
   );
 
   const ref = useCallback(
@@ -94,10 +80,12 @@ function App() {
 
   useEffect(() => {
     if (!cameraIsCentered) {
-      const player = nodes.find(node => node.id === "player")!;
+      const player = nodes.find(node => node.id.includes("pelican"))!;
 
-      centerCamera(player.position.x, player.position.y, screenSize);
-      setCameraIsCentered(true);
+      if (player) {
+        centerCamera(player.position.x, player.position.y, screenSize);
+        setCameraIsCentered(true);
+      }
     }
   }, [cameraIsCentered, centerCamera, nodes, screenSize]);
 
@@ -119,6 +107,7 @@ function App() {
           onEdgeUpdateEnd={onEdgeUpdateEnd}
           onEdgeUpdateStart={onEdgeUpdateStart}
           onNodesChange={handleOnNodesChange}
+          onNodesDelete={onNodesDelete}
         >
           <Background />
           <Controls />
