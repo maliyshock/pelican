@@ -23,13 +23,7 @@ export function useGetActionCallback(nodeSpecificAction: string | undefined) {
         const newNode = createNode({ position: { x: targetNode.xPos, y: targetNode.yPos, strict: false }, data: randomItem });
 
         if (nodeSpecificAction === "harvest" || nodeSpecificAction === "explore") {
-          setNodes((nodes: GameNode[]) => {
-            const result = changeNodeValueBy({ nodes, id: targetNode.id, key: "health", value: -1 });
-
-            console.log("result", result);
-
-            return result;
-          });
+          setNodes((nodes: GameNode[]) => changeNodeValueBy({ nodes, ids: [targetNode.id], key: "health", value: -1 }));
         }
 
         addNodes(newNode);

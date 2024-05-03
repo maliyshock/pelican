@@ -2,7 +2,7 @@ import { createNode } from "~/utils/create-node.ts";
 import { getBool } from "~/utils/get-bool.ts";
 import { getRandom } from "~/utils/get-random.ts";
 import { RESOURCE, TREE } from "~/constants/dictionary.ts";
-import { EntityType, ObjectType } from "~/types";
+import { EntityType, Role } from "~/types";
 
 jest.mock("~/utils/get-random", () => ({
   getRandom: jest.fn(),
@@ -13,7 +13,7 @@ jest.mock("~/utils/get-bool", () => ({
 
 describe("createNode function", () => {
   const mockData = {
-    roles: [RESOURCE] as ObjectType[],
+    roles: [RESOURCE] as Role[],
     type: TREE as EntityType,
     title: "Test Object",
   };

@@ -1,7 +1,7 @@
-import { EntityType, GameNode, ObjectType } from "~/types";
+import { EntityType, GameNode, Role } from "~/types";
 
 type Collection = {
-  [key in ObjectType]?: {
+  [key in Role]?: {
     [key in EntityType]?: number;
   };
 };
@@ -14,13 +14,14 @@ interface GroupNodesByKey {
 
 export function groupNodesByKey({ nodes, initAcc, step = 1 }: GroupNodesByKey): Collection {
   return nodes.reduce((accum, node) => {
-    return node.data.roles.reduce((acc, type) => {
-      const keyName = node.data.type;
+    return node.data.roles.reduce((acc, role) => {
+      const { type } = node.data;
 
-      if (!acc[type]) {
-        acc[type] = step > 0 ? { [keyName]: step } : undefined;
-      } else if (acc[type]) {
-        acc[type]![keyName] = acc[type]![keyName] ? Math.max(0, acc[type]![keyName]! + step) : step;
+      if (!acc[role]) {
+        acc[role] = step > 0 ? { [type]: step } : undefined;
+      } else if (acc[role]) {
+        // @ts-ignore i have no idea why it throw an error here, i did check on undefined above
+        acc[role][type] = acc[role][type] ? Math.max(0, acc[role][type] + step) : step;
       }
 
       return acc;

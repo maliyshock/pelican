@@ -22,10 +22,6 @@ export function createNode({ position: { x, y, strict = true }, data, draggable 
     { id: `${data.type}_output`, name: "output" },
   ];
 
-  if (data.type === "forest") {
-    console.log("outputTypes", data.outputTypes);
-  }
-
   return {
     id: `${data.type}_${Date.now()}`,
     data: {

@@ -28,7 +28,7 @@ import {
 } from "~/constants/dictionary.ts";
 
 export type Action = "collect" | "explore" | "harvest" | "eat" | "attack" | "talk" | "combine";
-export type ObjectType =
+export type Role =
   | typeof PLAYER
   | typeof CHARACTER
   | typeof ENEMY
@@ -44,7 +44,7 @@ export type Region = typeof FOREST;
 export type ResourceDeposit = typeof TREE | typeof STONE_DEPOSIT;
 export type Resource = typeof WOOD | typeof PLANK | typeof STONE | typeof POOP;
 export type Creature = typeof PELICAN | typeof FOX;
-export type EntityType = Region | ResourceDeposit | Resource | ObjectType | Creature;
+export type EntityType = Region | ResourceDeposit | Resource | Role | Creature;
 
 type ReactFlowNode = Omit<Node, "data">;
 
@@ -59,7 +59,7 @@ export type Socket = {
 };
 
 export type GameObject = {
-  roles: ObjectType[];
+  roles: Role[];
   type: EntityType;
   price?: number;
   title?: string;
@@ -77,6 +77,7 @@ export interface GameNodeData extends Omit<GameObject, "inputTypes | outputTypes
     src: string;
     alt: string;
   };
+  group?: string;
   inputs?: Socket[];
   outputs?: Socket[];
 }

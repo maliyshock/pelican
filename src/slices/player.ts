@@ -34,8 +34,8 @@ const initialState: Player = {
   health: 10,
   damage: 1,
   weapon: null,
-  exploreSpeed: 1000,
-  harvestSpeed: 7000,
+  exploreSpeed: 1000, //15000
+  harvestSpeed: 1000, // 7000
   attackSpeed: 2000,
   battleRank: 0,
   experience: 0,

@@ -1,7 +1,7 @@
 import { BUILDING, STONE, WOOD } from "~/constants/dictionary.ts";
 import { GameObject } from "~/types";
 
-export const TEST_STRUCTURE_OBJECT: GameObject = {
+export const TEST_STRUCTURE_ENTITY: GameObject = {
   inputTypes: [WOOD],
   outputTypes: [STONE],
   dmg: 1,

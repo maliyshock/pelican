@@ -1,7 +1,7 @@
 import { CHARACTER, FOX, PELICAN, PLAYER } from "~/constants/dictionary.ts";
 import { GameObject } from "~/types";
 
-export const PELICAN_OBJECT: GameObject = {
+export const PELICAN_ENTITY: GameObject = {
   dmg: 1,
   health: 10,
   // name: "George",
@@ -9,7 +9,7 @@ export const PELICAN_OBJECT: GameObject = {
   roles: [PLAYER],
 };
 
-export const FOX_OBJECT: GameObject = {
+export const FOX_ENTITY: GameObject = {
   dmg: 15,
   health: 35,
   title: "Fox",
