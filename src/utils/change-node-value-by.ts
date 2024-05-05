@@ -2,22 +2,23 @@ import { GameNode } from "~/types";
 
 interface ChangeValueBy {
   nodes: GameNode[];
-  id: string;
-  key: "price" | "dmg" | "health" | "quantity";
-  value: number;
+  ids: string[];
+  key: "price" | "dmg" | "health" | "quantity" | "group";
+  value?: number | string;
 }
 
 // supports only numbers for now
-export function changeNodeValueBy({ nodes, id, key, value }: ChangeValueBy) {
+export function changeNodeValueBy({ nodes, ids, key, value }: ChangeValueBy) {
   return nodes.map(node => {
     const dataValue = node.data[key];
+    const isNumber = typeof dataValue === "number" && typeof value === "number";
 
-    if (node.id === id && typeof dataValue === "number") {
+    if (ids.includes(node.id)) {
       return {
         ...node,
         data: {
           ...node.data,
-          [key]: Math.max(0, dataValue + value),
+          [key]: isNumber ? Math.max(0, dataValue + value) : value,
         },
       };
     }

@@ -1,8 +1,9 @@
 import { FOREST } from "~/constants/dictionary.ts";
-import { GameObject } from "~/types";
+import { GameNodeData } from "~/types";
+import { createSocket } from "~/utils/create-socket.ts";
 
-export const FOREST_OBJECT: GameObject = {
-  outputTypes: [], // no output
+export const FOREST_ENTITY: GameNodeData = {
+  inputs: [createSocket()],
   title: "Forest",
   roles: ["region"],
   type: FOREST,

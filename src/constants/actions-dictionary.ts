@@ -1,9 +1,9 @@
-import { Action, ObjectType } from "~/types";
+import { Action, Role } from "~/types";
 
 // declare all possible actions
 export type ActionsDictionary = {
-  [K in ObjectType]?: Partial<{
-    [J in ObjectType]: Action[] | undefined;
+  [K in Role]?: Partial<{
+    [J in Role]: Action[] | undefined;
   }>;
 };
 

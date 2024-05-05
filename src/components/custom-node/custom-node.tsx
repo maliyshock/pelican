@@ -1,8 +1,7 @@
-import { Handle, NodeProps, Position, ReactFlowState, useStore, useUpdateNodeInternals } from "reactflow";
+import { NodeProps, Position, ReactFlowState, useStore, useUpdateNodeInternals } from "reactflow";
 import "./custom-node.css";
 import { GameNodeData } from "~/types";
 import { useCallback, useEffect } from "react";
-import { ArrowRightFromLine, ArrowRightToLine } from "lucide-react";
 import { motion } from "framer-motion";
 import { useGetAction } from "~/hooks/use-get-action.ts";
 import { Timer } from "~/components/timer/timer.tsx";
@@ -11,28 +10,28 @@ import { Coin } from "~/components/ui/icons/coin.tsx";
 import { Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { addMoney } from "~/slices/money.ts";
-import { RootState } from "~/store";
 import { CHARACTER } from "~/constants/dictionary.ts";
 import { useDeleteNodes } from "~/hooks/use-delete-nodes.ts";
+import { Sockets } from "~/components/custom-node/sockets.tsx";
+import { RootState } from "~/store";
 
 const connectionNodeIdSelector = (state: ReactFlowState) => state.connectionNodeId;
 
 export default function CustomNode(props: NodeProps<GameNodeData>) {
   const { id, data, isConnectable, dragging } = props;
   const connectionNodeId = useStore(connectionNodeIdSelector);
-  const isCmd = useSelector((state: RootState) => state.cmd);
   const dispatch = useDispatch();
   const updateNodeInternals = useUpdateNodeInternals();
   const { callback, timer, actionName } = useGetAction({ node: props });
   const isTimer = callback && timer;
   const isConnecting = !!connectionNodeId;
-  //TODO validation?
-  const isTarget = connectionNodeId && connectionNodeId !== id;
+  const isTarget = !!connectionNodeId && connectionNodeId !== id;
   const isCharacter = data.roles.includes(CHARACTER);
   const deleteNodes = useDeleteNodes();
+  const isCmd = useSelector((state: RootState) => state.cmd);
 
   const handleSell = useCallback(() => {
-    if (data.price && data.price > 0) {
+    if (data.price) {
       deleteNodes([id]);
       dispatch(addMoney(data.price));
     }
@@ -83,54 +82,8 @@ export default function CustomNode(props: NodeProps<GameNodeData>) {
         )}
       </motion.div>
 
-      {isTarget && (
-        <Handle
-          key="catcher"
-          className={`handle-overlay handle-reset ${isCmd ? "" : "transparent"} ${isTarget ? "catcher" : ""}`}
-          id="catcher"
-          position={Position.Left}
-          type="target"
-        />
-      )}
-
-      <Handle
-        key="source-catcher"
-        className={`handle-overlay handle-reset ${isCmd ? "" : "transparent"}`}
-        id="source-catcher"
-        position={Position.Left}
-        type="source"
-      />
-
-      <div className="node__connectors node__inputs">
-        {data.inputs?.map((_input, index) => (
-          <Handle
-            key={`handle-input-${index}`}
-            className="handle input handle-reset"
-            id={`handle-input-${index}`}
-            isConnectable={isConnectable}
-            position={Position.Left}
-            type="target"
-          >
-            <ArrowRightToLine height="100%" strokeWidth={3} width="100%" />
-          </Handle>
-        ))}
-      </div>
-
-      <div className="node__connectors node__outputs">
-        {data.outputs?.map((_output, index) => (
-          <Handle
-            key={`handle-output-${index}`}
-            className="handle handle-reset"
-            id={`handle-output-${index}`}
-            isConnectable={isConnectable && !isCharacter}
-            isConnectableStart={!isCharacter}
-            position={Position.Right}
-            type="source"
-          >
-            <ArrowRightFromLine height="100%" strokeWidth={3} width="100%" />
-          </Handle>
-        ))}
-      </div>
+      {data.inputs && <Sockets isConnectable={isConnectable} isTarget={isTarget} position={Position.Left} sockets={data.inputs} type="target" />}
+      {data.outputs && <Sockets isConnectable={isConnectable} isTarget={isTarget} position={Position.Right} sockets={data.outputs} type="source" />}
     </motion.div>
   );
 }
