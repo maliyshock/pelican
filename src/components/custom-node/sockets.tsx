@@ -14,10 +14,11 @@ interface SocketsProps {
 
 export function Sockets({ type, isTarget, sockets, isConnectable, position }: SocketsProps) {
   const isCmd = useSelector((state: RootState) => state.cmd);
+  const isInput = type === "target";
 
   return (
     <>
-      {isTarget && type === "target" && (
+      {isTarget && isInput && (
         <Handle
           key="target-catcher"
           className={`handle-overlay handle-reset ${isCmd ? "" : "transparent"} ${isTarget ? "catcher" : ""}`}
@@ -27,7 +28,7 @@ export function Sockets({ type, isTarget, sockets, isConnectable, position }: So
         />
       )}
 
-      {type === "source" && (
+      {!isInput && (
         <Handle
           key="source-catcher"
           className={`handle-overlay handle-reset ${isCmd ? "" : "transparent"}`}
@@ -37,11 +38,11 @@ export function Sockets({ type, isTarget, sockets, isConnectable, position }: So
         />
       )}
 
-      <div className={`node__connectors ${type === "target" ? "node__inputs" : "node__outputs"}`}>
+      <div className={`node__connectors ${isInput ? "node__inputs" : "node__outputs"}`}>
         {sockets?.map((_input, index) => (
           <Handle
             key={`${type}-${index}`}
-            className="handle input handle-reset"
+            className={`handle ${isInput ? "input" : ""} handle-reset`}
             id={`${type}-${index}`}
             isConnectable={isConnectable}
             position={position}

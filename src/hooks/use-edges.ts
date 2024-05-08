@@ -12,7 +12,12 @@ export function useEdges() {
   const edges = getEdges();
   const edgeUpdateSuccessful = useRef(true);
 
-  const onEdgesDelete = useCallback((_: Edge[]) => {}, []);
+  const onEdgesDelete = useCallback(
+    (edges: Edge[]) => {
+      deleteEdges(edges);
+    },
+    [deleteEdges],
+  );
 
   const isValidConnection = useCallback(
     (connection: Connection) => {
@@ -68,7 +73,7 @@ export function useEdges() {
   const onEdgeUpdateEnd = useCallback(
     (_: MouseEvent | TouchEvent, edge: Edge) => {
       if (!edgeUpdateSuccessful.current) {
-        deleteEdges([edge.id]);
+        deleteEdges([edge]);
       }
 
       edgeUpdateSuccessful.current = true;

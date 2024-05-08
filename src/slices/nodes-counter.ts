@@ -8,6 +8,7 @@ export const nodesCounterSlice = createSlice({
   name: "nodesCounter",
   initialState: groupNodesByKey({ nodes: INIT_NODES, initAcc: {} }),
   reducers: {
+    // TODO: both methods kinda similar, it can be one
     add: (state, action: PayloadAction<GameNode[]>) => {
       return groupNodesByKey({ nodes: action.payload, initAcc: state });
     },

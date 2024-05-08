@@ -58,13 +58,6 @@ export type Socket = {
   // type?: Resource; // type of material/resource in output (for machines)
 };
 
-// export type GameNodeData = {
-//
-//   inputTypes?: Resource[];
-//   outputTypes?: Resource[];
-//
-// };
-
 export interface GameNodeData {
   roles: Role[];
   type: EntityType;

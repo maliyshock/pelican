@@ -4,9 +4,9 @@ import { useCallback } from "react";
 import { GameNode } from "~/types";
 import { createGroup } from "~/slices/groups/groups.ts";
 import { changeNodeValueBy } from "~/utils/change-node-value-by.ts";
-import { extractIds } from "~/utils/extractIds.ts";
+import { extractValue } from "~/utils/extract-value.ts";
 
-export function useUpdateNodes() {
+export function useUpdateOnSplit() {
   const { setNodes } = useReactFlow();
   const dispatch = useDispatch();
 
@@ -16,9 +16,9 @@ export function useUpdateNodes() {
         dispatch(createGroup({ groupName, nodes: nodesToUpdate }));
       }
 
-      setNodes((nodes: GameNode[]) =>
-        changeNodeValueBy({ nodes, ids: extractIds(nodesToUpdate), key: "group", value: nodesToUpdate.length > 1 ? groupName : undefined }),
-      );
+      const ids = extractValue(nodesToUpdate, "id");
+
+      setNodes((nodes: GameNode[]) => changeNodeValueBy({ nodes, ids, key: "group", value: nodesToUpdate.length > 1 ? groupName : undefined }));
     },
     [dispatch, setNodes],
   );

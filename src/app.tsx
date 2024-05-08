@@ -11,8 +11,7 @@ import CustomEdge from "~/components/custom-edge/custom-edge.tsx";
 import { useEdges } from "~/hooks/use-edges.ts";
 import { INIT_NODES } from "~/constants/constants.ts";
 import { Header } from "~/components/ui/header/header.tsx";
-import { add, remove } from "~/slices/nodes-counter.ts";
-import { GameNode } from "~/types";
+import { add } from "~/slices/nodes-counter.ts";
 import { useKeyListener } from "~/hooks/use-key-listener.ts";
 import { getAddedItems } from "~/utils/get-added-items.ts";
 import { useOnConnect } from "~/hooks/use-on-connect.ts";
@@ -27,15 +26,13 @@ function App() {
   const dispatch = useDispatch();
   const screenSize = useSelector((state: RootState) => state.screenSize);
   const [nodes, , onNodesChange] = useNodesState(INIT_NODES);
-  const [edges, , onEdgesChange] = useEdgesState([]); // TODO: put it to useEdges?
+  const [edges, , onEdgesChange] = useEdgesState([]);
   const { isValidConnection, onEdgeUpdate, onEdgeUpdateStart, onEdgeUpdateEnd, onEdgesDelete } = useEdges();
   const [cameraIsCentered, setCameraIsCentered] = useState(false);
   const onConnect = useOnConnect();
   const centerCamera = useCenterCamera();
 
   useKeyListener();
-
-  const onNodesDelete = useCallback((nodes: GameNode[]) => dispatch(remove(nodes)), [dispatch]);
 
   const handleOnNodesChange = useCallback(
     (nodeChanges: NodeChange[]) => {
@@ -93,7 +90,6 @@ function App() {
           onEdgeUpdateEnd={onEdgeUpdateEnd}
           onEdgeUpdateStart={onEdgeUpdateStart}
           onNodesChange={handleOnNodesChange}
-          onNodesDelete={onNodesDelete}
         >
           <Background />
           <Controls />

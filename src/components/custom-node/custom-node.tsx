@@ -1,4 +1,4 @@
-import { NodeProps, Position, ReactFlowState, useStore, useUpdateNodeInternals } from "reactflow";
+import { NodeProps, Position, ReactFlowState, useReactFlow, useStore, useUpdateNodeInternals } from "reactflow";
 import "./custom-node.css";
 import { GameNodeData } from "~/types";
 import { useCallback, useEffect } from "react";
@@ -11,7 +11,6 @@ import { Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { addMoney } from "~/slices/money.ts";
 import { CHARACTER } from "~/constants/dictionary.ts";
-import { useDeleteNodes } from "~/hooks/use-delete-nodes.ts";
 import { Sockets } from "~/components/custom-node/sockets.tsx";
 import { RootState } from "~/store";
 
@@ -19,6 +18,7 @@ const connectionNodeIdSelector = (state: ReactFlowState) => state.connectionNode
 
 export default function CustomNode(props: NodeProps<GameNodeData>) {
   const { id, data, isConnectable, dragging } = props;
+  const { deleteElements } = useReactFlow();
   const connectionNodeId = useStore(connectionNodeIdSelector);
   const dispatch = useDispatch();
   const updateNodeInternals = useUpdateNodeInternals();
@@ -27,15 +27,14 @@ export default function CustomNode(props: NodeProps<GameNodeData>) {
   const isConnecting = !!connectionNodeId;
   const isTarget = !!connectionNodeId && connectionNodeId !== id;
   const isCharacter = data.roles.includes(CHARACTER);
-  const deleteNodes = useDeleteNodes();
   const isCmd = useSelector((state: RootState) => state.cmd);
 
   const handleSell = useCallback(() => {
     if (data.price) {
-      deleteNodes([id]);
+      deleteElements({ nodes: [props] });
       dispatch(addMoney(data.price));
     }
-  }, [data.price, deleteNodes, dispatch, id]);
+  }, [data.price, deleteElements, dispatch, props]);
 
   useEffect(() => {
     updateNodeInternals(id);
@@ -43,9 +42,9 @@ export default function CustomNode(props: NodeProps<GameNodeData>) {
 
   useEffect(() => {
     if (data.health === 0) {
-      deleteNodes([id]);
+      deleteElements({ nodes: [props] });
     }
-  }, [data.health, deleteNodes, id]);
+  }, [data.health, deleteElements, id, props]);
 
   return (
     <motion.div className={`node-wrapper ${dragging ? "dragging" : ""} ${!isCharacter ? "grabbable" : ""}`} whileHover={{ scale: 1.1 }}>

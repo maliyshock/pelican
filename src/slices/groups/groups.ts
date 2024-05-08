@@ -1,40 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { GameNode } from "~/types";
-
-export interface LinkPair {
-  source: GameNode;
-  target: GameNode;
-  groupName: string;
-}
-export interface CreateGroup {
-  nodes: GameNode[];
-  groupName: string;
-}
-export interface DeleteGroup {
-  groupName: string;
-}
-
-export interface AddToGroup {
-  nodes: GameNode[];
-  groupName: string;
-  toEnd: boolean;
-}
-
-export interface JoinGroups {
-  source: {
-    nodes: GameNode[];
-    groupName: string;
-  };
-  target: {
-    nodes: GameNode[];
-    groupName: string;
-  };
-  groupName: string;
-}
-
-export interface State {
-  [key: string]: GameNode[];
-}
+import { generateGroupName } from "~/utils/generate-group-name.ts";
+import { AddToGroup, CreateGroup, DeleteGroup, JoinGroups, LinkPair, State } from "~/slices/groups/types.ts";
 
 const initialState: State = {};
 
@@ -51,7 +18,7 @@ export const groupsSlice = createSlice({
         const list: GameNode[] = [];
 
         list.push(source, target);
-        state[groupName] = list;
+        state[groupName] = { elements: list, namesChain: generateGroupName(list) };
       }
 
       return state;
@@ -60,12 +27,12 @@ export const groupsSlice = createSlice({
     createGroup: (state, action: PayloadAction<CreateGroup>) => {
       const { groupName, nodes } = action.payload;
 
-      state[groupName] = nodes;
+      state[groupName] = { elements: nodes, namesChain: generateGroupName(nodes) };
     },
 
     addToGroup: (state, action: PayloadAction<AddToGroup>) => {
       const { nodes, groupName, toEnd = true } = action.payload;
-      const list: GameNode[] | undefined = state[groupName];
+      const list: GameNode[] | undefined = state[groupName].elements;
 
       if (list) {
         if (toEnd) {
@@ -74,7 +41,7 @@ export const groupsSlice = createSlice({
           list.unshift(...nodes);
         }
 
-        state[groupName] = list;
+        state[groupName] = { elements: list, namesChain: generateGroupName(list) };
       }
 
       return state;
@@ -84,7 +51,8 @@ export const groupsSlice = createSlice({
       const { source, target, groupName } = action.payload;
       const nodes = source.nodes.concat(target.nodes);
 
-      state[groupName] = nodes.map(node => ({ ...node, group: groupName }));
+      state[groupName].elements = nodes.map(node => ({ ...node, group: groupName }));
+      state[groupName].namesChain = generateGroupName(nodes);
       delete state[source.groupName];
       delete state[target.groupName];
     },
