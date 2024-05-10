@@ -5,7 +5,9 @@ import { RootState } from "~/store";
 import { deleteGroup } from "~/slices/groups/groups.ts";
 import { useUpdateOnSplit } from "~/hooks/use-update-on-split.ts";
 
-type SplitGroup = { oldGroup: string; splitIndex: number };
+type SplitGroups = {
+  [key: string]: number[];
+};
 
 export function useManageGroupSplitting() {
   const groups = useSelector((state: RootState) => state.groups);
@@ -20,16 +22,20 @@ export function useManageGroupSplitting() {
       // what if there were multiple splits in the same group?
       // what if there were multiple edges of the same node
 
-      const splitPoints = edgesToDelete.reduce((acc: SplitGroup[], edg) => {
-        const oldGroup = edg.sourceNode?.data.group || edg.targetNode?.data.group;
+      const splitPoints = edgesToDelete.reduce((acc: SplitGroups, edg) => {
+        const oldGroup: string = edg.sourceNode?.data.group || edg.targetNode?.data.group;
         const splitIndex = groups[oldGroup].elements.findIndex(node => node.id === edg.sourceNode?.id) + 1;
 
         if (oldGroup && splitIndex >= 0) {
-          acc.push({ oldGroup, splitIndex });
+          if (acc[oldGroup]) {
+            acc = { ...acc, [oldGroup]: [splitIndex] };
+          } else {
+            acc[oldGroup].push(splitIndex);
+          }
         }
 
         return acc;
-      }, []);
+      }, {});
 
       splitPoints.forEach(split => {
         const { oldGroup, splitIndex } = split;
