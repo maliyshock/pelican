@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
+import App from "./app.tsx";
 import "./css/index.css";
 import { ReactFlowProvider } from "reactflow";
 import { store } from "./store";

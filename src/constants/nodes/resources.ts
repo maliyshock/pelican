@@ -1,17 +1,10 @@
 import { BASIC, COMMON, PLANK, POOP, RESOURCE, STONE, STONE_DEPOSIT, TREE, WOOD } from "~/constants/dictionary.ts";
-import { GameObject } from "~/types";
+import { GameNodeData } from "~/types";
+import { createSocket } from "~/utils/create-socket.ts";
 
-export const TREE_OBJECT: GameObject = {
-  title: "Tree",
-  type: TREE,
-  root: TREE,
-  health: 3,
-  roles: ["resourceDeposit"],
-  rarity: BASIC,
-  price: 1,
-};
-
-export const WOOD_OBJECT: GameObject = {
+export const WOOD_ENTITY: GameNodeData = {
+  inputs: [createSocket(1)],
+  outputs: [createSocket(1)],
   title: "Wood",
   type: WOOD,
   root: TREE,
@@ -21,7 +14,9 @@ export const WOOD_OBJECT: GameObject = {
   price: 1,
 };
 
-export const PLANK_OBJECT: GameObject = {
+export const PLANK_ENTITY: GameNodeData = {
+  inputs: [createSocket(1)],
+  outputs: [createSocket(1)],
   title: "Plank",
   root: TREE,
   quantity: 1,
@@ -31,17 +26,9 @@ export const PLANK_OBJECT: GameObject = {
   price: 2,
 };
 
-export const STONE_DEPOSIT_OBJECT: GameObject = {
-  title: "Stone Deposit",
-  root: STONE_DEPOSIT,
-  type: STONE_DEPOSIT,
-  health: 3,
-  roles: ["resourceDeposit"],
-  rarity: BASIC,
-  price: 1,
-};
-
-export const STONE_OBJECT: GameObject = {
+export const STONE_ENTITY: GameNodeData = {
+  inputs: [createSocket(1)],
+  outputs: [createSocket(1)],
   title: "Piece of stone",
   type: STONE,
   root: STONE_DEPOSIT,
@@ -51,7 +38,9 @@ export const STONE_OBJECT: GameObject = {
   price: 1,
 };
 
-export const POOP_OBJECT: GameObject = {
+export const POOP_ENTITY: GameNodeData = {
+  inputs: [createSocket(1)],
+  outputs: [createSocket(1)],
   title: "Poop",
   type: POOP,
   roles: ["resource", "food"],

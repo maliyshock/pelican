@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { cmdIsPressed } from "~/slices/cmdIsPressed.ts";
+import { cmdIsPressed } from "~/slices/cmd-is-pressed.ts";
 
 export function useKeyListener() {
   const dispatch = useDispatch();

@@ -1,4 +1,4 @@
-import { BaseEdge, EdgeLabelRenderer, Position, getSimpleBezierPath } from "reactflow";
+import { BaseEdge, EdgeLabelRenderer, Position, getSimpleBezierPath, useReactFlow } from "reactflow";
 import { CircleX } from "lucide-react";
 import { Action } from "~/types";
 import "./custom-edge.css";
@@ -6,7 +6,7 @@ import { Actions } from "~/components/custom-edge/actions.tsx";
 import { useCallback } from "react";
 import { useGetActionsList } from "~/hooks/use-get-actions-list.ts";
 import { Button } from "antd";
-import { useDeleteEdges } from "~/hooks/use-delete-edges.ts";
+import { useManageGroupSplitting } from "~/hooks/use-delete-edges.ts";
 
 type CustomEdgeProps = {
   id: string;
@@ -19,6 +19,7 @@ type CustomEdgeProps = {
 };
 
 export default function CustomEdge(props: CustomEdgeProps) {
+  const { getEdge } = useReactFlow();
   const { id, sourceX, sourceY, targetX, targetY, source, target } = props;
   const [edgePath, labelX, labelY] = getSimpleBezierPath({
     sourceX,
@@ -28,9 +29,10 @@ export default function CustomEdge(props: CustomEdgeProps) {
     sourcePosition: Position.Right,
     targetPosition: Position.Left,
   });
-  const deleteEdges = useDeleteEdges();
+  const manageGroupSplitting = useManageGroupSplitting();
   const actionsList: Action[] | undefined = useGetActionsList(source, target);
-  const handleClose = useCallback(() => deleteEdges([id]), [deleteEdges, id]);
+  const edge = getEdge(id);
+  const handleClose = useCallback(() => edge && manageGroupSplitting([edge]), [edge, manageGroupSplitting]);
 
   return (
     <>

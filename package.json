@@ -12,12 +12,10 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.3",
-    "@types/lodash": "^4.17.0",
     "antd": "^5.16.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.1.7",
-    "lodash": "^4.17.21",
     "lucide-react": "^0.354.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

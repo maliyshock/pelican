@@ -1,11 +1,23 @@
 import { useCallback, useRef } from "react";
-import { Connection, Edge, Node, getOutgoers, updateEdge, useReactFlow } from "reactflow";
+import { Connection, Edge, getOutgoers, updateEdge, useReactFlow } from "reactflow";
+import { GameNode } from "~/types";
+import { isConnectable } from "~/utils/is-connectable.ts";
+import { useManageGroupSplitting } from "~/hooks/use-delete-edges.ts";
 
 export function useEdges() {
+  const manageGroupSplitting = useManageGroupSplitting();
+  const { getNode } = useReactFlow();
   const { getEdges, getNodes, setEdges } = useReactFlow();
-  const nodes = getNodes();
+  const nodes: GameNode[] = getNodes();
   const edges = getEdges();
   const edgeUpdateSuccessful = useRef(true);
+
+  const onEdgesDelete = useCallback(
+    (edges: Edge[]) => {
+      manageGroupSplitting(edges);
+    },
+    [manageGroupSplitting],
+  );
 
   const isValidConnection = useCallback(
     (connection: Connection) => {
@@ -15,25 +27,35 @@ export function useEdges() {
       // * как вариант, описать возможные типы соединений и проверять типы
       // * второй уровень валидации проверять тип input и output, если они указаны
       // * ну и настроить катчер чтобы мы смотрели все вышеперечисленное и выбирали подходящее
+      // * описать возможное максимальное количество соединений
 
-      // output handle type of source should be === input handle type
-      const target = nodes.find(node => node.id === connection.target);
-      const hasCycle = (node: Node, visited = new Set()) => {
-        if (visited.has(node.id)) return false;
+      // target and source should always exist during the connection
+      // const target = nodes.find(node => node.id === connection.target)!;
+      // const source = nodes.find(node => node.id === connection.source)!;
 
-        visited.add(node.id);
+      if (connection.source && connection.target) {
+        const source = getNode(connection.source) as GameNode;
+        const target = getNode(connection.target) as GameNode;
 
-        for (const outgoer of getOutgoers(node, nodes, edges)) {
-          if (outgoer.id === connection.source) return true;
-          if (hasCycle(outgoer, visited)) return true;
-        }
-      };
+        const hasCycle = (node: GameNode, visited = new Set()) => {
+          if (visited.has(node.id)) return false;
+          visited.add(node.id);
 
-      if (target?.id === connection.source) return false;
+          for (const outgoer of getOutgoers(node, nodes, edges)) {
+            if (outgoer.id === connection.source) return true;
+            if (hasCycle(outgoer, visited)) return true;
+          }
+        };
 
-      return !!target && !hasCycle(target);
+        if (target?.id === connection.source) return false;
+
+        // source and target should always exist
+        return !!target && !hasCycle(target) && isConnectable({ source, target, edges, connection });
+      }
+
+      return false;
     },
-    [nodes, edges],
+    [getNode, nodes, edges],
   );
 
   const onEdgeUpdateStart = useCallback(() => {
@@ -51,12 +73,12 @@ export function useEdges() {
   const onEdgeUpdateEnd = useCallback(
     (_: MouseEvent | TouchEvent, edge: Edge) => {
       if (!edgeUpdateSuccessful.current) {
-        setEdges(eds => eds.filter(e => e.id !== edge.id));
+        manageGroupSplitting([edge]);
       }
 
       edgeUpdateSuccessful.current = true;
     },
-    [setEdges],
+    [manageGroupSplitting],
   );
 
   return {
@@ -64,5 +86,6 @@ export function useEdges() {
     onEdgeUpdateStart,
     onEdgeUpdate,
     onEdgeUpdateEnd,
+    onEdgesDelete,
   };
 }
