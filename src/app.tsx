@@ -36,10 +36,10 @@ function App() {
 
   const handleOnNodesChange = useCallback(
     (nodeChanges: NodeChange[]) => {
-      const nodes = getAddedItems(nodeChanges);
+      const addedItems = getAddedItems(nodeChanges);
 
-      if (nodes.length > 0) {
-        dispatch(add(nodes));
+      if (addedItems.length > 0) {
+        dispatch(add(addedItems));
       }
 
       onNodesChange(nodeChanges);

@@ -24,7 +24,7 @@ export function useOnConnect() {
 
           // TODO: it creates connections, not the edges
           // connection has id of source and target handles and also has id of source and target nodes itself
-          return addEdge({ ...connection, type: "custom-edge", sourceNode: source, targetNode: target }, oldEdges);
+          return addEdge({ ...connection, type: "custom-edge" }, oldEdges);
         });
       }
     },

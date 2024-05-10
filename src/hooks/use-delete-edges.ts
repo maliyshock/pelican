@@ -1,59 +1,65 @@
 import { useCallback } from "react";
-import { Edge } from "reactflow";
+import { Edge, useReactFlow } from "reactflow";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "~/store";
-import { deleteGroup } from "~/slices/groups/groups.ts";
+import { createGroup, deleteGroup } from "~/slices/groups/groups.ts";
 import { useUpdateOnSplit } from "~/hooks/use-update-on-split.ts";
+import { GameNode } from "~/types";
 
 type SplitGroups = {
   [key: string]: number[];
 };
 
 export function useManageGroupSplitting() {
+  const { getNode } = useReactFlow();
   const groups = useSelector((state: RootState) => state.groups);
   const dispatch = useDispatch();
   const updateOnSplit = useUpdateOnSplit();
 
   return useCallback(
     (edgesToDelete: Edge[]) => {
-      //TODO: imagine a case when multiple nodes connected and not connected ones has been deleted
-      // TODO: can be multiple edges
-      // for every deleted edge define the index of split and the group
-      // what if there were multiple splits in the same group?
-      // what if there were multiple edges of the same node
-
       const splitPoints = edgesToDelete.reduce((acc: SplitGroups, edg) => {
-        const oldGroup: string = edg.sourceNode?.data.group || edg.targetNode?.data.group;
-        const splitIndex = groups[oldGroup].elements.findIndex(node => node.id === edg.sourceNode?.id) + 1;
+        const sourceNode = getNode(edg.source);
+        const targetNode = getNode(edg.target);
+        const oldGroup = sourceNode?.data.group || targetNode?.data.group;
+
+        const splitIndex = groups[oldGroup]?.elements.findIndex(node => node.id === edg.source);
 
         if (oldGroup && splitIndex >= 0) {
           if (acc[oldGroup]) {
-            acc = { ...acc, [oldGroup]: [splitIndex] };
-          } else {
             acc[oldGroup].push(splitIndex);
+          } else {
+            acc = { ...acc, [oldGroup]: [splitIndex] };
           }
         }
 
         return acc;
       }, {});
 
-      splitPoints.forEach(split => {
-        const { oldGroup, splitIndex } = split;
+      const updates: GameNode[] = []; // - list of nodes and their groupNames
 
-        if (groups[oldGroup]) {
-          const newGroupFirst = `group_${Date.now()}`;
-          const newGroupSecond = `group_${Date.now()}`;
-          const firstHalf = groups[oldGroup].elements.slice(0, splitIndex);
-          const secondHalf = groups[oldGroup].elements.slice(splitIndex, splitIndex);
+      for (const oldGroup in splitPoints) {
+        const groupNodes = groups[oldGroup].elements; // [el1,el2,el3,el4,el5,el6,el7,el8,el9,el10]
 
-          // will automatically clean the group if there is only 1 element in array
-          updateOnSplit(firstHalf, newGroupFirst);
-          updateOnSplit(secondHalf, newGroupSecond);
-        }
+        splitPoints[oldGroup].forEach((splitIndex, loopIndex) => {
+          const prevSplitIndex = splitPoints[oldGroup][loopIndex - 1] || 0;
 
-        dispatch(deleteGroup({ groupName: oldGroup }));
-      });
+          if (splitIndex === 0 || (prevSplitIndex !== undefined && splitIndex + 1 - prevSplitIndex === 1)) {
+            updates.push({ ...groupNodes[0], data: { ...groupNodes[0].data, group: undefined } });
+          } else {
+            const newGroupName = `group_${Date.now()}`;
+            const newGroup = groupNodes.slice(prevSplitIndex, splitIndex + 1).map(node => ({ ...node, group: newGroupName }));
+
+            updates.push(...newGroup);
+            dispatch(createGroup({ groupName: newGroupName, nodes: newGroup }));
+          }
+
+          dispatch(deleteGroup({ groupName: oldGroup }));
+        }); // [0, 3, 4, 7]
+      }
+
+      updateOnSplit(updates);
     },
-    [dispatch, groups, updateOnSplit],
+    [dispatch, getNode, groups, updateOnSplit],
   );
 }
