@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "~/store";
 import { removeAction, setAction } from "~/slices/actions.ts";
+import { EXPLORING, HARVESTING } from "~/constants/dictionary.ts";
 
 interface ActionsProps {
   actionsList: Action[];
@@ -12,8 +13,8 @@ interface ActionsProps {
 }
 
 function getIcon(action: Action) {
-  if (action === "explore") return <Compass />;
-  if (action === "harvest") return <Grab />;
+  if (action === EXPLORING) return <Compass />;
+  if (action === HARVESTING) return <Grab />;
 }
 
 const cutoff = 1;
@@ -43,8 +44,8 @@ export function Actions({ actionsList, target }: ActionsProps) {
         actionsList.map(item => (
           <button
             key={`${target}_${item}`}
-            disabled={!!actions[target]}
             className="button"
+            disabled={!!actions[target]}
             onClick={() => !actions[target] && dispatch(setAction({ target, actionName: item }))}
           >
             {item} {getIcon(item)}

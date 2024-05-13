@@ -31,6 +31,7 @@ export default function CustomNode(props: NodeProps<GameNodeData>) {
 
   const handleSell = useCallback(() => {
     if (data.price) {
+      // TODO: check if there are connections
       deleteElements({ nodes: [props] });
       dispatch(addMoney(data.price));
     }
@@ -42,6 +43,7 @@ export default function CustomNode(props: NodeProps<GameNodeData>) {
 
   useEffect(() => {
     if (data.health === 0) {
+      // TODO: check if there are connections
       deleteElements({ nodes: [props] });
     }
   }, [data.health, deleteElements, id, props]);

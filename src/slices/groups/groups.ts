@@ -1,66 +1,49 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { DirectedGraph } from "~/utils/directed-graph.ts";
 import { GameNode } from "~/types";
-import { generateGroupName } from "~/utils/generate-group-name.ts";
-import { AddToGroup, CreateGroup, DeleteGroup, JoinGroups, LinkPair, State } from "~/slices/groups/types.ts";
 
-const initialState: State = {};
+interface Pair {
+  source: GameNode;
+  target: GameNode;
+}
 
-// TODO ordered / unordered groups?
-// ordered for recipes and unordered for enemies
+// TODO: room for refactoring? quicker way to find if there is a connection?
+const graph = new DirectedGraph();
+
 export const groupsSlice = createSlice({
   name: "groups",
-  initialState,
+  initialState: graph.findGroups(),
   reducers: {
-    linkPair: (state, action: PayloadAction<LinkPair>) => {
-      const { source, target, groupName } = action.payload;
+    linkPair: (state, action: PayloadAction<Pair>) => {
+      const { source, target } = action.payload;
 
       if (source && target) {
-        const list: GameNode[] = [];
-
-        list.push(source, target);
-        state[groupName] = { elements: list, namesChain: generateGroupName(list) };
+        graph.addNode(source);
+        graph.addNode(target);
+        graph.addConnection(source.id, target.id);
       }
+
+      state = graph.findGroups();
 
       return state;
     },
-
-    createGroup: (state, action: PayloadAction<CreateGroup>) => {
-      const { groupName, nodes } = action.payload;
-
-      state[groupName] = { elements: nodes, namesChain: generateGroupName(nodes) };
-    },
-
-    addToGroup: (state, action: PayloadAction<AddToGroup>) => {
-      const { nodes, groupName, toEnd = true } = action.payload;
-      const list: GameNode[] | undefined = state[groupName].elements;
-
-      if (list) {
-        if (toEnd) {
-          list.push(...nodes);
-        } else {
-          list.unshift(...nodes);
-        }
-
-        state[groupName] = { elements: list, namesChain: generateGroupName(list) };
-      }
+    // in case there is no connections left - remove it from the group
+    // remove it from the graph... i guess
+    removeNodes: (state, action: PayloadAction<GameNode[]>) => {
+      action.payload.forEach(node => graph.removeNode(node.id));
+      state = graph.findGroups();
 
       return state;
     },
+    removeConnection: (state, action: PayloadAction<Pair>) => {
+      const { source, target } = action.payload;
 
-    joinGroups: (state, action: PayloadAction<JoinGroups>) => {
-      const { source, target, groupName } = action.payload;
-      const nodes = source.nodes.concat(target.nodes);
+      graph.removeConnection(source.id, target.id);
+      state = graph.findGroups();
 
-      state[groupName].elements = nodes.map(node => ({ ...node, group: groupName }));
-      state[groupName].namesChain = generateGroupName(nodes);
-      delete state[source.groupName];
-      delete state[target.groupName];
-    },
-
-    deleteGroup: (state, action: PayloadAction<DeleteGroup>) => {
-      delete state[action.payload.groupName];
+      return state;
     },
   },
 });
 
-export const { linkPair, createGroup, addToGroup, joinGroups, deleteGroup } = groupsSlice.actions;
+export const { linkPair, removeNodes, removeConnection } = groupsSlice.actions;

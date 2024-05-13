@@ -1,4 +1,5 @@
 import { Action, Role } from "~/types";
+import { ATTACKING, CRAFTING, EXPLORING, HARVESTING, TALKING } from "~/constants/dictionary.ts";
 
 // declare all possible actions
 export type ActionsDictionary = {
@@ -15,23 +16,23 @@ export type ActionsDictionary = {
 // in that scenario it is hard to connect source and target
 export const ACTIONS_DICTIONARY: ActionsDictionary = {
   player: {
-    region: ["explore"],
-    resourceDeposit: ["harvest"],
-    resource: ["collect"],
-    food: ["eat"],
-    character: ["attack", "talk"],
+    region: [EXPLORING],
+    resourceDeposit: [HARVESTING],
+    resource: [CRAFTING],
+    // food: ["eat"],
+    character: [ATTACKING, TALKING],
   },
-  character: {
-    food: ["eat"],
-    player: ["attack"],
-  },
-  enemy: {
-    player: ["attack"],
-    resourceDeposit: ["attack"],
-    resource: ["attack"],
-    building: ["attack"],
-  },
-  resource: {
-    resource: ["combine"],
-  },
+  // character: {
+  //   food: ["eat"],
+  //   player: ["attack"],
+  // },
+  // enemy: {
+  //   player: ["attack"],
+  //   resourceDeposit: ["attack"],
+  //   resource: ["attack"],
+  //   building: ["attack"],
+  // },
+  // resource: {
+  //   resource: ["combine"],
+  // },
 };

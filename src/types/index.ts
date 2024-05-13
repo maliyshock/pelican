@@ -1,14 +1,18 @@
 import { Node } from "reactflow";
 import {
+  ATTACKING,
   BASIC,
   BUILDING,
   CHARACTER,
   COMMON,
+  CRAFTING,
   CREATURE,
   ENEMY,
+  EXPLORING,
   FOOD,
   FOREST,
   FOX,
+  HARVESTING,
   LEGENDARY,
   OBJECT,
   PELICAN,
@@ -22,12 +26,13 @@ import {
   RESOURCE_DEPOSIT,
   STONE,
   STONE_DEPOSIT,
+  TALKING,
   TREE,
   UNIQUE,
   WOOD,
 } from "~/constants/dictionary.ts";
 
-export type Action = "collect" | "explore" | "harvest" | "eat" | "attack" | "talk" | "combine";
+export type Action = typeof EXPLORING | typeof HARVESTING | typeof CRAFTING | typeof ATTACKING | typeof TALKING;
 export type Role =
   | typeof PLAYER
   | typeof CHARACTER
@@ -68,7 +73,6 @@ export interface GameNodeData {
     src: string;
     alt: string;
   };
-  group?: string;
   inputs?: Socket[];
   outputs?: Socket[];
   dmg?: number;
