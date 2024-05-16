@@ -2,14 +2,16 @@ import { getRandomItem } from "~/utils/get-random-item.ts";
 import { createNode } from "~/utils/create-node.ts";
 import { GameNode, GameNodeData } from "~/types";
 import { useCallback } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "~/store";
 import { NodeProps, useReactFlow } from "reactflow";
 import { changeNodeValueBy } from "~/utils/change-node-value-by.ts";
 import { CRAFTING, EXPLORING, HARVESTING } from "~/constants/dictionary.ts";
+import { complete } from "~/slices/resource-groups.ts";
 
-export function useGetActionCallback(nodeSpecificAction: string | undefined) {
+export function useGetActionCallback(nodeId: string, nodeSpecificAction: string | undefined) {
   const { addNodes, setNodes } = useReactFlow();
+  const dispatch = useDispatch();
   const player = useSelector((state: RootState) => state.player);
 
   return useCallback(
@@ -30,8 +32,9 @@ export function useGetActionCallback(nodeSpecificAction: string | undefined) {
       }
 
       if (nodeSpecificAction === CRAFTING) {
+        dispatch(complete(nodeId));
       }
     },
-    [addNodes, nodeSpecificAction, player.exploreRate, player.harvestRate, setNodes],
+    [addNodes, dispatch, nodeId, nodeSpecificAction, player.exploreRate, player.harvestRate, setNodes],
   );
 }

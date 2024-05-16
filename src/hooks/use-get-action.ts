@@ -20,7 +20,7 @@ export function useGetAction({ node }: UseGetAction) {
   const nodeSpecificAction: string | undefined = useSelector(selectActionForNode(node?.id));
   const player = useSelector((state: RootState) => state.player);
   const debouncedNode = useDebounce(node, 200);
-  const actionCallback = useGetActionCallback(nodeSpecificAction);
+  const actionCallback = useGetActionCallback(node.id, nodeSpecificAction);
 
   return useMemo(() => {
     let timer;
@@ -38,7 +38,8 @@ export function useGetAction({ node }: UseGetAction) {
       }
 
       if (nodeSpecificAction === CRAFTING) {
-        timer = player.craftingSpeed; // TODO: crafting time should calculated on items amount, player crafting speed and resource rarity
+        timer = player.craftingSpeed;
+        // TODO: crafting time should calculated on items amount, player crafting speed and resource rarity
       }
     }
 
@@ -47,5 +48,5 @@ export function useGetAction({ node }: UseGetAction) {
       callback,
       actionName: nodeSpecificAction,
     };
-  }, [actionCallback, debouncedNode, nodeSpecificAction, player.craftingSpeed, player.exploreSpeed, player.harvestSpeed]);
+  }, [actionCallback, debouncedNode, nodeSpecificAction, player.exploreSpeed, player.harvestSpeed]);
 }

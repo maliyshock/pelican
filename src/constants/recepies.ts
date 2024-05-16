@@ -1,21 +1,44 @@
-import { PLAYER, WOOD } from "~/constants/dictionary.ts";
-import { joinStrings } from "~/utils/join-strings.ts";
+import { STONE, WOOD } from "~/constants/dictionary.ts";
+import { GameNodeData, Resource } from "~/types";
+import { FIRE_PLACE, STONE_WALL } from "~/constants/nodes/buildings.ts";
+import { CONCAT_SYMBOL } from "~/constants/constants.ts";
 
-const FIRE_PLACE: string[] = [PLAYER, WOOD, WOOD, WOOD];
+interface Recipe {
+  requires: Resource[];
+  gives: GameNodeData;
+}
 
-class Recipes {
-  items: { [key: string]: string[] } = {};
+const firePlace: Recipe = {
+  requires: [WOOD],
+  gives: FIRE_PLACE,
+};
+
+const stoneWall: Recipe = {
+  requires: [STONE, STONE],
+  gives: STONE_WALL,
+};
+
+class RecipesBook {
+  items: { [key: string]: Recipe } = {};
 
   constructor() {
     this.items = {};
   }
 
-  add(recipe: string[]) {
-    const key = joinStrings(recipe);
+  add(recipe: Recipe) {
+    const key = recipe.requires.join(CONCAT_SYMBOL);
 
     this.items[key] = recipe;
   }
+
+  find(recipe: string): Recipe | undefined {
+    return this.items[recipe];
+  }
 }
 
-export const RECIPES = new Recipes();
-RECIPES.add(FIRE_PLACE);
+const RECIPES_BOOK = new RecipesBook();
+
+RECIPES_BOOK.add(firePlace);
+RECIPES_BOOK.add(stoneWall);
+
+export { RECIPES_BOOK };

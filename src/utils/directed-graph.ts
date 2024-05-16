@@ -9,6 +9,10 @@ interface GraphNodeArgs<T> {
   sources?: GraphNode<T>[];
 }
 
+export interface EntrancePoints {
+  [key: string]: number;
+}
+
 function findNode<T>(list: GraphNode<T>[], nodeId: string) {
   return list.find(item => item.id === nodeId);
 }
@@ -42,12 +46,12 @@ export class GraphNode<T> {
 }
 
 export class DirectedGraph<T> {
-  nodes: GraphNode<T>[];
-  groupsCache: WithId<T>[][] | null;
+  nodes: GraphNode<WithId<T>>[];
+  entrancePoints: EntrancePoints;
 
   constructor() {
     this.nodes = [];
-    this.groupsCache = null;
+    this.entrancePoints = {};
   }
 
   addNode(node: WithId<T>) {
@@ -55,7 +59,6 @@ export class DirectedGraph<T> {
       const result = new GraphNode({ id: node.id, value: node });
 
       this.nodes.push(result);
-      this.groupsCache = null;
     }
   }
 
@@ -66,7 +69,6 @@ export class DirectedGraph<T> {
     if (source && target) {
       source.addConnection(target, "targets");
       target.addConnection(source, "sources");
-      this.groupsCache = null;
     }
   }
 
@@ -77,7 +79,6 @@ export class DirectedGraph<T> {
     if (source && target) {
       source.removeConnectionWith(target.id);
       target.removeConnectionWith(source.id);
-      this.groupsCache = null;
     }
   }
 
@@ -101,8 +102,7 @@ export class DirectedGraph<T> {
       });
 
       this.nodes = filterOutNode(this.nodes, nodeId);
-      this.groupsCache = null;
-      const groups: WithId<T>[][] = this.findGroups();
+      const groups = this.findGroups();
 
       // delete all of the nodes which does not have any connections
       groups.forEach((group: WithId<T>[]) => {
@@ -114,37 +114,47 @@ export class DirectedGraph<T> {
   }
 
   findGroups(): WithId<T>[][] {
-    if (this.groupsCache) return this.groupsCache;
-
     const visited = new Set<string>();
     let groups: WithId<T>[][] = [];
 
+    this.entrancePoints = {};
     this.nodes.forEach(nd => {
       if (!visited.has(nd.id)) {
+        const currentGroupIndex = 0;
         // it should go through all of the sources and targets and mark them as visited
         let group: WithId<T>[] = [];
 
-        this.search(nd, visited, group);
+        this.search(nd, visited, group, currentGroupIndex);
         groups.push(group);
       }
     });
 
-    this.groupsCache = groups;
-
     return groups;
   }
 
-  search(node: GraphNode<T>, visited: Set<string>, group: T[]) {
+  getResult() {
+    const groups = this.findGroups();
+
+    return { groups, entrancePoints: this.entrancePoints };
+  }
+
+  search(node: GraphNode<T>, visited: Set<string>, group: T[], index: number, isPush = true) {
     visited.add(node.id);
-    group.push(node.value);
+    isPush ? group.push(node.value) : group.unshift(node.value);
+
+    if (node.sources.length === 0 && this.entrancePoints[node.id] === undefined) {
+      this.entrancePoints[node.id] = index;
+    }
+
     node.sources.forEach(target => {
       if (!visited.has(target.id)) {
-        this.search(target, visited, group);
+        this.search(target, visited, group, index, false);
       }
     });
+
     node.targets.forEach(target => {
       if (!visited.has(target.id)) {
-        this.search(target, visited, group);
+        this.search(target, visited, group, index);
       }
     });
   }

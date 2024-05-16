@@ -1,10 +1,10 @@
 import { Action } from "~/types";
-import { Compass, Grab } from "lucide-react";
+import { Compass, Grab, Hammer } from "lucide-react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "~/store";
-import { removeAction, setAction } from "~/slices/actions.ts";
-import { EXPLORING, HARVESTING } from "~/constants/dictionary.ts";
+import { removeAction, setActions } from "~/slices/actions.ts";
+import { CRAFTING, EXPLORING, HARVESTING } from "~/constants/dictionary.ts";
 
 interface ActionsProps {
   actionsList: Action[];
@@ -15,6 +15,7 @@ interface ActionsProps {
 function getIcon(action: Action) {
   if (action === EXPLORING) return <Compass />;
   if (action === HARVESTING) return <Grab />;
+  if (action === CRAFTING) return <Hammer />;
 }
 
 const cutoff = 1;
@@ -28,7 +29,7 @@ export function Actions({ actionsList, target }: ActionsProps) {
     if (actionsList.length === cutoff && !actions[target]) {
       const action = actionsList[0];
 
-      dispatch(setAction({ target, actionName: action }));
+      dispatch(setActions([{ target, actionName: action }]));
     }
   }, [actions, actionsList, dispatch, target]);
 
@@ -46,7 +47,7 @@ export function Actions({ actionsList, target }: ActionsProps) {
             key={`${target}_${item}`}
             className="button"
             disabled={!!actions[target]}
-            onClick={() => !actions[target] && dispatch(setAction({ target, actionName: item }))}
+            onClick={() => !actions[target] && dispatch(setActions([{ target, actionName: item }]))}
           >
             {item} {getIcon(item)}
           </button>

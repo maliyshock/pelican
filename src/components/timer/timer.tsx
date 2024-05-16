@@ -15,6 +15,8 @@ export function Timer({ time, callback, label }: TimerProps) {
     callback();
   }, [callback]);
 
+  if (callback === undefined) return;
+
   return (
     <div className="timer">
       <div className="timer__label">{label}</div>;

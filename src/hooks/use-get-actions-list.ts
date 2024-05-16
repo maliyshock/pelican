@@ -14,13 +14,13 @@ export function useGetActionsList(source: string, target: string) {
     // TODO: this is heavy. Any other data structure or Optimisation?
     sourceNode.data.roles.forEach(actor => {
       targetNode.data.roles.forEach(target => {
-        const firstPlace = ACTIONS_DICTIONARY[actor];
+        const actorEntity = ACTIONS_DICTIONARY[actor];
 
-        if (firstPlace !== undefined) {
-          const secondPlace = firstPlace[target];
+        if (actorEntity !== undefined) {
+          const action = actorEntity[target];
 
-          if (secondPlace !== undefined) {
-            actions = [...actions, ...secondPlace];
+          if (action !== undefined) {
+            actions = [...actions, ...action];
           }
         }
       });

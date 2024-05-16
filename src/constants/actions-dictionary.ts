@@ -1,5 +1,5 @@
 import { Action, Role } from "~/types";
-import { ATTACKING, CRAFTING, EXPLORING, HARVESTING, TALKING } from "~/constants/dictionary.ts";
+import { ATTACKING, EXPLORING, HARVESTING, TALKING } from "~/constants/dictionary.ts";
 
 // declare all possible actions
 export type ActionsDictionary = {
@@ -8,17 +8,11 @@ export type ActionsDictionary = {
   }>;
 };
 
-// TODO: this should be part of validation
-
-// instead of that we can describe that food can be eaten by
-// ... player ahd character
-// in that case we get final node and list of actions to do as keys
-// in that scenario it is hard to connect source and target
 export const ACTIONS_DICTIONARY: ActionsDictionary = {
   player: {
     region: [EXPLORING],
     resourceDeposit: [HARVESTING],
-    resource: [CRAFTING],
+    // resource: [COMBINING],
     // food: ["eat"],
     character: [ATTACKING, TALKING],
   },
@@ -33,6 +27,6 @@ export const ACTIONS_DICTIONARY: ActionsDictionary = {
   //   building: ["attack"],
   // },
   // resource: {
-  //   resource: ["combine"],
+  //   resource: [COMBINING],
   // },
 };

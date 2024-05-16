@@ -5,7 +5,8 @@ import { add } from "~/slices/nodes-counter.ts";
 import { useDispatch } from "react-redux";
 import { INIT_NODES } from "~/constants/constants.ts";
 import { GameNode } from "~/types";
-import { removeNodes } from "~/slices/groups/groups.ts";
+import { removeNodes } from "~/slices/resource-groups.ts";
+import { RESOURCE } from "~/constants/dictionary.ts";
 
 export function useNodes() {
   const [nodes, , onNodesChange] = useNodesState(INIT_NODES);
@@ -26,7 +27,7 @@ export function useNodes() {
 
   const handleOnNodesDelete = useCallback(
     (nodes: GameNode[]) => {
-      dispatch(removeNodes(nodes));
+      dispatch(removeNodes(nodes.filter(node => node.data.roles.includes(RESOURCE))));
     },
     [dispatch],
   );

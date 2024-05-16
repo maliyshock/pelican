@@ -13,6 +13,7 @@ import { Header } from "~/components/ui/header/header.tsx";
 import { useKeyListener } from "~/hooks/use-key-listener.ts";
 import { useOnConnect } from "~/hooks/use-on-connect.ts";
 import { useNodes } from "~/hooks/use-nodes.ts";
+import { useCraftingManager } from "~/hooks/use-crafting-manager.ts";
 
 const nodeTypes = { node: CustomNode };
 
@@ -31,6 +32,7 @@ function App() {
   const centerCamera = useCenterCamera();
 
   useKeyListener();
+  useCraftingManager();
 
   const ref = useCallback(
     (node: HTMLDivElement | null) => {
