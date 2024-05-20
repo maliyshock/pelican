@@ -8,3 +8,5 @@ export const INIT_NODES = [
   createNode({ position: { x: 0, y: -150 }, data: FOREST_ENTITY }),
   createNode({ position: { x: 100, y: 0 }, data: FOX_ENTITY, draggable: false }),
 ];
+
+export const CONCAT_SYMBOL = "+";

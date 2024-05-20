@@ -6,6 +6,7 @@ import { useMemo } from "react";
 import { createSelector } from "@reduxjs/toolkit";
 import { useDebounce } from "~/hooks/use-debounce.ts";
 import { useGetActionCallback } from "~/hooks/use-get-action-callback.ts";
+import { CRAFTING, EXPLORING, HARVESTING } from "~/constants/dictionary.ts";
 
 interface UseGetAction {
   node: NodeProps<GameNodeData>;
@@ -19,7 +20,7 @@ export function useGetAction({ node }: UseGetAction) {
   const nodeSpecificAction: string | undefined = useSelector(selectActionForNode(node?.id));
   const player = useSelector((state: RootState) => state.player);
   const debouncedNode = useDebounce(node, 200);
-  const actionCallback = useGetActionCallback(nodeSpecificAction);
+  const actionCallback = useGetActionCallback(node.id, nodeSpecificAction);
 
   return useMemo(() => {
     let timer;
@@ -28,12 +29,17 @@ export function useGetAction({ node }: UseGetAction) {
     if (debouncedNode?.id) {
       callback = actionCallback(debouncedNode);
 
-      if (nodeSpecificAction === "explore") {
+      if (nodeSpecificAction === EXPLORING) {
         timer = player.exploreSpeed;
       }
 
-      if (nodeSpecificAction === "harvest") {
+      if (nodeSpecificAction === HARVESTING) {
         timer = player.harvestSpeed;
+      }
+
+      if (nodeSpecificAction === CRAFTING) {
+        timer = player.craftingSpeed;
+        // TODO: crafting time should calculated on items amount, player crafting speed and resource rarity
       }
     }
 
@@ -42,5 +48,5 @@ export function useGetAction({ node }: UseGetAction) {
       callback,
       actionName: nodeSpecificAction,
     };
-  }, [actionCallback, debouncedNode, nodeSpecificAction, player.exploreSpeed, player.harvestSpeed]);
+  }, [actionCallback, debouncedNode, nodeSpecificAction, player.craftingSpeed, player.exploreSpeed, player.harvestSpeed]);
 }

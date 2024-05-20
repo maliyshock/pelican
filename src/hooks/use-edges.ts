@@ -2,22 +2,15 @@ import { useCallback, useRef } from "react";
 import { Connection, Edge, getOutgoers, updateEdge, useReactFlow } from "reactflow";
 import { GameNode } from "~/types";
 import { isConnectable } from "~/utils/is-connectable.ts";
-import { useManageGroupSplitting } from "~/hooks/use-delete-edges.ts";
+import { useDeleteEdge } from "~/hooks/use-delete-edge.ts";
 
 export function useEdges() {
-  const manageGroupSplitting = useManageGroupSplitting();
   const { getNode } = useReactFlow();
   const { getEdges, getNodes, setEdges } = useReactFlow();
   const nodes: GameNode[] = getNodes();
   const edges = getEdges();
+  const deleteEdge = useDeleteEdge();
   const edgeUpdateSuccessful = useRef(true);
-
-  const onEdgesDelete = useCallback(
-    (edges: Edge[]) => {
-      manageGroupSplitting(edges);
-    },
-    [manageGroupSplitting],
-  );
 
   const isValidConnection = useCallback(
     (connection: Connection) => {
@@ -73,12 +66,12 @@ export function useEdges() {
   const onEdgeUpdateEnd = useCallback(
     (_: MouseEvent | TouchEvent, edge: Edge) => {
       if (!edgeUpdateSuccessful.current) {
-        manageGroupSplitting([edge]);
+        deleteEdge(edge);
       }
 
       edgeUpdateSuccessful.current = true;
     },
-    [manageGroupSplitting],
+    [deleteEdge],
   );
 
   return {
@@ -86,6 +79,5 @@ export function useEdges() {
     onEdgeUpdateStart,
     onEdgeUpdate,
     onEdgeUpdateEnd,
-    onEdgesDelete,
   };
 }

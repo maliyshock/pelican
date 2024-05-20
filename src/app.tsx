@@ -1,6 +1,6 @@
 import "./css/app.css";
 import { useCallback, useEffect, useState } from "react";
-import { Background, Controls, NodeChange, ReactFlow, useEdgesState, useNodesState } from "reactflow";
+import { Background, Controls, ReactFlow, useEdgesState } from "reactflow";
 import "reactflow/dist/style.css";
 import CustomNode from "~/components/custom-node/custom-node.tsx";
 import { setScreenSize } from "./slices/screen-size.ts";
@@ -9,12 +9,11 @@ import { useCenterCamera } from "~/hooks/use-center-camera.ts";
 import { RootState } from "~/store";
 import CustomEdge from "~/components/custom-edge/custom-edge.tsx";
 import { useEdges } from "~/hooks/use-edges.ts";
-import { INIT_NODES } from "~/constants/constants.ts";
 import { Header } from "~/components/ui/header/header.tsx";
-import { add } from "~/slices/nodes-counter.ts";
 import { useKeyListener } from "~/hooks/use-key-listener.ts";
-import { getAddedItems } from "~/utils/get-added-items.ts";
 import { useOnConnect } from "~/hooks/use-on-connect.ts";
+import { useNodes } from "~/hooks/use-nodes.ts";
+import { useCraftingManager } from "~/hooks/use-crafting-manager.ts";
 
 const nodeTypes = { node: CustomNode };
 
@@ -25,27 +24,15 @@ const edgeTypes = {
 function App() {
   const dispatch = useDispatch();
   const screenSize = useSelector((state: RootState) => state.screenSize);
-  const [nodes, , onNodesChange] = useNodesState(INIT_NODES);
+  const { handleOnNodesChange, handleOnNodesDelete, nodes } = useNodes();
   const [edges, , onEdgesChange] = useEdgesState([]);
-  const { isValidConnection, onEdgeUpdate, onEdgeUpdateStart, onEdgeUpdateEnd, onEdgesDelete } = useEdges();
+  const { isValidConnection, onEdgeUpdate, onEdgeUpdateStart, onEdgeUpdateEnd } = useEdges();
   const [cameraIsCentered, setCameraIsCentered] = useState(false);
   const onConnect = useOnConnect();
   const centerCamera = useCenterCamera();
 
   useKeyListener();
-
-  const handleOnNodesChange = useCallback(
-    (nodeChanges: NodeChange[]) => {
-      const addedItems = getAddedItems(nodeChanges);
-
-      if (addedItems.length > 0) {
-        dispatch(add(addedItems));
-      }
-
-      onNodesChange(nodeChanges);
-    },
-    [dispatch, onNodesChange],
-  );
+  useCraftingManager();
 
   const ref = useCallback(
     (node: HTMLDivElement | null) => {
@@ -85,11 +72,11 @@ function App() {
           nodeTypes={nodeTypes}
           onConnect={onConnect}
           onEdgesChange={onEdgesChange}
-          onEdgesDelete={onEdgesDelete}
           onEdgeUpdate={onEdgeUpdate}
           onEdgeUpdateEnd={onEdgeUpdateEnd}
           onEdgeUpdateStart={onEdgeUpdateStart}
           onNodesChange={handleOnNodesChange}
+          onNodesDelete={handleOnNodesDelete}
         >
           <Background />
           <Controls />

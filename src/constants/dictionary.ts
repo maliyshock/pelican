@@ -32,3 +32,10 @@ export const REGION = "region";
 export const RESOURCE = "resource";
 export const FOOD = "food";
 export const RESOURCE_DEPOSIT = "resourceDeposit";
+
+// action names
+export const EXPLORING = "EXPLORING";
+export const HARVESTING = "HARVESTING";
+export const CRAFTING = "CRAFTING";
+export const ATTACKING = "ATTACKING";
+export const TALKING = "TALKING";

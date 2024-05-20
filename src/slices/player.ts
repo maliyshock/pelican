@@ -8,6 +8,7 @@ interface Player {
   weapon: null;
   exploreSpeed: number;
   harvestSpeed: number;
+  craftingSpeed: number;
   attackSpeed: number;
   battleRank: number;
   experience: number;
@@ -37,6 +38,7 @@ const initialState: Player = {
   exploreSpeed: 1000, //15000
   harvestSpeed: 1000, // 7000
   attackSpeed: 2000,
+  craftingSpeed: 2000, // TODO: crafting time should calculated on items amount, player crafting speed and resource rarity
   battleRank: 0,
   experience: 0,
   nextLevel: 50,
@@ -48,17 +50,17 @@ const initialState: Player = {
   exploreRate: {
     [BASIC]: 80,
     [COMMON]: 20,
-    [UNIQUE]: 0,
     [RARE]: 0,
     [REALLY_RARE]: 0,
+    [UNIQUE]: 0,
     [LEGENDARY]: 0,
   },
   harvestRate: {
     [BASIC]: 80,
     [COMMON]: 20,
-    [UNIQUE]: 0,
     [RARE]: 0,
     [REALLY_RARE]: 0,
+    [UNIQUE]: 0,
     [LEGENDARY]: 0,
   },
 };

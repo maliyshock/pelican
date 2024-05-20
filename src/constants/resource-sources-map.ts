@@ -13,7 +13,7 @@ import { STONE_DEPOSIT_ENTITY, TREE_ENTITY } from "~/constants/nodes/resource-de
 //   "legendary": 5,
 // };
 
-export const RESOURCE_NODES: {
+export const RESOURCE_SOURCES_MAP: {
   [K in EntityType]?: Array<Array<GameNodeData>>;
 } = {
   [FOREST]: [[TREE_ENTITY, STONE_ENTITY, STONE_DEPOSIT_ENTITY], [POOP_ENTITY], [PLANK_ENTITY]],

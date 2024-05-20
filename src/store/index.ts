@@ -6,7 +6,7 @@ import { timeSlice } from "~/slices/time.ts";
 import { nodesCounterSlice } from "~/slices/nodes-counter.ts";
 import { moneySlice } from "~/slices/money.ts";
 import { cmdSlice } from "~/slices/cmd-is-pressed.ts";
-import { groupsSlice } from "~/slices/groups/groups.ts";
+import { resourceGroupsSlice } from "~/slices/resource-groups.ts";
 
 export const store = configureStore({
   reducer: {
@@ -17,7 +17,7 @@ export const store = configureStore({
     nodesCounter: nodesCounterSlice.reducer,
     money: moneySlice.reducer,
     cmd: cmdSlice.reducer,
-    groups: groupsSlice.reducer,
+    resourceGroups: resourceGroupsSlice.reducer,
   },
 });
 

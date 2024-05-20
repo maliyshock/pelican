@@ -7,7 +7,7 @@ export const PELICAN_ENTITY: GameNodeData = {
   health: 10,
   // name: "George",
   type: PELICAN,
-  roles: [PLAYER],
+  roles: [PLAYER, CHARACTER],
   inputs: [createSocket()],
   outputs: [createSocket()],
 };

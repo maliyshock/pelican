@@ -6,7 +6,7 @@ import { Actions } from "~/components/custom-edge/actions.tsx";
 import { useCallback } from "react";
 import { useGetActionsList } from "~/hooks/use-get-actions-list.ts";
 import { Button } from "antd";
-import { useManageGroupSplitting } from "~/hooks/use-delete-edges.ts";
+import { useDeleteEdge } from "~/hooks/use-delete-edge.ts";
 
 type CustomEdgeProps = {
   id: string;
@@ -29,10 +29,11 @@ export default function CustomEdge(props: CustomEdgeProps) {
     sourcePosition: Position.Right,
     targetPosition: Position.Left,
   });
-  const manageGroupSplitting = useManageGroupSplitting();
+  const deleteEdge = useDeleteEdge();
+
   const actionsList: Action[] | undefined = useGetActionsList(source, target);
   const edge = getEdge(id);
-  const handleClose = useCallback(() => edge && manageGroupSplitting([edge]), [edge, manageGroupSplitting]);
+  const handleClose = useCallback(() => edge && deleteEdge(edge), [deleteEdge, edge]);
 
   return (
     <>

@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 // one specific action between source and target per time
-export type SetActionPayload = {
+export type SetActionsPayload = {
   target: string;
   actionName: string;
 };
@@ -12,10 +12,8 @@ export const actionsSlice = createSlice({
   name: "actions",
   initialState,
   reducers: {
-    setAction: (state, action: PayloadAction<SetActionPayload>) => {
-      const { target, actionName } = action.payload;
-
-      state[target] = actionName;
+    setActions: (state, action: PayloadAction<SetActionsPayload[]>) => {
+      action.payload.forEach(action => (state[action.target] = action.actionName));
     },
     removeAction: (state, action: PayloadAction<{ target: string }>) => {
       delete state[action.payload.target];
@@ -23,4 +21,4 @@ export const actionsSlice = createSlice({
   },
 });
 
-export const { setAction, removeAction } = actionsSlice.actions;
+export const { setActions, removeAction } = actionsSlice.actions;
