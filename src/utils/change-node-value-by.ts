@@ -3,7 +3,7 @@ import { GameNode } from "~/types";
 interface ChangeValueBy {
   nodes: GameNode[];
   ids: string[];
-  key: "price" | "dmg" | "health" | "quantity" | "group";
+  key: "price" | "dmg" | "health" | "quantity";
   value?: number | string;
 }
 

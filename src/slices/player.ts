@@ -50,17 +50,17 @@ const initialState: Player = {
   exploreRate: {
     [BASIC]: 80,
     [COMMON]: 20,
-    [UNIQUE]: 0,
     [RARE]: 0,
     [REALLY_RARE]: 0,
+    [UNIQUE]: 0,
     [LEGENDARY]: 0,
   },
   harvestRate: {
     [BASIC]: 80,
     [COMMON]: 20,
-    [UNIQUE]: 0,
     [RARE]: 0,
     [REALLY_RARE]: 0,
+    [UNIQUE]: 0,
     [LEGENDARY]: 0,
   },
 };

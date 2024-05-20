@@ -48,5 +48,5 @@ export function useGetAction({ node }: UseGetAction) {
       callback,
       actionName: nodeSpecificAction,
     };
-  }, [actionCallback, debouncedNode, nodeSpecificAction, player.exploreSpeed, player.harvestSpeed]);
+  }, [actionCallback, debouncedNode, nodeSpecificAction, player.craftingSpeed, player.exploreSpeed, player.harvestSpeed]);
 }
