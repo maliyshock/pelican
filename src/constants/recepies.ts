@@ -1,6 +1,6 @@
 import { STONE, WOOD } from "~/constants/dictionary.ts";
 import { GameNodeData, Resource } from "~/types";
-import { FIRE_PLACE, STONE_WALL } from "~/constants/nodes/buildings.ts";
+import { FIRE_PLACE, STONE_WALL } from "~/constants/nodes/buildings/buildings.ts";
 import { CONCAT_SYMBOL } from "~/constants/constants.ts";
 
 interface Recipe {

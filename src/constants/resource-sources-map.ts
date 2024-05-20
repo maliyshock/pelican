@@ -1,22 +1,27 @@
 import { EntityType, GameNodeData } from "~/types";
-import { PLANK_ENTITY, POOP_ENTITY, STONE_ENTITY, WOOD_ENTITY } from "~/constants/nodes/resources.ts";
+
 import { FOREST, STONE_DEPOSIT, TREE } from "~/constants/dictionary.ts";
-import { STONE_DEPOSIT_ENTITY, TREE_ENTITY } from "~/constants/nodes/resource-deposits.ts";
+import { TREE_DATA } from "~/constants/nodes/resource-deposits/tree.ts";
+import { STONE_DATA } from "~/constants/nodes/resources/stone.ts";
+import { STONE_DEPOSIT_DATA } from "~/constants/nodes/resource-deposits/stone-deposit.ts";
+import { POOP_DATA } from "~/constants/nodes/fertilizer/poop.ts";
+import { PLANK_DATA } from "~/constants/nodes/resources/plank.ts";
+import { WOOD_DATA } from "~/constants/nodes/resources/wood.ts";
 
 // just a reminder, remove later
 // const rarityMap = {
 //   "basic": 0,
 //   "common": 1,
-//   "unique": 2,
 //   "rare": 3,
 //   "really-really-rare": 4,
+//   "unique": 2,
 //   "legendary": 5,
 // };
 
-export const RESOURCE_SOURCES_MAP: {
+export const RESOURCE_CONTAINERS: {
   [K in EntityType]?: Array<Array<GameNodeData>>;
 } = {
-  [FOREST]: [[TREE_ENTITY, STONE_ENTITY, STONE_DEPOSIT_ENTITY], [POOP_ENTITY], [PLANK_ENTITY]],
-  [TREE]: [[WOOD_ENTITY], [], []], // apple // nut // stick // leaf
-  [STONE_DEPOSIT]: [[STONE_ENTITY]],
+  [FOREST]: [[TREE_DATA, STONE_DATA, STONE_DEPOSIT_DATA], [POOP_DATA], [PLANK_DATA]],
+  [TREE]: [[WOOD_DATA], [], []], // apple // nut // stick // leaf
+  [STONE_DEPOSIT]: [[STONE_DATA]],
 };
