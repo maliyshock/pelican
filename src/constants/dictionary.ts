@@ -16,12 +16,14 @@ export const PLANK = "plank";
 export const STONE_DEPOSIT = "stone";
 export const STONE = "stone";
 export const POOP = "poop";
+export const BERRIES_BUSH = "berries-bush";
+export const EMPTY_BERRIES_BUSH = "empty-berries-bush";
 
 // creatures
 export const PELICAN = "pelican";
 export const FOX = "fox";
 
-// object types
+// roles
 export const PLAYER = "player";
 export const CHARACTER = "character";
 export const ENEMY = "enemy";
@@ -31,7 +33,8 @@ export const CREATURE = "creature";
 export const REGION = "region";
 export const RESOURCE = "resource";
 export const FOOD = "food";
-export const RESOURCE_DEPOSIT = "resourceDeposit";
+export const RESOURCE_DEPOSIT = "resource-deposit";
+export const FERTILIZER = "fertilizer";
 
 // action names
 export const EXPLORING = "EXPLORING";
@@ -39,3 +42,28 @@ export const HARVESTING = "HARVESTING";
 export const CRAFTING = "CRAFTING";
 export const ATTACKING = "ATTACKING";
 export const TALKING = "TALKING";
+export const LAKE = "lake";
+export const RIVER = "river";
+export const ACORN = "acorn";
+export const APPLE = "apple";
+export const BERRY = "berry";
+export const EGG = "egg";
+export const FISH = "fish";
+export const GRAIN = "grain";
+export const HONEY = "honey";
+export const INSECTS = "insects";
+export const LARVAE = "larvae";
+export const MUSHROOM = "mushroom";
+export const WILD_GRAPES = "wild_grapes";
+export const CLAY_DEPOSIT = "clay_deposit";
+export const ANTHILL = "anthill";
+export const BONES = "bones";
+export const CANE = "cane";
+export const FEATHERS = "feathers";
+export const FLINT = "flint";
+export const LEAFS = "leafs";
+export const ROPE = "rope";
+export const Skin = "skin";
+export const SOIL = "soil";
+export const STICKS = "sticks";
+export const VINE = "vine";

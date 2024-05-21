@@ -2,6 +2,7 @@ import { CHARACTER, FOX, PELICAN, PLAYER } from "~/constants/dictionary.ts";
 import { GameNodeData } from "~/types";
 import { createSocket } from "~/utils/create-socket.ts";
 
+import { PELICAN } from "~/constants/dictionary.ts";
 export const PELICAN_DATA: GameNodeData = {
   dmg: 1,
   health: 10,
