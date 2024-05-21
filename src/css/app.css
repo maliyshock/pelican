@@ -36,3 +36,21 @@
 .node-sandbox {
   flex-grow: 1;
 }
+
+.img {
+  min-height: 200px;
+  position: relative;
+}
+
+.img:before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  content: '';
+  background-image: url("/assets/template.jpg");
+  background-position: center;
+  background-size: cover;
+}
