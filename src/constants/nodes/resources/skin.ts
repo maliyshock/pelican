@@ -1,13 +1,13 @@
-import { RARE, RESOURCE, Skin } from "~/constants/dictionary.ts";
+import { RARE, RESOURCE, SKIN } from "~/constants/dictionary.ts";
 import { createSocket } from "~/utils/create-socket.ts";
 import { GameNodeData } from "~/types";
 
-export const Skin_DATA: GameNodeData = {
+export const SKIN_DATA: GameNodeData = {
   inputs: [createSocket(1)],
   outputs: [createSocket(1)],
   title: "Some, um... skin",
-  root: Skin,
-  type: Skin,
+  root: SKIN,
+  type: SKIN,
   roles: [RESOURCE],
   rarity: RARE,
   price: 2,

@@ -1,4 +1,4 @@
-import { FOOD, RARE } from "~/constants/dictionary.ts";
+import { FOOD, RARE, APPLE, APPLE } from "~/constants/dictionary.ts";
 import { createSocket } from "~/utils/create-socket.ts";
 import { GameNodeData } from "~/types";
 import { APPLE } from "~/constants/dictionary.ts";

@@ -42,6 +42,8 @@ export const HARVESTING = "HARVESTING";
 export const CRAFTING = "CRAFTING";
 export const ATTACKING = "ATTACKING";
 export const TALKING = "TALKING";
+
+// generated
 export const LAKE = "lake";
 export const RIVER = "river";
 export const ACORN = "acorn";
@@ -63,7 +65,8 @@ export const FEATHERS = "feathers";
 export const FLINT = "flint";
 export const LEAFS = "leafs";
 export const ROPE = "rope";
-export const Skin = "skin";
+export const SKIN = "skin";
 export const SOIL = "soil";
 export const STICKS = "sticks";
 export const VINE = "vine";
+export const PLANT_FIBERS = "plant_fibers";

@@ -1,4 +1,4 @@
-import { BASIC, FOOD } from "~/constants/dictionary.ts";
+import { BASIC, FOOD, ACORN, ACORN } from "~/constants/dictionary.ts";
 import { createSocket } from "~/utils/create-socket.ts";
 import { GameNodeData } from "~/types";
 import { ACORN } from "~/constants/dictionary.ts";
