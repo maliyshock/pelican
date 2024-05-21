@@ -33,7 +33,9 @@ function getFileContent(filePath) {
 function updateDictionary(dictionaryContent, newConstants) {
   newConstants.forEach(constant => {
     if (!dictionaryContent.includes(`export const ${constant}`)) {
-      dictionaryContent += `export const ${constant} = "${constant.toLowerCase()}";\n`;
+      const formattedConstant = constant.toLowerCase().replace(/_/g, "-");
+
+      dictionaryContent += `export const ${constant} = "${formattedConstant}";\n`;
     }
   });
   fs.writeFileSync(dictionaryFile, dictionaryContent, "utf8");

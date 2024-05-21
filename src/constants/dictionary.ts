@@ -37,11 +37,11 @@ export const RESOURCE_DEPOSIT = "resource-deposit";
 export const FERTILIZER = "fertilizer";
 
 // action names
-export const EXPLORING = "EXPLORING";
-export const HARVESTING = "HARVESTING";
-export const CRAFTING = "CRAFTING";
-export const ATTACKING = "ATTACKING";
-export const TALKING = "TALKING";
+export const EXPLORING = "exploring";
+export const HARVESTING = "harvesting";
+export const CRAFTING = "crafting";
+export const ATTACKING = "attacking";
+export const TALKING = "talking";
 
 // generated
 export const LAKE = "lake";
@@ -56,8 +56,8 @@ export const HONEY = "honey";
 export const INSECTS = "insects";
 export const LARVAE = "larvae";
 export const MUSHROOM = "mushroom";
-export const WILD_GRAPES = "wild_grapes";
-export const CLAY_DEPOSIT = "clay_deposit";
+export const WILD_GRAPES = "wild-grapes";
+export const CLAY_DEPOSIT = "clay-deposit";
 export const ANTHILL = "anthill";
 export const BONES = "bones";
 export const CANE = "cane";
@@ -69,4 +69,4 @@ export const SKIN = "skin";
 export const SOIL = "soil";
 export const STICKS = "sticks";
 export const VINE = "vine";
-export const PLANT_FIBERS = "plant_fibers";
+export const PLANT_FIBERS = "plant-fibers";
