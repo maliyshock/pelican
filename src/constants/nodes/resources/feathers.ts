@@ -9,6 +9,5 @@ export const FEATHERS_DATA: GameNodeData = {
   root: FEATHERS,
   type: FEATHERS,
   roles: [RESOURCE],
-  rarity: RARE,
   price: 2,
 };

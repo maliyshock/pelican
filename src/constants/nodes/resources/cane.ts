@@ -10,6 +10,5 @@ export const CANE_DATA: GameNodeData = {
   root: CANE,
   type: CANE,
   roles: [RESOURCE],
-  rarity: RARE,
   price: 2,
 };

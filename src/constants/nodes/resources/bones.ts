@@ -9,6 +9,5 @@ export const BONES_DATA: GameNodeData = {
   root: BONES,
   type: BONES,
   roles: [RESOURCE],
-  rarity: BASIC,
   price: 2,
 };

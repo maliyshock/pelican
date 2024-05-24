@@ -1,0 +1,7 @@
+.options-list {
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  padding: 20px;
+}

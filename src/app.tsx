@@ -14,6 +14,7 @@ import { useKeyListener } from "~/hooks/use-key-listener.ts";
 import { useOnConnect } from "~/hooks/use-on-connect.ts";
 import { useNodes } from "~/hooks/use-nodes.ts";
 import { useCraftingManager } from "~/hooks/use-crafting-manager.ts";
+import { MakeChoice } from "~/components/make-choice/make-choice.tsx";
 
 const nodeTypes = { node: CustomNode };
 
@@ -60,6 +61,8 @@ function App() {
 
   return (
     <div className="app">
+      {/*on explore*/}
+      <MakeChoice />
       <div className="node-sandbox">
         <Header />
         {/*<CenterCameraButton />*/}

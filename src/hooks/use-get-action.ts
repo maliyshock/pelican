@@ -20,7 +20,7 @@ export function useGetAction({ node }: UseGetAction) {
   const nodeSpecificAction: string | undefined = useSelector(selectActionForNode(node?.id));
   const player = useSelector((state: RootState) => state.player);
   const debouncedNode = useDebounce(node, 200);
-  const actionCallback = useGetActionCallback(node.id, nodeSpecificAction);
+  const actionCallback = useGetActionCallback(node.id, nodeSpecificAction); // вызов происходит часто
 
   return useMemo(() => {
     let timer;
@@ -30,11 +30,11 @@ export function useGetAction({ node }: UseGetAction) {
       callback = actionCallback(debouncedNode);
 
       if (nodeSpecificAction === EXPLORING) {
-        timer = player.exploreSpeed;
+        timer = player.explore.speed;
       }
 
       if (nodeSpecificAction === HARVESTING) {
-        timer = player.harvestSpeed;
+        timer = player.harvest.speed;
       }
 
       if (nodeSpecificAction === CRAFTING) {
@@ -48,5 +48,5 @@ export function useGetAction({ node }: UseGetAction) {
       callback,
       actionName: nodeSpecificAction,
     };
-  }, [actionCallback, debouncedNode, nodeSpecificAction, player.craftingSpeed, player.exploreSpeed, player.harvestSpeed]);
+  }, [actionCallback, debouncedNode, nodeSpecificAction, player.craftingSpeed, player.explore.speed, player.harvest.speed]);
 }

@@ -6,9 +6,9 @@ import { Socket } from "~/types";
 
 interface SocketsProps {
   type: "target" | "source";
-  isTarget: boolean;
+  isTarget?: boolean;
   sockets: Socket[];
-  isConnectable: boolean;
+  isConnectable?: boolean;
   position: Position;
 }
 
@@ -38,7 +38,7 @@ export function Sockets({ type, isTarget, sockets, isConnectable, position }: So
         />
       )}
 
-      <div className={`node__connectors ${isInput ? "node__inputs" : "node__outputs"}`}>
+      <div className={`card__connectors ${isInput ? "card__inputs" : "card__outputs"}`}>
         {sockets?.map((_input, index) => (
           <Handle
             key={`${type}-${index}`}

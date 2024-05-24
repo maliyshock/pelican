@@ -9,6 +9,5 @@ export const FLINT_DATA: GameNodeData = {
   root: FLINT,
   type: FLINT,
   roles: [RESOURCE],
-  rarity: COMMON,
   price: 2,
 };

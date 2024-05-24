@@ -9,6 +9,5 @@ export const PLANT_FIBERS_DATA: GameNodeData = {
   root: PLANT_FIBERS,
   type: PLANT_FIBERS,
   roles: [RESOURCE],
-  rarity: BASIC,
   price: 2,
 };

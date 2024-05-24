@@ -9,6 +9,5 @@ export const SOIL_DATA: GameNodeData = {
   root: SOIL,
   type: SOIL,
   roles: [RESOURCE],
-  rarity: COMMON,
   price: 2,
 };

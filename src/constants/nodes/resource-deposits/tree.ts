@@ -1,8 +1,7 @@
 import { GameNodeData } from "~/types";
 import { createSocket } from "~/utils/create-socket.ts";
-import { BASIC, RESOURCE_DEPOSIT, TREE } from "~/constants/dictionary.ts";
+import { RESOURCE_DEPOSIT, TREE } from "~/constants/dictionary.ts";
 
-import { TREE, TREE } from "~/constants/dictionary.ts";
 export const TREE_DATA: GameNodeData = {
   inputs: [createSocket()],
   title: "Tree",
@@ -10,6 +9,5 @@ export const TREE_DATA: GameNodeData = {
   root: TREE,
   health: 3,
   roles: [RESOURCE_DEPOSIT],
-  rarity: BASIC,
   price: 1,
 };

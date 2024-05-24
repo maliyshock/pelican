@@ -1,4 +1,4 @@
-import { Probability } from "~/slices/player.ts";
+import { Probability } from "~/slices/player/player.ts";
 import { Rarity } from "~/types";
 import { BASIC } from "~/constants/dictionary.ts";
 

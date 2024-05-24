@@ -2,9 +2,9 @@ import { Rarity } from "~/types";
 const rarityMap = {
   "basic": 0,
   "common": 1,
-  "unique": 2,
-  "rare": 3,
-  "really-really-rare": 4,
+  "rare": 2,
+  "really-really-rare": 3,
+  "unique": 4,
   "legendary": 5,
 };
 

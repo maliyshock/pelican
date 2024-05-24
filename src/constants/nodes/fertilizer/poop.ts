@@ -8,6 +8,5 @@ export const POOP_DATA: GameNodeData = {
   title: "Poop",
   type: POOP,
   roles: [FERTILIZER, RESOURCE, FOOD],
-  rarity: COMMON,
   price: 1,
 };

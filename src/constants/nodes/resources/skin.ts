@@ -9,6 +9,5 @@ export const SKIN_DATA: GameNodeData = {
   root: SKIN,
   type: SKIN,
   roles: [RESOURCE],
-  rarity: RARE,
   price: 2,
 };

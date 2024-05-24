@@ -8,6 +8,7 @@ export const LEGENDARY = "legendary";
 
 // regions
 export const FOREST = "forest";
+export const DEEP_FOREST = "deep-forest";
 
 // resources
 export const TREE = "tree";
@@ -70,3 +71,6 @@ export const SOIL = "soil";
 export const STICKS = "sticks";
 export const VINE = "vine";
 export const PLANT_FIBERS = "plant-fibers";
+export const APPLE_TREE = "apple-tree";
+export const NUT_TREE = "nut-tree";
+export const NUT = "nut";

@@ -9,6 +9,5 @@ export const WILD_GRAPES_DATA: GameNodeData = {
   root: WILD_GRAPES,
   type: WILD_GRAPES,
   roles: [FOOD],
-  rarity: REALLY_RARE,
   price: 2,
 };

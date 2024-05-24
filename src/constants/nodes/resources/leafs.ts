@@ -9,6 +9,5 @@ export const LEAFS_DATA: GameNodeData = {
   root: LEAFS,
   type: LEAFS,
   roles: [RESOURCE],
-  rarity: BASIC,
   price: 2,
 };

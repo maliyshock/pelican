@@ -1,7 +1,11 @@
 import { getRandom } from "~/utils/get-random.ts";
 
 export function getRandomFromArray<T>(array: Array<T>) {
-  const index = getRandom(array.length - 1);
+  if (array.length > 0) {
+    const index = getRandom(array.length - 1);
 
-  return array[index];
+    return array[index];
+  } else {
+    console.log("there is a negative index");
+  }
 }

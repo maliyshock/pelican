@@ -1,4 +1,4 @@
-import { COMMON, FOOD, GRAIN } from "~/constants/dictionary.ts";
+import { FOOD, GRAIN } from "~/constants/dictionary.ts";
 import { createSocket } from "~/utils/create-socket.ts";
 import { GameNodeData } from "~/types";
 
@@ -9,6 +9,5 @@ export const GRAIN_DATA: GameNodeData = {
   root: GRAIN,
   type: GRAIN,
   roles: [FOOD],
-  rarity: COMMON,
   price: 2,
 };

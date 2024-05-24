@@ -9,6 +9,5 @@ export const INSECTS_DATA: GameNodeData = {
   root: INSECTS,
   type: INSECTS,
   roles: [FOOD],
-  rarity: BASIC,
   price: 2,
 };

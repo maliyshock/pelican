@@ -9,6 +9,5 @@ export const ROPE_DATA: GameNodeData = {
   root: ROPE,
   type: ROPE,
   roles: [RESOURCE],
-  rarity: RARE,
   price: 2,
 };

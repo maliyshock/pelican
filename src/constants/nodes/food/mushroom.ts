@@ -9,6 +9,5 @@ export const MUSHROOM_DATA: GameNodeData = {
   root: MUSHROOM,
   type: MUSHROOM,
   roles: [FOOD],
-  rarity: RARE,
   price: 2,
 };

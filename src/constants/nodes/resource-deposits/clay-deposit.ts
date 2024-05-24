@@ -9,6 +9,5 @@ export const CLAY_DEPOSIT_DATA: GameNodeData = {
   type: CLAY_DEPOSIT,
   health: 3,
   roles: [RESOURCE_DEPOSIT],
-  rarity: BASIC,
   price: 1,
 };

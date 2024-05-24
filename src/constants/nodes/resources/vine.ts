@@ -9,6 +9,5 @@ export const VINE_DATA: GameNodeData = {
   root: VINE,
   type: VINE,
   roles: [RESOURCE],
-  rarity: RARE,
   price: 2,
 };

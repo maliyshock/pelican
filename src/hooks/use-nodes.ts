@@ -3,7 +3,7 @@ import { NodeChange, useNodesState } from "reactflow";
 import { getAddedItems } from "~/utils/get-added-items.ts";
 import { add } from "~/slices/nodes-counter.ts";
 import { useDispatch } from "react-redux";
-import { INIT_NODES } from "~/constants/constants.ts";
+import { INIT_NODES } from "~/constants";
 import { GameNode } from "~/types";
 import { removeNodes } from "~/slices/resource-groups.ts";
 import { RESOURCE } from "~/constants/dictionary.ts";

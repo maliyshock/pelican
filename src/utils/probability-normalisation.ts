@@ -1,4 +1,4 @@
-import { Probability } from "~/slices/player.ts";
+import { Probability } from "~/slices/player/player.ts";
 
 export function probabilityNormalisation(probabilityChances: Probability) {
   const keys = Object.keys(probabilityChances) as Array<keyof Probability>;

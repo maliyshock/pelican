@@ -9,6 +9,5 @@ export const LARVAE_DATA: GameNodeData = {
   root: LARVAE,
   type: LARVAE,
   roles: [FOOD],
-  rarity: BASIC,
   price: 2,
 };

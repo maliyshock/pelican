@@ -9,6 +9,5 @@ export const STICKS_DATA: GameNodeData = {
   root: STICKS,
   type: STICKS,
   roles: [RESOURCE],
-  rarity: BASIC,
   price: 2,
 };

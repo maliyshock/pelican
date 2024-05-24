@@ -19,6 +19,7 @@ export function Clocks({ initHours = 12, initMinutes = 45 }: TimerProps) {
   const [hours, setHours] = useState(initHours);
   const [minutes, setMinutes] = useState(initMinutes);
   const clocks = useSelector((state: RootState) => state.time);
+  const isModalOpen = useSelector((state: RootState) => state.modalStatus.isOpen);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -41,12 +42,16 @@ export function Clocks({ initHours = 12, initMinutes = 45 }: TimerProps) {
     }
   }, [clocks.play]);
 
+  useEffect(() => {
+    dispatch(isModalOpen ? pause() : play());
+  }, [dispatch, isModalOpen]);
+
   return (
     <div className="clocks">
       {formatTime(hours)} : {formatTime(minutes)}
       <div className="clocks__controls">
-        <Button className="clocks__button" icon={<Play />} shape="round" onClick={() => dispatch(play())} />
-        <Button className="clocks__button" icon={<Pause />} shape="round" onClick={() => dispatch(pause())} />
+        <Button className="clocks__button" disabled={isModalOpen} icon={<Play />} shape="round" onClick={() => !isModalOpen && dispatch(play())} />
+        <Button className="clocks__button" disabled={isModalOpen} icon={<Pause />} shape="round" onClick={() => !isModalOpen && dispatch(pause())} />
       </div>
     </div>
   );

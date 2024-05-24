@@ -2,7 +2,6 @@ import { GameNodeData } from "~/types";
 import { RARE, RESOURCE_DEPOSIT, RIVER } from "~/constants/dictionary.ts";
 import { createSocket } from "~/utils/create-socket.ts";
 
-import { RIVER, RIVER } from "~/constants/dictionary.ts";
 export const RIVER_DATA: GameNodeData = {
   inputs: [createSocket()],
   title: "Lake",
@@ -10,7 +9,6 @@ export const RIVER_DATA: GameNodeData = {
   type: RIVER,
   health: 3,
   roles: [RESOURCE_DEPOSIT],
-  rarity: RARE,
   price: 1,
   description:
     "the planet's restless vein, carving paths through valleys and forests, sustaining life along its journey, and offering endless opportunities for exploration and adventure for those who dare to follow its flow",
