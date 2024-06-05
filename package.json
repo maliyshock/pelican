@@ -1,52 +1,24 @@
 {
-  "name": "rockets-js",
-  "private": true,
-  "version": "0.0.0",
+  "name": "pelican",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "vite",
-    "build": "tsc && vite build",
-    "test": "jest --verbose",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "fe": "pnpm --filter fe",
+    "fe:start": "pnpm --filter fe start"
   },
-  "dependencies": {
-    "@reduxjs/toolkit": "^2.2.3",
-    "antd": "^5.16.4",
-    "class-variance-authority": "^0.7.0",
-    "clsx": "^2.1.1",
-    "framer-motion": "^11.1.7",
-    "lucide-react": "^0.354.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-jss": "^10.10.0",
-    "react-redux": "^9.1.1",
-    "reactflow": "^11.11.2",
-    "tailwind-merge": "^2.3.0",
-    "tailwindcss-animate": "^1.0.7"
-  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
-    "@types/jest": "^29.5.12",
-    "@types/node": "^20.12.7",
-    "@types/react": "^18.2.79",
-    "@types/react-dom": "^18.2.25",
-    "@vitejs/plugin-react": "^4.2.1",
+    "typescript": "^5.4.5",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-jest": "^28.2.0",
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "jest": "^29.7.0",
-    "prettier": "^3.2.5",
-    "ts-jest": "^29.1.2",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.4.5",
-    "vite": "^5.2.10"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app"
-    ]
+    "prettier": "^3.2.5"
   }
 }
