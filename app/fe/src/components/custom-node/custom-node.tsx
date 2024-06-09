@@ -1,13 +1,12 @@
 import { NodeProps, ReactFlowState, useReactFlow, useStore, useUpdateNodeInternals } from "reactflow";
 import "../ui/card.css";
-import { GameNodeData } from "../../../../common/src/types";
 import { useCallback, useEffect } from "react";
-import { useGetAction } from "../../hooks/use-get-action.ts";
+import { useGetAction } from "~/hooks/use-get-action.ts";
 import { useDispatch, useSelector } from "react-redux";
-import { addMoney } from "../../slices/money.ts";
-import { CHARACTER } from "../../../../common/constants/dictionary.ts";
-import { RootState } from "../../store";
+import { addMoney } from "~/slices/money.ts";
+import { RootState } from "~/store";
 import { Card } from "../ui/card.tsx";
+import { GameNodeData } from "@pelican/constants";
 
 const connectionNodeIdSelector = (state: ReactFlowState) => state.connectionNodeId;
 
@@ -21,7 +20,7 @@ export default function CustomNode(props: NodeProps<GameNodeData>) {
   const isTimer = callback && timer && actionName;
   const isConnecting = !!connectionNodeId;
   const isTarget = !!connectionNodeId && connectionNodeId !== id;
-  const isCharacter = data.roles.includes(CHARACTER);
+  const isCharacter = data.roles.includes("character");
   const isCmd = useSelector((state: RootState) => state.cmd);
 
   const handleSell = useCallback(() => {

@@ -1,13 +1,13 @@
 import { useEffect } from "react";
-import { getRecipeKey } from "../utils/get-recipe-key.ts";
-import { RECIPES_BOOK } from "../constants/recepies.ts";
-import { getAveragePosition } from "../utils/get-averahe-position.ts";
-import { createNode } from "../utils/create-node.ts";
-import { destroyGroup } from "../slices/resource-groups.ts";
+import { getRecipeKey } from "~/utils/get-recipe-key.ts";
+import { getAveragePosition } from "~/utils/get-averahe-position.ts";
+import { createNode } from "~/utils/create-node.ts";
+import { destroyGroup } from "~/slices/resource-groups.ts";
 import { useReactFlow } from "reactflow";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store";
+import { RootState } from "~/store";
 import { useNodes } from "./use-nodes.ts";
+import { RECIPES_BOOK } from "@pelican/constants";
 
 interface CompleteElementsPerGroup {
   [key: number]: {

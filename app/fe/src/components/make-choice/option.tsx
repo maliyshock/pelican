@@ -1,7 +1,7 @@
-import { GameNodeData } from "../../../../common/src/types";
 import { useCallback } from "react";
 import { Card } from "../ui/card.tsx";
-import { createImg } from "../../utils/create-img.ts";
+import { createImg } from "~/utils/create-img";
+import { GameNodeData } from "@pelican/constants";
 
 interface OptionProps {
   option: GameNodeData;

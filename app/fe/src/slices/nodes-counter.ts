@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { GameNode } from "../../../common/src/types";
-import { INIT_NODES } from "../../../common/constants";
 import { groupNodesByKey } from "../utils/group-nodes-by-key.ts";
+import { INIT_NODES } from "~/constants";
+import { GameNode } from "@pelican/constants";
 
 // this slice does not regulate state of react flow, it is an utility to track some useful data
 export const nodesCounterSlice = createSlice({

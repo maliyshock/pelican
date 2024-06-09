@@ -1,8 +1,8 @@
 import { Handle, Position } from "reactflow";
 import { ArrowRightFromLine, ArrowRightToLine } from "lucide-react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
-import { Socket } from "../../../../common/src/types";
+import { RootState } from "~/store";
+import { Socket } from "@pelican/constants";
 
 interface SocketsProps {
   type: "target" | "source";

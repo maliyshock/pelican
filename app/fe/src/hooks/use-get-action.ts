@@ -1,12 +1,11 @@
-import { GameNodeData } from "../../../common/src/types";
 import { useSelector } from "react-redux";
-import { RootState } from "../store";
+import { RootState } from "~/store";
 import { NodeProps } from "reactflow";
 import { useMemo } from "react";
 import { createSelector } from "@reduxjs/toolkit";
 import { useDebounce } from "./use-debounce.ts";
 import { useGetActionCallback } from "./use-get-action-callback.ts";
-import { CRAFTING, EXPLORING, HARVESTING } from "../../../common/constants/dictionary.ts";
+import { ActionKind, GameNodeData } from "@pelican/constants";
 
 interface UseGetAction {
   node: NodeProps<GameNodeData>;
@@ -17,7 +16,7 @@ interface UseGetAction {
 export function useGetAction({ node }: UseGetAction) {
   // it should be debounced
   const selectActionForNode = (nodeId: string = "") => createSelector([state => state.actions], actions => actions[nodeId]);
-  const nodeSpecificAction: string | undefined = useSelector(selectActionForNode(node?.id));
+  const nodeSpecificAction: ActionKind | undefined = useSelector(selectActionForNode(node?.id));
   const player = useSelector((state: RootState) => state.player);
   const debouncedNode = useDebounce(node, 200);
   const actionCallback = useGetActionCallback(node.id, nodeSpecificAction); // вызов происходит часто
@@ -29,15 +28,15 @@ export function useGetAction({ node }: UseGetAction) {
     if (debouncedNode?.id) {
       callback = actionCallback(debouncedNode);
 
-      if (nodeSpecificAction === EXPLORING) {
+      if (nodeSpecificAction === "explore") {
         timer = player.explore.speed;
       }
 
-      if (nodeSpecificAction === HARVESTING) {
+      if (nodeSpecificAction === "harvest") {
         timer = player.harvest.speed;
       }
 
-      if (nodeSpecificAction === CRAFTING) {
+      if (nodeSpecificAction === "craft") {
         timer = player.craftingSpeed;
         // TODO: crafting time should calculated on items amount, player crafting speed and resource rarity
       }

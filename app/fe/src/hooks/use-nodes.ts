@@ -1,12 +1,11 @@
 import { useCallback } from "react";
 import { NodeChange, useNodesState } from "reactflow";
-import { getAddedItems } from "../utils/get-added-items.ts";
-import { add } from "../slices/nodes-counter.ts";
+import { getAddedItems } from "~/utils/get-added-items.ts";
+import { add } from "~/slices/nodes-counter.ts";
 import { useDispatch } from "react-redux";
-import { INIT_NODES } from "../../../common/constants";
-import { GameNode } from "../../../common/src/types";
-import { removeNodes } from "../slices/resource-groups.ts";
-import { RESOURCE } from "../../../common/constants/dictionary.ts";
+import { removeNodes } from "~/slices/resource-groups.ts";
+import { GameNode } from "@pelican/constants";
+import { INIT_NODES } from "~/constants";
 
 export function useNodes() {
   const [nodes, , onNodesChange] = useNodesState(INIT_NODES);
@@ -27,7 +26,7 @@ export function useNodes() {
 
   const handleOnNodesDelete = useCallback(
     (nodes: GameNode[]) => {
-      dispatch(removeNodes(nodes.filter(node => node.data.roles.includes(RESOURCE))));
+      dispatch(removeNodes(nodes.filter(node => node.data.roles.includes("resource"))));
     },
     [dispatch],
   );

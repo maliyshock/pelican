@@ -1,13 +1,12 @@
 import { useCallback } from "react";
 import { Connection, addEdge, useReactFlow } from "reactflow";
 import { useDispatch, useSelector } from "react-redux";
-import { linkPair, processing } from "../slices/resource-groups.ts";
-import { GameNode } from "../../../common/src/types";
-import { CHARACTER, CRAFTING, RESOURCE } from "../../../common/src/constants/dictionary.ts";
-import { RootState } from "../store";
-import { RECIPES_BOOK } from "../constants/recepies.ts";
-import { setActions } from "../slices/actions.ts";
-import { getRecipeKey } from "../utils/get-recipe-key.ts";
+import { linkPair, processing } from "~/slices/resource-groups.ts";
+import { RootState } from "~/store";
+import { setActions } from "~/slices/actions.ts";
+import { getRecipeKey } from "~/utils/get-recipe-key.ts";
+import { GameNode, RECIPES_BOOK } from "@pelican/constants";
+import { includes } from "~/utils/includes.ts";
 
 export function useOnConnect() {
   const { groups, entrancePoints } = useSelector((state: RootState) => state.resourceGroups);
@@ -20,11 +19,11 @@ export function useOnConnect() {
         const source = getNode(connection.source) as GameNode;
         const target = getNode(connection.target) as GameNode;
 
-        if (source.data.roles.includes(RESOURCE) && target.data.roles.includes(RESOURCE)) {
+        if (includes(source.data.roles, "resource") && includes(target.data.roles, "resource")) {
           dispatch(linkPair({ source, target }));
         }
 
-        if (source.data.roles.includes(CHARACTER) && entrancePoints[target.id] !== undefined) {
+        if (includes(source.data.roles, "character") && entrancePoints[target.id] !== undefined) {
           const index = entrancePoints[target.id];
           const nodes = groups[index];
           const recipeKey = getRecipeKey(nodes);
@@ -38,7 +37,7 @@ export function useOnConnect() {
             }, {});
 
             dispatch(processing(nodesToProcess));
-            dispatch(setActions(nodes.map(node => ({ target: node.id, actionName: CRAFTING }))));
+            dispatch(setActions(nodes.map(node => ({ target: node.id, actionName: "craft" }))));
           }
         }
 

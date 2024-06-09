@@ -1,5 +1,4 @@
 import { getRandomItem } from "./get-random-item.ts";
-import { FOREST } from "../../../common/src/constants/dictionary.ts";
 
 describe("Integration Test for getRandomItem", () => {
   test("retrieves a random item based on rarity and keyName", async () => {

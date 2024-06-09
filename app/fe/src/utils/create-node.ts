@@ -1,8 +1,8 @@
-import { GameNode, GameNodeData } from "../../../common/src/types";
 import { getRandom } from "./get-random.ts";
-import { APPEARANCE_RANGE } from "../../../common/constants";
 import { getBool } from "./get-bool.ts";
 import { createImg } from "./create-img.ts";
+import { GameNode, GameNodeData } from "@pelican/constants";
+import { APPEARANCE_RANGE } from "~/constants";
 
 interface CreateNode {
   position: {

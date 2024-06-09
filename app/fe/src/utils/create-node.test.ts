@@ -1,8 +1,6 @@
 import { createNode } from "./create-node.ts";
 import { getBool } from "./get-bool.ts";
 import { getRandom } from "./get-random.ts";
-import { RESOURCE, TREE } from "../../../common/src/constants/dictionary.ts";
-import { EntityType, Role } from "../../../common/src/types";
 
 jest.mock("~/utils/get-random", () => ({
   getRandom: jest.fn(),

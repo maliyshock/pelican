@@ -1,5 +1,3 @@
-// import { BASIC, COMMON, LEGENDARY, RARE, REALLY_RARE, UNIQUE } from "../../constants/dictionary.ts";
-
 export const EXPLORE = {
   experience: 0,
   nextLevel: 50,

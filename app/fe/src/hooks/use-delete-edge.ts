@@ -1,8 +1,7 @@
 import { useCallback } from "react";
 import { Edge, useReactFlow } from "reactflow";
 import { useDispatch } from "react-redux";
-import { removeConnection } from "../slices/resource-groups.ts";
-import { RESOURCE } from "../../../common/src/constants/dictionary.ts";
+import { removeConnection } from "~/slices/resource-groups.ts";
 
 export function useDeleteEdge() {
   const { setEdges, getNode } = useReactFlow();
@@ -13,7 +12,7 @@ export function useDeleteEdge() {
       const source = getNode(edge.source);
       const target = getNode(edge.target);
 
-      if (source && target && source.data.roles.includes(RESOURCE) === target.data.roles.includes(RESOURCE)) {
+      if (source && target && source.data.roles.includes("resource") === target.data.roles.includes("resource")) {
         dispatch(removeConnection({ source, target }));
       }
 

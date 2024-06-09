@@ -1,17 +1,2 @@
-import { ACORN, APPLE, BERRY, EGG, FISH, GRAIN, HONEY, INSECTS, LARVAE, MUSHROOM, NUT, WILD_GRAPES } from "~/constants/dictionary";
-
-//TODO: should be generic
-
-export type Food =
-  | typeof ACORN
-  | typeof APPLE
-  | typeof BERRY
-  | typeof EGG
-  | typeof FISH
-  | typeof GRAIN
-  | typeof HONEY
-  | typeof INSECTS
-  | typeof LARVAE
-  | typeof MUSHROOM
-  | typeof WILD_GRAPES
-  | typeof NUT;
+export const FOOD = ["acorn", "apple", "berry", "egg", "fish", "grain", "honey", "insects", "larvae", "mushroom", "wild-grapes", "poop"] as const;
+export type FoodKind = (typeof FOOD)[number];

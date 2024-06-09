@@ -1,8 +1,7 @@
-import { GameNode, Role } from "../../../common/src/types";
-import { connections } from "../constants/connections.ts";
 import { getIntersection } from "./get-intersection.ts";
 import { Connection, Edge } from "reactflow";
 import { isBelowLimit } from "./check-handle-limits.ts";
+import { GameNode, RoleKind, connections } from "@pelican/constants";
 
 interface IsConnectable {
   source: GameNode;
@@ -16,7 +15,7 @@ interface IsConnectable {
 export function isConnectable({ source, target, edges, connection }: IsConnectable) {
   const targetRoles = target.data.roles;
   const sourceRoles = source.data.roles;
-  let intersections: Role[] = [];
+  let intersections: RoleKind[] = [];
 
   if (!isBelowLimit({ source, target, edges, connection })) {
     return false;

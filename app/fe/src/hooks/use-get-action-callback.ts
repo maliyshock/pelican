@@ -1,25 +1,23 @@
-import { GameNode, GameNodeData } from "../../../common/src/types";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NodeProps, useReactFlow } from "reactflow";
-import { changeNodeValueBy } from "../utils/change-node-value-by.ts";
-import { CRAFTING, EXPLORING, HARVESTING } from "../../../common/src/constants/dictionary.ts";
-import { complete } from "../slices/resource-groups.ts";
-import { useGetProbability } from "./useGetProbability.ts";
-import { RESOURCE_CONTAINERS } from "../constants/resource-sources-map.ts";
-import { getRandom } from "../utils/get-random.ts";
-import { RootState } from "../store";
-import { setItems } from "../slices/items-to-choose.ts";
+import { changeNodeValueBy } from "~/utils/change-node-value-by.ts";
+import { complete } from "~/slices/resource-groups.ts";
+// import { useGetProbability } from "./useGetProbability.ts";
+import { getRandom } from "~/utils/get-random.ts";
+import { RootState } from "~/store";
+import { setItems } from "~/slices/items-to-choose.ts";
+import { ActionKind, GameNode, GameNodeData, RESOURCE_CONTAINERS } from "@pelican/constants";
 
-export function useGetActionCallback(nodeId: string, nodeSpecificAction: string | undefined) {
-  const { addNodes, setNodes } = useReactFlow();
-  const getProbability = useGetProbability();
+export function useGetActionCallback(nodeId: string, nodeSpecificAction: ActionKind | undefined) {
+  const { setNodes } = useReactFlow();
+  // const getProbability = useGetProbability();
   const dispatch = useDispatch();
   const exploringOptions = useSelector((state: RootState) => state.player.explore.options);
 
   return useCallback(
     (targetNode: NodeProps<GameNodeData>) => () => {
-      if (nodeSpecificAction === EXPLORING) {
+      if (nodeSpecificAction === "explore") {
         const { type } = targetNode.data;
         const itemsBank = RESOURCE_CONTAINERS[type];
 
@@ -53,14 +51,14 @@ export function useGetActionCallback(nodeId: string, nodeSpecificAction: string 
       //   }
       // }
 
-      if (nodeSpecificAction === EXPLORING || nodeSpecificAction === HARVESTING) {
+      if (nodeSpecificAction === "explore" || nodeSpecificAction === "harvest") {
         setNodes((nodes: GameNode[]) => changeNodeValueBy({ nodes, ids: [targetNode.id], key: "health", value: -1 }));
       }
 
-      if (nodeSpecificAction === CRAFTING) {
+      if (nodeSpecificAction === "craft") {
         dispatch(complete(nodeId));
       }
     },
-    [addNodes, dispatch, exploringOptions, getProbability, nodeId, nodeSpecificAction, setNodes],
+    [dispatch, exploringOptions, nodeId, nodeSpecificAction, setNodes],
   );
 }

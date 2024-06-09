@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { DirectedGraph, EntrancePoints } from "../utils/directed-graph.ts";
-import { GameNode } from "../../../common/src/types";
+import { GameNode } from "@pelican/constants";
 
 interface Pair {
   source: GameNode;

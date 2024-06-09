@@ -14,6 +14,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@pelican/utils": "workspace:^",
     "@pelican/constants": "workspace:^",
     "@reduxjs/toolkit": "^2.2.3",
     "antd": "^5.16.4",

@@ -1,12 +1,2 @@
-import { APPLE_TREE, BERRIES_BUSH, CLAY_DEPOSIT, EMPTY_BERRIES_BUSH, LAKE, NUT_TREE, RIVER, STONE_DEPOSIT, TREE } from "~/constants/dictionary";
-
-export type ResourceDeposit =
-  | typeof TREE
-  | typeof STONE_DEPOSIT
-  | typeof BERRIES_BUSH
-  | typeof EMPTY_BERRIES_BUSH
-  | typeof LAKE
-  | typeof RIVER
-  | typeof CLAY_DEPOSIT
-  | typeof APPLE_TREE
-  | typeof NUT_TREE;
+export const RESOURCE_DEPOSIT = ["berries-bush", "clay-deposit", "empty-berries-bush", "lake", "river", "stone-deposit", "tree"] as const;
+export type ResourceDepositKind = (typeof RESOURCE_DEPOSIT)[number];

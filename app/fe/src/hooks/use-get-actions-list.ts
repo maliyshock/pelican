@@ -1,7 +1,6 @@
 import { useReactFlow } from "reactflow";
-import { Action, GameNode } from "../../../common/src/types";
-import { ACTIONS_DICTIONARY } from "../constants/actions-dictionary.ts";
 import { useMemo } from "react";
+import { ACTIONS_DICTIONARY, ActionKind, GameNode } from "@pelican/constants";
 
 export function useGetActionsList(source: string, target: string) {
   const { getNode } = useReactFlow();
@@ -9,7 +8,7 @@ export function useGetActionsList(source: string, target: string) {
   const targetNode = getNode(target) as GameNode;
 
   return useMemo(() => {
-    let actions: Action[] = [];
+    let actions: ActionKind[] = [];
 
     // TODO: this is heavy. Any other data structure or Optimisation?
     sourceNode.data.roles.forEach(actor => {

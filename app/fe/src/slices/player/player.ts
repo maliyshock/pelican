@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Rarity } from "../../../../common/src/types";
+// import { Rarity } from "../../../../common/src/types";
 import { EXPLORE } from "./explore.ts";
 import { HARVEST } from "./harvest.ts";
 
@@ -23,9 +23,9 @@ type PlayerChange = {
   [key in keyof Player]: Player[key];
 };
 
-export type Probability = {
-  [k in Rarity]: number;
-};
+// export type Probability = {
+//   [k in Rarity]: number;
+// };
 
 // TODO: normalisation should be applied to rates
 const initialState: Player = {

@@ -1,21 +1,20 @@
-import { Action } from "../../../../common/src/types";
 import { Compass, Grab, Hammer } from "lucide-react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
-import { removeAction, setActions } from "../../slices/actions.ts";
-import { CRAFTING, EXPLORING, HARVESTING } from "../../../../common/constants/dictionary.ts";
+import { RootState } from "~/store";
+import { removeAction, setActions } from "~/slices/actions.ts";
+import { ActionKind } from "@pelican/constants";
 
 interface ActionsProps {
-  actionsList: Action[];
+  actionsList: ActionKind[];
   source: string;
   target: string;
 }
 
-function getIcon(action: Action) {
-  if (action === EXPLORING) return <Compass />;
-  if (action === HARVESTING) return <Grab />;
-  if (action === CRAFTING) return <Hammer />;
+function getIcon(action: ActionKind) {
+  if (action === "explore") return <Compass />;
+  if (action === "harvest") return <Grab />;
+  if (action === "craft") return <Hammer />;
 }
 
 const cutoff = 1;
