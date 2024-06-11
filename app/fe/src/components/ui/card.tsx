@@ -32,19 +32,35 @@ interface CardProps {
     value: number;
     handler?(): void;
   };
+  disabled?: boolean;
 }
 
 const activeWrapper = { scale: 1.1 };
 const activeInnerWrapper = { boxShadow: "0 16px 12px rgba(0, 0, 0, 0.03)", outline: "4px solid var(--blue)" };
 
-export function Card({ className, innerClassName, title, img, dmg, health, inputs, outputs, timer, price, isConnectable, isTarget, active }: CardProps) {
+export function Card({
+  className,
+  innerClassName,
+  title,
+  img,
+  dmg,
+  health,
+  inputs,
+  outputs,
+  timer,
+  price,
+  isConnectable,
+  isTarget,
+  active,
+  disabled,
+}: CardProps) {
   return (
-    <motion.div animate={active ? activeWrapper : {}} className={`card-wrapper ${className || ""}`} whileHover={activeWrapper}>
+    <motion.div animate={active ? activeWrapper : {}} className={`card-wrapper ${className || ""} ${disabled ? "disabled" : ""}`} whileHover={activeWrapper}>
       <motion.div
         animate={active ? activeInnerWrapper : {}}
         className={`card__inner ${innerClassName || ""}`}
         initial={{ boxShadow: "0 0px 12px rgba(0, 0, 0, 0.06)" }}
-        whileHover={{ boxShadow: "0 16px 12px rgba(0, 0, 0, 0.03)", outline: "4px solid var(--blue)" }}
+        whileHover={!disabled ? { boxShadow: "0 16px 12px rgba(0, 0, 0, 0.03)", outline: "4px solid var(--blue)" } : {}}
       >
         {price && (
           <Button className="card__value-container card__sale" shape="circle" onClick={() => price?.handler && price.handler()}>
@@ -74,8 +90,8 @@ export function Card({ className, innerClassName, title, img, dmg, health, input
         )}
       </motion.div>
 
-      {inputs && <Sockets isConnectable={isConnectable} isTarget={isTarget} position={Position.Left} sockets={inputs} type="target" />}
-      {outputs && <Sockets isConnectable={isConnectable} isTarget={isTarget} position={Position.Right} sockets={outputs} type="source" />}
+      {inputs && <Sockets isConnectable={disabled ? false : isConnectable} isTarget={isTarget} position={Position.Left} sockets={inputs} type="target" />}
+      {outputs && <Sockets isConnectable={disabled ? false : isConnectable} isTarget={isTarget} position={Position.Right} sockets={outputs} type="source" />}
     </motion.div>
   );
 }

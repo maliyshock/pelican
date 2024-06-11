@@ -24,6 +24,7 @@ const edgeTypes = {
 function App() {
   const dispatch = useDispatch();
   const screenSize = useSelector((state: RootState) => state.screenSize);
+  const chooseFrom = useSelector((state: RootState) => state.itemsToChoose.items);
   const { handleOnNodesChange, handleOnNodesDelete, nodes } = useNodes();
   const [edges, , onEdgesChange] = useEdgesState([]);
   const { isValidConnection, onEdgeUpdate, onEdgeUpdateStart, onEdgeUpdateEnd } = useEdges();
@@ -60,7 +61,7 @@ function App() {
 
   return (
     <div className="app">
-      <MakeChoice />
+      {chooseFrom.length > 0 && <MakeChoice />}
       <div className="node-sandbox">
         <Header />
         {/*<CenterCameraButton />*/}
