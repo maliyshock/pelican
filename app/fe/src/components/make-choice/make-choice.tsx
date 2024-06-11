@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { Modal } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { modalStatus } from "../../slices/modal-status.ts";
-import { RootState } from "../../store";
+import { modalStatus } from "~/slices/modal-status.ts";
+import { RootState } from "~/store";
 import { Option } from "./option.tsx";
-import { clear } from "../../slices/items-to-choose.ts";
+import { clear } from "~/slices/items-to-choose.ts";
 import "./make-choice.css";
 
 export function MakeChoice() {

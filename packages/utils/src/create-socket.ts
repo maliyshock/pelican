@@ -1,5 +1,5 @@
-import { generateID } from "~/generate-id";
+import generateID from "~/generate-id";
 
-export function createSocket(limit: number) {
+export default function createSocket(limit: number) {
   return { id: generateID(), ...(limit ? { limit } : {}) };
 }

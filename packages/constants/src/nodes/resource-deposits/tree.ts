@@ -9,4 +9,5 @@ export const TREE: GameNodeData = {
   title: "Tree",
   roles: ["resource-deposit"],
   price: 2,
+  health: 3,
 };

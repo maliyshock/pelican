@@ -1,2 +1,0 @@
-export const RESOURCE_DEPOSIT = ["berries-bush", "clay-deposit", "empty-berries-bush", "lake", "river", "stone-deposit", "tree"] as const;
-export type ResourceDepositKind = (typeof RESOURCE_DEPOSIT)[number];

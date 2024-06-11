@@ -7,7 +7,7 @@ import { complete } from "~/slices/resource-groups.ts";
 import { getRandom } from "~/utils/get-random.ts";
 import { RootState } from "~/store";
 import { setItems } from "~/slices/items-to-choose.ts";
-import { ActionKind, GameNode, GameNodeData, RESOURCE_CONTAINERS } from "@pelican/constants";
+import { ActionKind, GameNode, GameNodeData, RESOURCE_CONTAINERS, ResourceContainer } from "@pelican/constants";
 
 export function useGetActionCallback(nodeId: string, nodeSpecificAction: ActionKind | undefined) {
   const { setNodes } = useReactFlow();
@@ -19,7 +19,7 @@ export function useGetActionCallback(nodeId: string, nodeSpecificAction: ActionK
     (targetNode: NodeProps<GameNodeData>) => () => {
       if (nodeSpecificAction === "explore") {
         const { type } = targetNode.data;
-        const itemsBank = RESOURCE_CONTAINERS[type];
+        const itemsBank = RESOURCE_CONTAINERS[type as ResourceContainer];
 
         if (itemsBank && itemsBank.length > 0) {
           let itemsForChoice = [];

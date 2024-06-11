@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { RegionKind, ResourceDepositKind, ResourceKind, RoleKind } from "~/types";
+import { RoleKind } from "~/types";
 import { Node } from "reactflow";
 
 type ReactFlowNode = Omit<Node, "data">;
@@ -31,5 +31,3 @@ export interface GameNodeData {
   quantity?: number;
   description?: ReactNode;
 }
-
-export type ResourceContainer = ResourceKind | ResourceDepositKind | RegionKind;

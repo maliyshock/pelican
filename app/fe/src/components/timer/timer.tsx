@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import "./timer.css";
 import { Line } from "./line.tsx";
-import { getRandom } from "../../utils/get-random.ts";
+import { getRandom } from "~/utils/get-random.ts";
 
 interface TimerProps {
   time: number;

@@ -4,14 +4,16 @@
   "description": "",
   "main": "dist/index.d.ts",
   "scripts": {
-    "build": "rm -rf dist && tsc && tsc-alias -p tsconfig.json",
-    "barrels:generate": "barrelsby -D"
+    "watch": "nodemon --watch ./src/** --exec \"pnpm run build\"",
+    "build": "rm -rf dist && pnpm run barrels:generate && tsc && tsc-alias -p tsconfig.json",
+    "barrels:generate": "barrelsby -D -d ./src --exportDefault"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "barrelsby": "^2.8.1",
+    "nodemon": "^3.1.3",
     "typescript": "^5.4.5"
   },
   "devDependencies": {

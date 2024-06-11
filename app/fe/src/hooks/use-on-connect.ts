@@ -5,8 +5,9 @@ import { linkPair, processing } from "~/slices/resource-groups.ts";
 import { RootState } from "~/store";
 import { setActions } from "~/slices/actions.ts";
 import { getRecipeKey } from "~/utils/get-recipe-key.ts";
-import { GameNode, RECIPES_BOOK } from "@pelican/constants";
+
 import { includes } from "~/utils/includes.ts";
+import { GameNode, RECIPES_BOOK } from "@pelican/constants";
 
 export function useOnConnect() {
   const { groups, entrancePoints } = useSelector((state: RootState) => state.resourceGroups);

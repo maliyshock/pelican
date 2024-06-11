@@ -1,5 +1,5 @@
-import { getRandom } from "~/get-random";
+import getRandom from "~/get-random";
 
-export function generateID() {
+export default function generateID() {
   return getRandom(Date.now()).toString();
 }

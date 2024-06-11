@@ -6,7 +6,7 @@ import { Timer } from "../timer/timer.tsx";
 import { Sockets } from "../custom-node/sockets.tsx";
 import { Position } from "reactflow";
 import { ReactNode } from "react";
-import { Socket } from "../../../../common/src/types";
+import { Socket } from "@pelican/constants";
 
 interface CardProps {
   className?: string;

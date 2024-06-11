@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { GameNodeData } from "../../../common/src/types";
+import { GameNodeData } from "@pelican/constants";
 
 const initialState: { items: GameNodeData[] } = {
   items: [],
