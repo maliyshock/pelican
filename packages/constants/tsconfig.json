@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "allowImportingTsExtensions": false,
+    "experimentalDecorators": true,
+    "declaration": true,
+    "noEmit": false,
+    "noImplicitAny": false,
+    "paths": {
+      "~/*": ["./src/*"]
+    },
+    "outDir": "./dist"
+  },
+  "include": [
+    "./src/**/*.ts"
+  ]
+}

@@ -1,0 +1,2 @@
+export const RESOURCE = ["poop", "stone-deposit", "bones", "cane", "feathers", "flint", "leafs", "plank", "plant-fibers", "rope", "skin", "soil", "stick", "stone", "vine", "wood"] as const;
+export type ResourceKind = (typeof RESOURCE)[number];

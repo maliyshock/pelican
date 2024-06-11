@@ -1,0 +1,192 @@
+.card-wrapper {
+    color: #000;
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+}
+
+.card-wrapper.grabbable {
+    cursor: grab
+}
+
+.card-wrapper.dragging {
+    cursor: grabbing;
+}
+
+.card__inner {
+    border-radius: 8px;
+    width: 240px;
+    min-height: 100px;
+    overflow: hidden;
+    background-color: white;
+}
+
+.card__inner.cmd:before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    height: 20px;
+    width: 40px;
+    transform: translate(-50%, 0);
+    background: #d6d5e6;
+    z-index: 1000;
+    line-height: 1;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 9px;
+    border: 2px solid #222138;
+}
+
+.card__body {
+    width: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card__connectors {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.card-wrapper .handle-reset {
+    left: unset;
+    top: unset;
+    position: static;
+    transform: none;
+    border-radius: unset;
+}
+.card-wrapper .handle {
+    height: 28px;
+    width: 28px;
+    padding: 4px;
+    border-radius: 4px;
+    background: var(--blue);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.handle-overlay {
+    opacity: 0.5;
+}
+
+.card-wrapper .handle-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    background-color: var(--blue);
+}
+
+.handle-overlay.catcher {
+    background-color: var(--yellow);
+    z-index: 10;
+}
+
+.handle-overlay.transparent {
+    pointer-events: none;
+    opacity: 0;
+}
+
+.handle.input {
+    background: var(--yellow);
+}
+
+.handle *{
+    pointer-events: none;
+}
+
+.card__inputs {
+    right: 100%;
+    transform: translateX(50%);
+}
+
+.card__outputs {
+    left: 100%;
+    transform: translateX(-50%);
+}
+
+.card__header {
+    text-align: center;
+}
+
+.card__header, .card__footer {
+    width: 100%;
+    padding: 12px;
+}
+
+.card__value-container {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--gray);
+    box-shadow: 0 0 0 2px white;
+    z-index: 2;
+}
+
+.card__value {
+    mix-blend-mode: multiply;
+}
+
+.card__dmg {
+    left: 0;
+    top: 100%;
+    transform: translate(-40%, -60%);
+    background-color: var(--silver);
+}
+
+.card__health {
+    right: 0;
+    top: 100%;
+    transform: translate(40%, -60%);
+    background-color: var(--lasagna);
+}
+
+.card__sale {
+    left: 0;
+    top: 0;
+    transform: translate(-40%, -30%);
+    color: var(--orange);
+    border: none;
+    background-color: var(--yellow);
+    padding: 0;
+}
+
+/*hack to rewrite ant-design styles*/
+.card__sale.card__sale.card__sale:hover {
+    border: none;
+    color: var(--orange);
+}
+
+.card__footer {
+    display: flex;
+    justify-content: center;
+}
+
+.card__footer *:first-child {
+    margin-right: auto;
+}
+.card__footer *:last-child {
+    margin-left: auto;
+}
+
+.card__header * {
+    margin: 0;
+}
