@@ -6,13 +6,15 @@ import { RootState } from "~/store";
 import { Option } from "./option.tsx";
 import { clear } from "~/slices/items-to-choose.ts";
 import "./make-choice.css";
+import { createNode } from "~/utils/create-node.ts";
+import { useReactFlow } from "reactflow";
 
 export function MakeChoice() {
-  const [selected, setSelected] = useState<number[]>([]);
   const chooseFrom = useSelector((state: RootState) => state.itemsToChoose.items);
+  const [selected, setSelected] = useState<number[]>([]);
   const limit = useSelector((state: RootState) => state.player.explore.limit);
   const dispatch = useDispatch();
-  const [open, setOpen] = useState(chooseFrom.length > 0);
+  const { addNodes } = useReactFlow();
 
   const handleSelection = useCallback(
     (index: number) => {
@@ -23,36 +25,33 @@ export function MakeChoice() {
     [limit, selected.length],
   );
 
-  const handleDeSelection = useCallback((index: number) => setSelected(prev => prev.filter(id => id !== index)), []);
+  const handleDeSelection = useCallback((index: number) => setSelected(prev => prev.filter(ind => ind !== index)), []);
 
   const handleCancel = () => {
     dispatch(clear());
-    setOpen(false);
+    dispatch(modalStatus(false));
   };
 
   const handleOk = useCallback(() => {
-    if (selected.length > 0) {
-      setOpen(false);
-    }
-  }, [selected.length]);
+    dispatch(modalStatus(false));
+    dispatch(clear());
+    // TODO: we need to know position of a player
+    // we need to have an access to character position by id
+    const newNodes = selected.map(ind => createNode({ data: chooseFrom[ind], position: { x: 0, y: 0, strict: false } }));
+
+    addNodes(newNodes);
+  }, [addNodes, chooseFrom, dispatch, selected]);
 
   useEffect(() => {
-    if (chooseFrom.length > 0) {
-      setOpen(true);
-    }
-  }, [chooseFrom.length]);
-
-  useEffect(() => {
-    dispatch(modalStatus(open));
-  }, [dispatch, open]);
+    dispatch(modalStatus(true));
+  }, [dispatch]);
 
   return (
     <Modal
       closable={false}
-      destroyOnClose={true}
       maskClosable={false}
       okButtonProps={{ disabled: selected.length === 0 }}
-      open={open}
+      open={true}
       width={620}
       onCancel={handleCancel}
       onOk={handleOk}

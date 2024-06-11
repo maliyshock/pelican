@@ -15,6 +15,12 @@
     cursor: grabbing;
 }
 
+.card-wrapper.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
 .card__inner {
     border-radius: 8px;
     width: 240px;

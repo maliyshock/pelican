@@ -18,11 +18,14 @@ export function Option({ index, option, limitIsReached, active, onSelect, onDeSe
     if (active) onDeSelect(index);
   }, [active, index, limitIsReached, onDeSelect, onSelect]);
 
+  const isDisabled = limitIsReached && !active;
+
   return (
-    <li className={`options-list__item`} onClick={handleSelect}>
+    <li className={`options-list__item`} onClick={isDisabled ? undefined : handleSelect}>
       <Card
         active={active}
         className="small"
+        disabled={isDisabled}
         dmg={option.dmg}
         health={option.health}
         img={createImg(option.type)}
