@@ -1,7 +1,3 @@
-import { getItemsByRarity } from "./get-items-by-rarity.ts";
-import { RESOURCE_CONTAINERS } from "../constants/resource-sources-map.ts";
-import { BASIC, COMMON, FOREST, RARE, TREE } from "../../../common/src/constants/dictionary.ts";
-
 describe("getItemsByRarity", () => {
   it("returns items for a given rarity and place when items are available", () => {
     expect(getItemsByRarity(COMMON, FOREST)).toEqual(RESOURCE_CONTAINERS[FOREST]![1]);

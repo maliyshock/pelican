@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import { RoleKind } from "~/types";
 import { Node } from "reactflow";
+import { RoleKind } from "~/types/roles";
 
 type ReactFlowNode = Omit<Node, "data">;
 

@@ -1,6 +1,3 @@
-import { getRarity } from "./get-rarity.ts";
-import { BASIC, COMMON, LEGENDARY, RARE, REALLY_RARE, UNIQUE } from "../../../common/src/constants/dictionary.ts";
-
 describe("getRarity function", () => {
   const probabilities = {
     [BASIC]: 20,

@@ -1,4 +1,4 @@
-import { GetFieldType } from "../../../common/src/types/utils.ts";
+import { GetFieldType } from "~/types/get-field-type.ts";
 
 export function getValue<TData, TPath extends string, TDefault = GetFieldType<TData, TPath>>(
   data: TData,

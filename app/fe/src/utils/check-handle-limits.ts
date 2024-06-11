@@ -1,5 +1,5 @@
-import { GameNode } from "../../../common/src/types";
 import { Connection, Edge } from "reactflow";
+import { GameNode } from "@pelican/constants";
 
 interface CheckHandleLimits {
   source: GameNode;

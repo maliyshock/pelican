@@ -1,4 +1,4 @@
-import { GameNode } from "../../../common/src/types";
+import { GameNode } from "@pelican/constants";
 
 export function getAveragePosition(nodes: GameNode[]) {
   const calculations = nodes.reduce(

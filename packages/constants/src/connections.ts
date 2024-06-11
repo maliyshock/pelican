@@ -1,4 +1,4 @@
-import { RoleKind } from "~/types";
+import { RoleKind } from "~/types/roles";
 
 export const outputs = {};
 

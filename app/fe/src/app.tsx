@@ -60,7 +60,6 @@ function App() {
 
   return (
     <div className="app">
-      {/*on explore*/}
       <MakeChoice />
       <div className="node-sandbox">
         <Header />

@@ -32,7 +32,6 @@ export function MakeChoice() {
 
   const handleOk = useCallback(() => {
     if (selected.length > 0) {
-      // close modal
       setOpen(false);
     }
   }, [selected.length]);
