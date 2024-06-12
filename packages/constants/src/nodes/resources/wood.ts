@@ -8,4 +8,5 @@ export const WOOD: GameNodeData = {
   title: "Wood",
   roles: ["resource"],
   price: 1,
+  health: 3,
 };

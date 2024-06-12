@@ -5,7 +5,7 @@ import { STONE_DEPOSIT } from "~/nodes/resource-deposits/stone-deposit";
 import { POOP } from "~/nodes/others/poop";
 import { PLANK } from "~/nodes/resources/plank";
 import { WOOD } from "~/nodes/resources/wood";
-import { ResourceContainer } from "~/types";
+import { ResourceContainer } from "~/types/resource-container";
 import { ANTHILL } from "~/nodes/resources/anthill";
 import { BONES } from "~/nodes/resources/bones";
 import { CANE } from "~/nodes/resources/cane";
@@ -50,6 +50,7 @@ export const RESOURCE_CONTAINERS: {
     TREE,
     POOP,
   ],
+  // "deepForest": [],
   "tree": [WOOD], // apple // nut // stick // leaf
   "stone-deposit": [STONE],
 };
