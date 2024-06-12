@@ -59,6 +59,8 @@ async function processFiles(files: string[]) {
     }
   }
 
+  const rolesBank: Array<{ snake: string; camel: string; name: string }> = [];
+
   for (const role in rolesMap) {
     const roleFileName = `${role}.ts`;
     const roleFilePath = path.join(typesDir, roleFileName); // сохранение в папке types
@@ -67,8 +69,18 @@ async function processFiles(files: string[]) {
     const roleCamel = upperFirst(camelCase(role));
     const fileContent = `export const ${roleSnake} = [${typesArray.map(type => `"${type}"`).join(", ")}] as const;\nexport type ${roleCamel}Kind = (typeof ${roleSnake})[number];`;
 
+    rolesBank.push({ snake: roleSnake, camel: roleCamel, name: role });
     fs.writeFileSync(roleFilePath, fileContent, "utf8");
   }
+
+  const importPaths = rolesBank.reduce((acc, item) => {
+    const newPath = `import {${item.camel}Kind} from "./${item.name}"\n`;
+
+    return acc + newPath;
+  }, "");
+  const fileContent = `${importPaths}\nexport type TypeKind = ${rolesBank.map(role => role.camel + "Kind").join(" | ")};`;
+
+  fs.writeFileSync(path.join(typesDir, "type-kind.ts"), fileContent, "utf8");
 }
 
 const allFiles = getAllFiles(nodesDir);

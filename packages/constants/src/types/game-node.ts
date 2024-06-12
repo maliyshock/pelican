@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { Node } from "reactflow";
 import { RoleKind } from "~/types/roles";
+import { TypeKind } from "~/types/build/type-kind";
 
 type ReactFlowNode = Omit<Node, "data">;
 
@@ -16,10 +17,10 @@ export type Socket = {
 
 export interface GameNodeData {
   roles: RoleKind[];
-  type: string; // TODO: should be strict
+  type: TypeKind;
   price?: number;
   title?: string;
-  root?: string; // TODO: should be strict
+  root?: TypeKind;
   img: {
     src: string;
     alt: string;

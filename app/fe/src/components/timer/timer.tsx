@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import "./timer.css";
 import { Line } from "./line.tsx";
-import { getRandom } from "~/utils/get-random.ts";
+import { getRandomNum } from "~/utils/get-random-num.ts";
 
 interface TimerProps {
   time: number;
@@ -10,9 +10,9 @@ interface TimerProps {
 }
 
 export function Timer({ time, callback, label }: TimerProps) {
-  const [key, setKey] = useState(getRandom(Date.now()));
+  const [key, setKey] = useState(getRandomNum(Date.now()));
   const onComplete = useCallback(() => {
-    setKey(getRandom(Date.now()));
+    setKey(getRandomNum(Date.now()));
     callback();
   }, [callback]);
 

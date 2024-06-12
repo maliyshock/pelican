@@ -1,3 +1,3 @@
-export function getRandom(max: number) {
+export function getRandomNum(max: number) {
   return Math.round(Math.random() * max);
 }

@@ -1,7 +1,8 @@
 import { GameNodeData } from "~/types/game-node";
 import { FIRE_PLACE, STONE_WALL } from "~/nodes/buildings/buildings";
-import { ResourceKind } from "~/types";
+
 import { CONCAT_SYMBOL } from "~/constants";
+import { ResourceKind } from "~/types/build/resource";
 
 interface Recipe {
   requires: ResourceKind[];

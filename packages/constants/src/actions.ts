@@ -1,5 +1,7 @@
 // declare all possible actions
-import { ActionKind, RoleKind } from "~/types";
+
+import { RoleKind } from "~/types/roles";
+import { ActionKind } from "~/types/actions";
 
 export type Actions = {
   [K in RoleKind]?: Partial<{

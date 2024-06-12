@@ -56,3 +56,4 @@ export * from "./types/build/player";
 export * from "./types/build/region";
 export * from "./types/build/resource-deposit";
 export * from "./types/build/resource";
+export * from "./types/build/type-kind";

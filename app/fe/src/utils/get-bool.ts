@@ -1,5 +1,5 @@
-import { getRandom } from "./get-random.ts";
+import { getRandomNum } from "./get-random-num.ts";
 
 export function getBool() {
-  return !!getRandom(1);
+  return !!getRandomNum(1);
 }

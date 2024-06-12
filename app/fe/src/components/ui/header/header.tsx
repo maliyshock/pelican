@@ -1,14 +1,15 @@
-import { Clocks } from "../../clocks/clocks.tsx";
+import { Clocks } from "~/components/clocks/clocks.tsx";
 import "./header.css";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../store";
-import { Coin } from "../icons/coin.tsx";
-import { Icon } from "../icons/icon/icon.tsx";
+import { RootState } from "~/store";
+import { Coin } from "~/components/ui/icons/coin.tsx";
+import { Icon } from "~/components/ui/icons/icon/icon.tsx";
+import { TypeKind } from "@pelican/constants";
 
 export function Header() {
   const money = useSelector((state: RootState) => state.money);
   const nodesCounter = useSelector((state: RootState) => state.nodesCounter);
-  const resourceKeys = nodesCounter.resourceDeposit ? Object.keys(nodesCounter.resourceDeposit).sort() : [];
+  const resourceKeys = nodesCounter["resource-deposit"] ? Object.keys(nodesCounter["resource-deposit"]).sort() : [];
 
   // TODO: resource deposit should includes all of the outcome resources
   // you have to use root key here
@@ -25,7 +26,7 @@ export function Header() {
         <div className="header__resources">
           {resourceKeys.map(key => (
             <div key={key}>
-              {key}: {nodesCounter.resourceDeposit![key as keyof typeof nodesCounter.resourceDeposit]}
+              {key}: {nodesCounter["resource-deposit"]![key as TypeKind]}
             </div>
           ))}
         </div>

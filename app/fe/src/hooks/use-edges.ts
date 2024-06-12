@@ -1,8 +1,8 @@
 import { useCallback, useRef } from "react";
 import { Connection, Edge, getOutgoers, updateEdge, useReactFlow } from "reactflow";
-import { GameNode } from "../../../common/src/types";
 import { isConnectable } from "../utils/is-connectable.ts";
 import { useDeleteEdge } from "./use-delete-edge.ts";
+import { GameNode } from "@pelican/constants";
 
 export function useEdges() {
   const { getNode } = useReactFlow();

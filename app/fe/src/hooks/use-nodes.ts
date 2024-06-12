@@ -4,8 +4,8 @@ import { getAddedItems } from "~/utils/get-added-items.ts";
 import { add } from "~/slices/nodes-counter.ts";
 import { useDispatch } from "react-redux";
 import { removeNodes } from "~/slices/resource-groups.ts";
-import { GameNode } from "@pelican/constants";
 import { INIT_NODES } from "~/constants";
+import { GameNode } from "@pelican/constants";
 
 export function useNodes() {
   const [nodes, , onNodesChange] = useNodesState(INIT_NODES);

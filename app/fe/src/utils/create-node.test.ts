@@ -1,9 +1,9 @@
 import { createNode } from "./create-node.ts";
 import { getBool } from "./get-bool.ts";
-import { getRandom } from "./get-random.ts";
+import { getRandomNum } from "./get-random-num.ts";
 
-jest.mock("~/utils/get-random", () => ({
-  getRandom: jest.fn(),
+jest.mock("~/utils/get-random-num", () => ({
+  getRandomNum: jest.fn(),
 }));
 jest.mock("~/utils/get-bool", () => ({
   getBool: jest.fn(),
@@ -25,7 +25,7 @@ describe("createNode function", () => {
   });
 
   test("creates a node with randomized position", () => {
-    (getRandom as jest.Mock).mockReturnValue(10);
+    (getRandomNum as jest.Mock).mockReturnValue(10);
     (getBool as jest.Mock).mockReturnValueOnce(true).mockReturnValueOnce(false); // First call returns true, second call returns false
 
     const node = createNode({
@@ -42,7 +42,7 @@ describe("createNode function", () => {
   });
 
   test("handles different random and boolean outputs", () => {
-    (getRandom as jest.Mock).mockReturnValue(20);
+    (getRandomNum as jest.Mock).mockReturnValue(20);
     (getBool as jest.Mock).mockReturnValueOnce(false).mockReturnValueOnce(true); // First call returns false, second call returns true
 
     const node = createNode({

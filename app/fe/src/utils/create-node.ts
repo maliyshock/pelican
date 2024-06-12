@@ -1,4 +1,4 @@
-import { getRandom } from "./get-random.ts";
+import { getRandomNum } from "./get-random-num.ts";
 import { getBool } from "./get-bool.ts";
 import { createImg } from "./create-img.ts";
 import { GameNode, GameNodeData } from "@pelican/constants";
@@ -16,16 +16,16 @@ interface CreateNode {
 
 // TODO: inputs and outputs types for the future
 export function createNode({ position: { x, y, strict = true }, data, draggable = true }: CreateNode): GameNode {
-  const rangeX = strict ? x : getRandom(APPEARANCE_RANGE) * (getBool() ? 1 : -1);
-  const rangeY = strict ? y : getRandom(APPEARANCE_RANGE) * (getBool() ? 1 : -1);
+  const rangeX = strict ? x : getRandomNum(APPEARANCE_RANGE) * (getBool() ? 1 : -1);
+  const rangeY = strict ? y : getRandomNum(APPEARANCE_RANGE) * (getBool() ? 1 : -1);
 
   return {
-    id: `${data.type}_${getRandom(Date.now())}`,
+    id: `${data.type}_${getRandomNum(Date.now())}`,
     data: {
       ...data,
       img: createImg(data.type),
     },
-    ...(!draggable ? { dragHandle: `.this .handler .should .never .exist .for .character .type ._${getRandom(Date.now())}` } : {}),
+    ...(!draggable ? { dragHandle: `.this .handler .should .never .exist .for .character .type ._${getRandomNum(Date.now())}` } : {}),
     position: { x: x + rangeX, y: y + rangeY },
     type: "node",
   };

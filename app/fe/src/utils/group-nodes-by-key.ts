@@ -1,27 +1,28 @@
-import { EntityType, GameNode, Role } from "../../../common/src/types";
+import { GameNode, RoleKind, TypeKind } from "@pelican/constants";
 
-type Collection = {
-  [key in Role]?: {
-    [key in EntityType]?: number;
-  };
-};
+export type Collection = Record<RoleKind, Record<TypeKind, string[] | number>>;
 
 interface GroupNodesByKey {
   nodes: GameNode[];
-  initAcc: Collection;
+  initAcc: Collection | Partial<Collection>;
   step?: number;
 }
 
-export function groupNodesByKey({ nodes, initAcc, step = 1 }: GroupNodesByKey): Collection {
+export function groupNodesByKey({ nodes, initAcc, step = 1 }: GroupNodesByKey) {
   return nodes.reduce((accum, node) => {
-    return node.data.roles.reduce((acc, role) => {
+    return node.data.roles.reduce((acc: Partial<Collection>, role: RoleKind) => {
       const { type } = node.data;
+      const isPlayer = role === "player";
+      const accRole = acc[role];
 
-      if (!acc[role]) {
-        acc[role] = step > 0 ? { [type]: step } : undefined;
+      if (!accRole) {
+        acc[role] = { [type]: isPlayer ? [node.id] : step } as Record<TypeKind, string[] | number>;
       } else if (acc[role]) {
-        // @ts-ignore i have no idea why it throw an error here, i did check on undefined above
-        acc[role][type] = acc[role][type] ? Math.max(0, acc[role][type] + step) : step;
+        if (isPlayer) {
+          accRole[type] = accRole[type] ? [...(accRole[type] as string[]), type] : [type];
+        } else {
+          accRole[type] = accRole[type] ? Math.max(0, (accRole[type] as number) + step) : step;
+        }
       }
 
       return acc;
