@@ -46,16 +46,9 @@ export function useGetActionCallback(nodeId: string, nodeSpecificAction: ActionK
         const nodesBank = RESOURCE_CONTAINERS[targetNode.data.type as ResourceContainer];
         const randomItem = nodesBank?.length ? nodesBank[getRandomNum(nodesBank?.length - 1)] : undefined;
 
-        console.log("RESOURCE_CONTAINERS", RESOURCE_CONTAINERS);
-        console.log("targetNode.data.type", targetNode.data.type);
-        console.log("nodes?.length", nodesBank?.length);
-        console.log("randomItem", randomItem);
-        console.log("---");
-
         if (randomItem) {
           const newNode = createNode({ position: { x: targetNode.xPos, y: targetNode.yPos, strict: false }, data: randomItem });
 
-          console.log("newNode", newNode);
           addNodes(newNode);
         } else {
           console.log("there is no item");
