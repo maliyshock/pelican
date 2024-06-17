@@ -1,24 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { SetState } from "zustand";
+import { Store } from "~/store/use-store.ts";
 
-const initialState: {
+export type TimeSlice = {
   speed: number;
   play: boolean;
-} = {
+  setPlay: (payload: boolean) => void;
+};
+
+const initialState = {
   speed: 1,
   play: true,
 };
 
-export const timeSlice = createSlice({
-  name: "time",
-  initialState,
-  reducers: {
-    pause: state => {
-      state.play = false;
-    },
-    play: state => {
-      state.play = true;
-    },
-  },
+export const timeSlice = (set: SetState<Store>) => ({
+  ...initialState,
+  setPlay: (payload: boolean) => set(state => ({ ...state, play: payload })),
 });
-
-export const { pause, play } = timeSlice.actions;

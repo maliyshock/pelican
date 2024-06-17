@@ -1,9 +1,7 @@
 import { Compass, Grab, Hammer } from "lucide-react";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "~/store";
-import { removeAction, setActions } from "~/slices/actions.ts";
 import { ActionKind } from "@pelican/constants";
+import useStore from "~/store/use-store.ts";
 
 interface ActionsProps {
   actionsList: ActionKind[];
@@ -19,24 +17,25 @@ function getIcon(action: ActionKind) {
 
 const cutoff = 1;
 
-export function Actions({ actionsList, target }: ActionsProps) {
-  const dispatch = useDispatch();
-  const actions = useSelector((state: RootState) => state.actions);
+export function Actions({ actionsList, target, source }: ActionsProps) {
+  const removeAction = useStore(store => store.removeAction);
+  const setActions = useStore(store => store.setActions);
+  const actions = useStore(store => store.actions);
 
   // if there is only 1 action trigger it by default
   useEffect(() => {
     if (actionsList.length === cutoff && !actions[target]) {
       const action = actionsList[0];
 
-      dispatch(setActions([{ target, actionName: action }]));
+      setActions([{ target, source, actionName: action }]);
     }
-  }, [actions, actionsList, dispatch, target]);
+  }, [actions, actionsList, setActions, source, target]);
 
   useEffect(() => {
     return () => {
-      dispatch(removeAction({ target }));
+      removeAction(target);
     };
-  }, [dispatch, target]);
+  }, [removeAction, target]);
 
   return (
     <>
@@ -46,7 +45,7 @@ export function Actions({ actionsList, target }: ActionsProps) {
             key={`${target}_${item}`}
             className="button"
             disabled={!!actions[target]}
-            onClick={() => !actions[target] && dispatch(setActions([{ target, actionName: item }]))}
+            onClick={() => !actions[target] && setActions([{ target, source, actionName: item }])}
           >
             {item} {getIcon(item)}
           </button>

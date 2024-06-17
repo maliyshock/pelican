@@ -1,50 +1,52 @@
 import { useCallback, useEffect, useState } from "react";
 import { Modal } from "antd";
-import { useDispatch, useSelector } from "react-redux";
-import { modalStatus } from "~/slices/modal-status.ts";
-import { RootState } from "~/store";
 import { Option } from "./option.tsx";
-import { clear } from "~/slices/items-to-choose.ts";
 import "./make-choice.css";
 import { createNode } from "~/utils/create-node.ts";
 import { useReactFlow } from "reactflow";
+import useStore from "~/store/use-store.ts";
+import { GameNode } from "@pelican/constants";
 
 export function MakeChoice() {
-  const chooseFrom = useSelector((state: RootState) => state.itemsToChoose.items);
+  const { getNode } = useReactFlow();
+  const { items, actor, setItems } = useStore(store => store.choice);
+  const { setIsOpen } = useStore(store => store.modal);
   const [selected, setSelected] = useState<number[]>([]);
-  const limit = useSelector((state: RootState) => state.player.explore.limit);
-  const dispatch = useDispatch();
+  // actor, not player
+  const limit = undefined; // get limit here from actor
   const { addNodes } = useReactFlow();
 
   const handleSelection = useCallback(
     (index: number) => {
-      if (selected.length < limit) {
+      const actorNode: GameNode | undefined = actor ? getNode(actor) : undefined;
+
+      if (actorNode?.data.profile && selected.length < actorNode.data.profile.explore.limit) {
         setSelected(prev => [...prev, index]);
       }
     },
-    [limit, selected.length],
+    [actor, getNode, selected.length],
   );
 
   const handleDeSelection = useCallback((index: number) => setSelected(prev => prev.filter(ind => ind !== index)), []);
 
   const handleCancel = () => {
-    dispatch(clear());
-    dispatch(modalStatus(false));
+    setItems({ items: [], actor: undefined });
+    setIsOpen(false);
   };
 
   const handleOk = useCallback(() => {
-    dispatch(modalStatus(false));
-    dispatch(clear());
+    setIsOpen(false);
+    setItems({ items: [], actor: undefined });
     // TODO: we need to know position of a player
     // we need to have an access to character position by id
-    const newNodes = selected.map(ind => createNode({ data: chooseFrom[ind], position: { x: 0, y: 0, strict: false } }));
+    const newNodes = selected.map(ind => createNode({ data: items[ind], position: { x: 0, y: 0, strict: false } }));
 
     addNodes(newNodes);
-  }, [addNodes, chooseFrom, dispatch, selected]);
+  }, [addNodes, items, selected, setIsOpen, setItems]);
 
   useEffect(() => {
-    dispatch(modalStatus(true));
-  }, [dispatch]);
+    setIsOpen(true);
+  }, [setIsOpen]);
 
   return (
     <Modal
@@ -59,7 +61,7 @@ export function MakeChoice() {
       <div>
         Make your choice
         <ul className="options-list">
-          {chooseFrom.map((option, index) => (
+          {items.map((option, index) => (
             <Option
               key={`${option}_${index}`}
               active={selected.includes(index)}

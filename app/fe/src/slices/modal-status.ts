@@ -1,15 +1,19 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { SetState } from "zustand";
+import { Store } from "~/store/use-store.ts";
 
-export const modalStatusSlice = createSlice({
-  name: "modals-status",
-  initialState: {
-    isOpen: false,
-  },
-  reducers: {
-    modalStatus: (state, action: PayloadAction<boolean>) => {
-      state.isOpen = action.payload;
-    },
-  },
+export type ModalStatusSlice = {
+  isOpen: boolean;
+  setIsOpen: (status: boolean) => void;
+};
+
+export const modalStatusSlice = (set: SetState<Store>) => ({
+  isOpen: false,
+  setIsOpen: (status: boolean) =>
+    set(state => ({
+      ...state,
+      modal: {
+        ...state.modal,
+        isOpen: status,
+      },
+    })),
 });
-
-export const { modalStatus } = modalStatusSlice.actions;

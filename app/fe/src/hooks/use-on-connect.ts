@@ -1,18 +1,15 @@
 import { useCallback } from "react";
 import { Connection, addEdge, useReactFlow } from "reactflow";
-import { useDispatch, useSelector } from "react-redux";
-import { linkPair, processing } from "~/slices/resource-groups.ts";
-import { RootState } from "~/store";
-import { setActions } from "~/slices/actions.ts";
 import { getRecipeKey } from "~/utils/get-recipe-key.ts";
-
 import { includes } from "~/utils/includes.ts";
 import { GameNode, RECIPES_BOOK } from "@pelican/constants";
+import useStore from "~/store/use-store.ts";
 
 export function useOnConnect() {
-  const { groups, entrancePoints } = useSelector((state: RootState) => state.resourceGroups);
-  const { setEdges, getNode } = useReactFlow();
-  const dispatch = useDispatch();
+  const { getNode } = useReactFlow();
+  const setActions = useStore(store => store.setActions);
+  const { groups, entrancePoints, linkPair, setProcessing } = useStore(store => store.resourceGroups);
+  const { setEdges } = useReactFlow();
 
   return useCallback(
     (connection: Connection) => {
@@ -21,7 +18,7 @@ export function useOnConnect() {
         const target = getNode(connection.target) as GameNode;
 
         if (includes(source.data.roles, "resource") && includes(target.data.roles, "resource")) {
-          dispatch(linkPair({ source, target }));
+          linkPair({ source, target });
         }
 
         if (includes(source.data.roles, "character") && entrancePoints[target.id] !== undefined) {
@@ -37,8 +34,8 @@ export function useOnConnect() {
               return acc;
             }, {});
 
-            dispatch(processing(nodesToProcess));
-            dispatch(setActions(nodes.map(node => ({ target: node.id, actionName: "craft" }))));
+            setProcessing(nodesToProcess);
+            setActions(nodes.map(node => ({ target: node.id, source: source.id, actionName: "craft" })));
           }
         }
 
@@ -52,6 +49,6 @@ export function useOnConnect() {
         });
       }
     },
-    [dispatch, entrancePoints, getNode, groups, setEdges],
+    [entrancePoints, getNode, groups, linkPair, setProcessing, setActions, setEdges],
   );
 }

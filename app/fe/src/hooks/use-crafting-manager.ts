@@ -2,12 +2,9 @@ import { useEffect } from "react";
 import { getRecipeKey } from "~/utils/get-recipe-key.ts";
 import { getAveragePosition } from "~/utils/get-averahe-position.ts";
 import { createNode } from "~/utils/create-node.ts";
-import { destroyGroup } from "~/slices/resource-groups.ts";
 import { useReactFlow } from "reactflow";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "~/store";
-import { useNodes } from "./use-nodes.ts";
 import { RECIPES_BOOK } from "@pelican/constants";
+import useStore from "~/store/use-store.ts";
 
 interface CompleteElementsPerGroup {
   [key: number]: {
@@ -17,15 +14,14 @@ interface CompleteElementsPerGroup {
 }
 
 export function useCraftingManager() {
-  const { nodes } = useNodes();
-  const dispatch = useDispatch();
-  const { addNodes, deleteElements } = useReactFlow();
-  const resourceGroups = useSelector((state: RootState) => state.resourceGroups);
+  // TODO: addNodes conflicts with setNodes - it is react flow bug
+  const { deleteElements, setNodes, getNode } = useReactFlow();
+  const { complete, processing, groups, destroyGroup } = useStore(state => state.resourceGroups);
 
   // groups watcher
   useEffect(() => {
-    const completedElementsPerGroup = resourceGroups.complete.reduce((acc: CompleteElementsPerGroup, id) => {
-      const group = resourceGroups.processing[id];
+    const completedElementsPerGroup = complete.reduce((acc: CompleteElementsPerGroup, id) => {
+      const group = processing[id];
 
       if (acc[group] === undefined) {
         acc[group] = {
@@ -43,7 +39,7 @@ export function useCraftingManager() {
     }, {});
 
     for (let groupIndex in completedElementsPerGroup) {
-      const groupElements = resourceGroups.groups[groupIndex];
+      const groupElements = groups[groupIndex];
       const sameLength = groupElements.length === completedElementsPerGroup[groupIndex].amount;
       const sameElements = sameLength && groupElements.filter(node => !completedElementsPerGroup[groupIndex].ids.includes(node.id)).length === 0;
 
@@ -52,15 +48,15 @@ export function useCraftingManager() {
         const recipe = RECIPES_BOOK.find(recipeKey);
 
         if (recipe) {
-          const position = getAveragePosition(nodes);
+          const position = getAveragePosition(groupElements.map(node => getNode(node.id)));
           const element = createNode({ position, data: recipe.gives });
 
-          addNodes(element);
+          setNodes(prevNodes => [...prevNodes, element]);
 
-          dispatch(destroyGroup(Number(groupIndex)));
+          destroyGroup(Number(groupIndex));
           deleteElements({ nodes: groupElements });
         }
       }
     }
-  }, [addNodes, deleteElements, dispatch, nodes, resourceGroups.complete, resourceGroups.groups, resourceGroups.processing]);
+  }, [setNodes, complete, deleteElements, destroyGroup, groups, processing]);
 }

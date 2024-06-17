@@ -1,8 +1,7 @@
 import { Handle, Position } from "reactflow";
 import { ArrowRightFromLine, ArrowRightToLine } from "lucide-react";
-import { useSelector } from "react-redux";
-import { RootState } from "~/store";
 import { Socket } from "@pelican/constants";
+import useStore from "~/store/use-store.ts";
 
 interface SocketsProps {
   type: "target" | "source";
@@ -13,7 +12,7 @@ interface SocketsProps {
 }
 
 export function Sockets({ type, isTarget, sockets, isConnectable, position }: SocketsProps) {
-  const isCmd = useSelector((state: RootState) => state.cmd);
+  const isCmd = useStore(state => state.cmdIsPressed);
   const isInput = type === "target";
 
   return (

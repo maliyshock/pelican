@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { Card } from "../ui/card.tsx";
+import { Card, Value } from "../ui/card.tsx";
 import { createImg } from "~/utils/create-img";
 import { GameNodeData } from "@pelican/constants";
 
@@ -19,6 +19,10 @@ export function Option({ index, option, limitIsReached, active, onSelect, onDeSe
   }, [active, index, limitIsReached, onDeSelect, onSelect]);
 
   const isDisabled = limitIsReached && !active;
+  const values = [
+    ...(option.dmg ? [{ value: option.dmg, className: "bottom-left bg-silver" }] : []),
+    ...(option.health ? [{ value: option.health, className: "bottom-right bg-lasagna" }] : []),
+  ] as Value[];
 
   return (
     <li className={`options-list__item`} onClick={isDisabled ? undefined : handleSelect}>
@@ -26,8 +30,6 @@ export function Option({ index, option, limitIsReached, active, onSelect, onDeSe
         active={active}
         className="small"
         disabled={isDisabled}
-        dmg={option.dmg}
-        health={option.health}
         img={createImg(option.type)}
         price={
           option.price
@@ -37,6 +39,7 @@ export function Option({ index, option, limitIsReached, active, onSelect, onDeSe
             : undefined
         }
         title={option.title}
+        values={values}
       />
     </li>
   );

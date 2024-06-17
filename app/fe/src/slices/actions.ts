@@ -1,25 +1,45 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { ActionKind } from "@pelican/constants";
+import { SetState } from "zustand";
+import { Store } from "~/store/use-store.ts";
 
 // one specific action between source and target per time
-export type SetActionsPayload = {
+export type ActionPayload = {
   target: string;
+  source: string;
   actionName: ActionKind;
 };
 
-const initialState: { [key: string]: string } = {};
+export type Action = {
+  source: string;
+  actionName: ActionKind;
+};
 
-export const actionsSlice = createSlice({
-  name: "actions",
-  initialState,
-  reducers: {
-    setActions: (state, action: PayloadAction<SetActionsPayload[]>) => {
-      action.payload.forEach(action => (state[action.target] = action.actionName));
-    },
-    removeAction: (state, action: PayloadAction<{ target: string }>) => {
-      delete state[action.payload.target];
-    },
-  },
+export type Actions = {
+  [target: string]: Action;
+};
+
+export type ActionsSlice = {
+  setActions: (payload: ActionPayload[]) => void;
+  removeAction: (target: string) => void;
+  actions: Actions;
+};
+
+export const actionsSlice = (set: SetState<Store>) => ({
+  actions: {},
+  setActions: (payload: ActionPayload[]) =>
+    set(state => {
+      const newStateActions = { ...state.actions };
+
+      payload.forEach(ap => (newStateActions[ap.target] = { actionName: ap.actionName, source: ap.source }));
+
+      return { ...state, actions: newStateActions };
+    }),
+  removeAction: (target: string) =>
+    set(state => {
+      const newState = { ...state.actions };
+
+      delete newState[target];
+
+      return newState;
+    }),
 });
-
-export const { setActions, removeAction } = actionsSlice.actions;

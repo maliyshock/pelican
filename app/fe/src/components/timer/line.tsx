@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAnimate } from "framer-motion";
-import { useSelector } from "react-redux";
-import { RootState } from "~/store";
 import "./timer.css";
+import useStore from "~/store/use-store.ts";
 
 interface LineProps {
   duration: number;
@@ -12,7 +11,7 @@ interface LineProps {
 export function Line({ duration, onComplete }: LineProps) {
   const [scope, animate] = useAnimate();
   const [isComplete, setIsComplete] = useState(false);
-  const clocks = useSelector((state: RootState) => state.time);
+  const play = useStore(state => state.play);
 
   useEffect(() => {
     const anDuration = duration / 1000;
@@ -29,8 +28,8 @@ export function Line({ duration, onComplete }: LineProps) {
   useEffect(() => {
     const animation = scope.animations[0];
 
-    clocks.play ? animation.play() : animation.pause();
-  }, [animate, clocks.play, scope]);
+    play ? animation.play() : animation.pause();
+  }, [animate, play, scope]);
 
   useEffect(() => {
     if (isComplete) {

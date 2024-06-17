@@ -21,6 +21,12 @@
     pointer-events: none;
 }
 
+.card-wrapper.small .img{
+    width: 100%;
+    height: 200px;
+
+}
+
 .card__inner {
     border-radius: 8px;
     width: 240px;
@@ -151,18 +157,25 @@
     mix-blend-mode: multiply;
 }
 
-.card__dmg {
-    left: 0;
-    top: 100%;
-    transform: translate(-40%, -60%);
+.bg-silver {
     background-color: var(--silver);
 }
 
-.card__health {
+.bg-lasagna {
+    background-color: var(--lasagna);
+}
+
+.bottom-left {
+    left: 0;
+    top: 100%;
+    transform: translate(-40%, -60%);
+
+}
+
+.bottom-right {
     right: 0;
     top: 100%;
     transform: translate(40%, -60%);
-    background-color: var(--lasagna);
 }
 
 .card__sale {

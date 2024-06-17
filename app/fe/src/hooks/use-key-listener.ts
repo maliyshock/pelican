@@ -1,20 +1,19 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { cmdIsPressed } from "../slices/cmd-is-pressed.ts";
+import useStore from "~/store/use-store.ts";
 
 export function useKeyListener() {
-  const dispatch = useDispatch();
+  const setCmdIsPressed = useStore(store => store.setCmdIsPressed);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.metaKey) {
-        dispatch(cmdIsPressed(true));
+        setCmdIsPressed(true);
       }
     };
 
     const handleKeyUp = (e: KeyboardEvent) => {
       if (e.key === "Meta") {
-        dispatch(cmdIsPressed(false));
+        setCmdIsPressed(false);
       }
     };
 
@@ -26,7 +25,7 @@ export function useKeyListener() {
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
     };
-  }, [dispatch]);
+  }, [setCmdIsPressed]);
 
   return;
 }

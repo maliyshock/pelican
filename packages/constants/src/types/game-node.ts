@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { Node } from "reactflow";
 import { RoleKind } from "~/types/roles";
 import { TypeKind } from "~/types/build/type-kind";
+import { Profile } from "~/nodes/player/pelican";
 
 type ReactFlowNode = Omit<Node, "data">;
 
@@ -31,4 +32,5 @@ export interface GameNodeData {
   health?: number;
   quantity?: number;
   description?: ReactNode;
+  profile?: Profile;
 }
