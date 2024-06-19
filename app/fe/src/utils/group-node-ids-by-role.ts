@@ -1,6 +1,7 @@
-import { GameNode, RoleKind } from "@pelican/constants";
+import { GameNode, RoleKind, TypeKind } from "@pelican/constants";
 
-export type NodesCounter = Record<RoleKind, string[]>;
+export type Item = Record<TypeKind, { [key: string]: GameNode }>;
+export type NodesCounter = Record<RoleKind, Item>;
 
 interface GroupNodeIdsByRole {
   nodes: GameNode[];
@@ -10,28 +11,39 @@ interface GroupNodeIdsByRole {
 export function groupNodeIdsByRole({ nodes, initAcc }: GroupNodeIdsByRole) {
   return nodes.reduce((acc, node) => {
     const mainRole = node.data.roles[0];
+    const { type } = node.data;
 
-    return {
-      ...acc,
-      [mainRole]: acc[mainRole] ? [...acc[mainRole], node.id] : [node.id],
-    };
+    if (type) {
+      if (mainRole in acc) {
+        if (type in acc[mainRole]) {
+          return {
+            ...acc,
+            [mainRole]: {
+              ...acc[mainRole],
+              [type]: {
+                ...acc[mainRole][type],
+                [node.id]: node,
+              },
+            },
+          };
+        } else {
+          return {
+            ...acc,
+            [mainRole]: {
+              ...acc[mainRole],
+              [type]: {
+                [node.id]: node,
+              },
+            },
+          };
+        }
+      } else {
+        acc[mainRole] = {
+          [type]: { [node.id]: node },
+        } as Item;
+      }
+    }
 
-    // return node.data.roles.reduce((acc: Partial<Collection>, role: RoleKind) => {
-    //   const { type } = node.data;
-    //   const isPlayer = role === "player";
-    //   const accRole = acc[role];
-    //
-    //   if (!accRole) {
-    //     acc[role] = { [type]: isPlayer ? [node.id] : step } as Record<TypeKind, string[] | number>;
-    //   } else if (acc[role]) {
-    //     if (isPlayer) {
-    //       accRole[type] = accRole[type] ? [...(accRole[type] as string[]), type] : [type];
-    //     } else {
-    //       accRole[type] = accRole[type] ? Math.max(0, (accRole[type] as number) + step) : step;
-    //     }
-    //   }
-    //
-    //   return acc;
-    // }, accum);
+    return acc;
   }, initAcc);
 }

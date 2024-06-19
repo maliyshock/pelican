@@ -27,8 +27,7 @@ export function useGetAction({ node }: UseGetAction) {
 
     if (actionByTarget) {
       if (debouncedNode.id && actor && actor.data.profile) {
-        const { speedPenaltyLevel } = actor.data;
-        const { explore, harvest, craftingSpeed } = actor.data.profile;
+        const { explore, harvest, craftingSpeed, speedPenaltyLevel } = actor.data.profile;
 
         callback = actionCallback({ targetNode: debouncedNode, actorNode: actor, nodeSpecificAction: actionByTarget?.actionName });
 

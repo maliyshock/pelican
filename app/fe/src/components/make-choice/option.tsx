@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { Card, Value } from "../ui/card.tsx";
+import { Card, Value } from "../ui/card/card.tsx";
 import { createImg } from "~/utils/create-img";
 import { GameNodeData } from "@pelican/constants";
 

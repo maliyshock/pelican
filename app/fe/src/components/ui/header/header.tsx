@@ -2,7 +2,6 @@ import { Clocks } from "~/components/clocks/clocks.tsx";
 import "./header.css";
 import { Coin } from "~/components/ui/icons/coin.tsx";
 import { Icon } from "~/components/ui/icons/icon/icon.tsx";
-import { GameNode, RoleKind, TypeKind } from "@pelican/constants";
 import useStore from "~/store/use-store.ts";
 import { Button } from "antd";
 import { useCallback } from "react";
@@ -16,13 +15,13 @@ export function Header() {
   const resourceKeys = nodes["resource-deposit"] ? Object.keys(nodes["resource-deposit"]).sort() : [];
   const { setNodes, getNodes } = useReactFlow();
 
+  console.log("nodes", nodes);
+
   // TODO: resource deposit should includes all of the outcome resources
   // you have to use root key here
 
   const handleFeed = useCallback(() => {
     const player = getNodes().find(node => node.id.includes("pelican"))!;
-
-    console.log("player", player);
 
     if (player) {
       setNodes(prev => {

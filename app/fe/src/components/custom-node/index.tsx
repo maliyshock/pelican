@@ -1,8 +1,8 @@
 import { NodeProps, ReactFlowState, useReactFlow, useStore as useReactFlowStore, useUpdateNodeInternals } from "reactflow";
-import "../ui/card.css";
+import "../ui/card/card.css";
 import { useCallback, useEffect } from "react";
 import { useGetAction } from "~/hooks/use-get-action.ts";
-import { Card } from "../ui/card.tsx";
+import { Card } from "../ui/card/card.tsx";
 import { GameNode, GameNodeData } from "@pelican/constants";
 import useStore from "~/store/use-store.ts";
 import { useHungerManager } from "~/components/custom-node/hooks/use-hunger-manager.ts";

@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import { Button } from "antd";
-import { Icon } from "./icons/icon/icon.tsx";
-import { Coin } from "./icons/coin.tsx";
-import { Timer } from "../timer/timer.tsx";
+import { Icon } from "../icons/icon/icon.tsx";
+import { Coin } from "../icons/coin.tsx";
+import { Timer } from "../../timer/timer.tsx";
 import { Position } from "reactflow";
 import { ReactNode } from "react";
 import { Socket } from "@pelican/constants";
