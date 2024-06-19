@@ -15,8 +15,6 @@ export function Header() {
   const resourceKeys = nodes["resource-deposit"] ? Object.keys(nodes["resource-deposit"]).sort() : [];
   const { setNodes, getNodes } = useReactFlow();
 
-  console.log("nodes", nodes);
-
   // TODO: resource deposit should includes all of the outcome resources
   // you have to use root key here
 
