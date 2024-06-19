@@ -1,8 +1,14 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { SetState } from "zustand";
+import { Store } from "~/store/use-store.ts";
 
 export type Size = {
   width?: number;
   height?: number;
+};
+
+export type ScreenSizeSlice = {
+  screenSize: Size;
+  setScreenSize: (size: Size) => void;
 };
 
 const initialState: Size = {
@@ -10,14 +16,10 @@ const initialState: Size = {
   height: undefined,
 };
 
-export const screenSizeSlice = createSlice({
-  name: "screenSize",
-  initialState,
-  reducers: {
-    setScreenSize: (state, action: PayloadAction<Size>) => {
-      return { ...state, ...action.payload };
-    },
-  },
+export const screenSizeSlice = (set: SetState<Store>) => ({
+  screenSize: initialState,
+  setScreenSize: (size: Size) =>
+    set(state => ({
+      screenSize: { ...state.screenSize, ...size },
+    })),
 });
-
-export const { setScreenSize } = screenSizeSlice.actions;

@@ -1,4 +1,4 @@
-import CustomEdge from "./components/custom-edge/custom-edge.tsx";
+import CustomEdge from "./components/custom-edge";
 
 export const edgeTypes = {
   "custom-edge": CustomEdge,

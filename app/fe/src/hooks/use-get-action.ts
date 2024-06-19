@@ -1,51 +1,57 @@
-import { useSelector } from "react-redux";
-import { RootState } from "~/store";
-import { NodeProps } from "reactflow";
 import { useMemo } from "react";
-import { createSelector } from "@reduxjs/toolkit";
 import { useDebounce } from "./use-debounce.ts";
 import { useGetActionCallback } from "./use-get-action-callback.ts";
-import { ActionKind, GameNodeData } from "@pelican/constants";
+import { GameNode } from "@pelican/constants";
+import useStore from "~/store/use-store.ts";
+import { Action } from "~/slices/actions.ts";
+import { useReactFlow } from "reactflow";
 
 interface UseGetAction {
-  node: NodeProps<GameNodeData>;
+  node: GameNode;
 }
 
 // by knowing source target and action we can create a function and return it
 // node is target node
 export function useGetAction({ node }: UseGetAction) {
-  // it should be debounced
-  const selectActionForNode = (nodeId: string = "") => createSelector([state => state.actions], actions => actions[nodeId]);
-  const nodeSpecificAction: ActionKind | undefined = useSelector(selectActionForNode(node?.id));
-  const player = useSelector((state: RootState) => state.player);
+  const { getNode } = useReactFlow();
+  const actions = useStore(state => state.actions);
+  const actionByTarget = useMemo(() => actions[node.id], [actions, node.id]) as Action | undefined;
+  const actorId = actionByTarget?.source;
+  const actor = actorId ? (getNode(actorId) as GameNode) : undefined;
+  const actionCallback = useGetActionCallback(); // вызов происходит часто
   const debouncedNode = useDebounce(node, 200);
-  const actionCallback = useGetActionCallback(node.id, nodeSpecificAction); // вызов происходит часто
 
   return useMemo(() => {
     let timer;
     let callback;
 
-    if (debouncedNode?.id) {
-      callback = actionCallback(debouncedNode);
+    if (actionByTarget) {
+      if (debouncedNode.id && actor && actor.data.profile) {
+        const { speedPenaltyLevel } = actor.data;
+        const { explore, harvest, craftingSpeed } = actor.data.profile;
 
-      if (nodeSpecificAction === "explore") {
-        timer = player.explore.speed;
+        callback = actionCallback({ targetNode: debouncedNode, actorNode: actor, nodeSpecificAction: actionByTarget?.actionName });
+
+        if (actionByTarget.actionName === "explore") {
+          timer = explore.speed * speedPenaltyLevel;
+        }
+
+        if (actionByTarget.actionName === "harvest") {
+          timer = harvest.speed * speedPenaltyLevel;
+        }
+
+        if (actionByTarget.actionName === "craft") {
+          timer = craftingSpeed * speedPenaltyLevel;
+          // TODO: crafting time should calculated on items amount, player crafting speed and resource rarity
+        }
       }
 
-      if (nodeSpecificAction === "harvest") {
-        timer = player.harvest.speed;
-      }
-
-      if (nodeSpecificAction === "craft") {
-        timer = player.craftingSpeed;
-        // TODO: crafting time should calculated on items amount, player crafting speed and resource rarity
-      }
+      return {
+        actor: actionByTarget.source,
+        timer,
+        callback,
+        actionName: actionByTarget.actionName,
+      };
     }
-
-    return {
-      timer,
-      callback,
-      actionName: nodeSpecificAction,
-    };
-  }, [actionCallback, debouncedNode, nodeSpecificAction, player.craftingSpeed, player.explore.speed, player.harvest.speed]);
+  }, [actionByTarget, actionCallback, actor, debouncedNode]);
 }

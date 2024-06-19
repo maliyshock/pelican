@@ -1,23 +1,66 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { groupNodesByKey } from "~/utils/group-nodes-by-key.ts";
+import { SetState } from "zustand";
+import { Store } from "~/store/use-store.ts";
+import { NodesCounter, groupNodeIdsByRole } from "~/utils/group-node-ids-by-role.ts";
 import { INIT_NODES } from "~/constants";
 import { GameNode } from "@pelican/constants";
 
-const initAcc = {};
+export type NodesCounterSlice = {
+  nodes: NodesCounter;
+  addNodes: (nodes: GameNode[]) => void;
+  removeNodes: (nodes: GameNode[]) => void;
+};
 
-// this slice does not regulate state of react flow, it is an utility to track some useful data
-export const nodesCounterSlice = createSlice({
-  name: "nodesCounter",
-  initialState: groupNodesByKey({ nodes: INIT_NODES, initAcc }),
-  reducers: {
-    // TODO: both methods kinda similar, it can be one
-    add: (state, action: PayloadAction<GameNode[]>) => {
-      return groupNodesByKey({ nodes: action.payload, initAcc: state });
-    },
-    remove: (state, action: PayloadAction<GameNode[]>) => {
-      return groupNodesByKey({ nodes: action.payload, initAcc: state, step: -1 });
-    },
-  },
+export const groupNodesIdsSlice = (set: SetState<Store>) => ({
+  nodes: groupNodeIdsByRole({ nodes: INIT_NODES, initAcc: {} as NodesCounter }),
+  setNodes: (nodes: GameNode[]) =>
+    set(state => ({
+      ...state,
+      nodesCounter: {
+        ...state.nodesCounter,
+        nodes: groupNodeIdsByRole({ nodes, initAcc: state.nodesCounter.nodes }),
+      },
+    })),
+  removeNodes: (nodes: GameNode[]) =>
+    set(state => {
+      const newState = { ...state };
+
+      return nodes.reduce((acc, item) => {
+        const mainRole = item.data.roles[0];
+        const nodesByRole = acc.nodesCounter.nodes[mainRole];
+
+        if (nodesByRole && nodesByRole.length > 0) {
+          acc = {
+            ...acc,
+            nodesCounter: {
+              ...acc.nodesCounter,
+              [mainRole]: nodesByRole.filter(id => id !== item.id),
+            },
+          };
+        }
+
+        return acc;
+      }, newState);
+    }),
+  addNodes: (nodes: GameNode[]) =>
+    set(state => {
+      const newState = { ...state };
+
+      return nodes.reduce((acc, item) => {
+        const mainRole = item.data.roles[0];
+        const nodesByRole = newState.nodesCounter.nodes[mainRole];
+
+        if (nodesByRole && nodesByRole.length > 0) {
+          nodesByRole.push(item.id);
+          acc = {
+            ...acc,
+            nodesCounter: {
+              ...acc.nodesCounter,
+              [mainRole]: [...nodesByRole],
+            },
+          };
+        }
+
+        return acc;
+      }, newState);
+    }),
 });
-
-export const { add, remove } = nodesCounterSlice.actions;

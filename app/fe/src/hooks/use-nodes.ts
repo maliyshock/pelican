@@ -1,35 +1,22 @@
 import { useCallback } from "react";
-import { NodeChange, useNodesState } from "reactflow";
-import { getAddedItems } from "~/utils/get-added-items.ts";
-import { add } from "~/slices/nodes-counter.ts";
-import { useDispatch } from "react-redux";
-import { removeNodes } from "~/slices/resource-groups.ts";
-import { INIT_NODES } from "~/constants";
+import { useReactFlow } from "reactflow";
 import { GameNode } from "@pelican/constants";
 
 export function useNodes() {
-  const [nodes, , onNodesChange] = useNodesState(INIT_NODES);
-  const dispatch = useDispatch();
+  const { setNodes } = useReactFlow();
 
-  const handleOnNodesChange = useCallback(
-    (nodeChanges: NodeChange[]) => {
-      const addedItems = getAddedItems(nodeChanges);
-
-      if (addedItems.length > 0) {
-        dispatch(add(addedItems));
-      }
-
-      onNodesChange(nodeChanges);
-    },
-    [dispatch, onNodesChange],
-  );
-
-  const handleOnNodesDelete = useCallback(
+  const addNodes = useCallback(
     (nodes: GameNode[]) => {
-      dispatch(removeNodes(nodes.filter(node => node.data.roles.includes("resource"))));
+      //TODO: we can not able to use add nodes because of ReactFlow bug
+      setNodes((prevNodes: GameNode[]) => [...prevNodes, ...nodes]);
     },
-    [dispatch],
+    [setNodes],
   );
 
-  return { handleOnNodesChange, handleOnNodesDelete, nodes };
+  // gonna be triggered on deleteElements
+  const handleOnNodesDelete = useCallback((nodes: GameNode[]) => {
+    // counter -
+  }, []);
+
+  return { setNodes, addNodes, handleOnNodesDelete };
 }

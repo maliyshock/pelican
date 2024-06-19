@@ -1,50 +1,55 @@
-import { NodeProps, ReactFlowState, useReactFlow, useStore, useUpdateNodeInternals } from "reactflow";
+import { NodeProps, ReactFlowState, useReactFlow, useStore as useReactFlowStore, useUpdateNodeInternals } from "reactflow";
 import "../ui/card.css";
 import { useCallback, useEffect } from "react";
 import { useGetAction } from "~/hooks/use-get-action.ts";
-import { useDispatch, useSelector } from "react-redux";
-import { addMoney } from "~/slices/money.ts";
-import { RootState } from "~/store";
 import { Card } from "../ui/card.tsx";
-import { GameNodeData } from "@pelican/constants";
+import { GameNode, GameNodeData } from "@pelican/constants";
+import useStore from "~/store/use-store.ts";
+import { useHungerManager } from "~/components/custom-node/hooks/use-hunger-manager.ts";
+import { useGetValues } from "~/components/custom-node/hooks/use-get-values.tsx";
 
 const connectionNodeIdSelector = (state: ReactFlowState) => state.connectionNodeId;
 
 export default function CustomNode(props: NodeProps<GameNodeData>) {
-  const { id, data, isConnectable, dragging } = props;
+  const addMoney = useStore(store => store.addMoney);
+  const { id, isConnectable, dragging } = props;
+  const { getNode } = useReactFlow();
+  const currentNode = getNode(id) as GameNode;
+  const { data } = currentNode;
   const { deleteElements } = useReactFlow();
-  const connectionNodeId = useStore(connectionNodeIdSelector);
-  const dispatch = useDispatch();
+  const connectionNodeId = useReactFlowStore(connectionNodeIdSelector);
   const updateNodeInternals = useUpdateNodeInternals();
-  const { callback, timer, actionName } = useGetAction({ node: props });
-  const isTimer = callback && timer && actionName;
+  const action = useGetAction({ node: currentNode });
   const isConnecting = !!connectionNodeId;
   const isTarget = !!connectionNodeId && connectionNodeId !== id;
   const isCharacter = data.roles.includes("character");
-  const isCmd = useSelector((state: RootState) => state.cmd);
+  const isCmd = useStore(state => state.cmdIsPressed);
+
+  useHungerManager({ digestion: data.profile?.digestion, id });
+  const values = useGetValues(data);
 
   const handleSell = useCallback(() => {
     if (data.price) {
       deleteElements({ nodes: [props] });
-      dispatch(addMoney(data.price));
+      addMoney(data.price);
     }
-  }, [data.price, deleteElements, dispatch, props]);
+  }, [addMoney, data.price, deleteElements, props]);
 
   useEffect(() => {
     updateNodeInternals(id);
   }, [id, isTarget, updateNodeInternals, isConnecting]);
 
   useEffect(() => {
-    if (data.health === 0) {
-      deleteElements({ nodes: [props] });
+    if (data.health && data.health <= 0) {
+      // TODO: check altar
+      // TODO: trigger the end
+      deleteElements({ nodes: [currentNode] });
     }
-  }, [data.health, deleteElements, id, props]);
+  }, [currentNode, data.health, deleteElements]);
 
   return (
     <Card
       className={`${dragging ? "dragging" : ""} ${!isCharacter ? "grabbable" : ""}`}
-      dmg={data.dmg}
-      health={data.health}
       img={data.img}
       innerClassName={`${isCmd && !isCharacter ? "cmd" : ""}`}
       inputs={data.inputs}
@@ -60,15 +65,16 @@ export default function CustomNode(props: NodeProps<GameNodeData>) {
           : undefined
       }
       timer={
-        isTimer
+        action?.callback && action?.timer && action?.actionName
           ? {
-              value: timer,
-              actionName,
-              callback,
+              value: action.timer,
+              actionName: action.actionName,
+              callback: action.callback,
             }
           : undefined
       }
       title={data.title}
+      values={values}
     />
   );
 }

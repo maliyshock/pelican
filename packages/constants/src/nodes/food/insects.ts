@@ -9,4 +9,5 @@ export const INSECTS: GameNodeData = {
   title: "Insects",
   roles: ["food", "ingredient"],
   price: 2,
+  nutrition: 1,
 };

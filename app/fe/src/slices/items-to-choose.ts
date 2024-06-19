@@ -1,21 +1,30 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { SetState } from "zustand";
+import { Store } from "~/store/use-store.ts";
 import { GameNodeData } from "@pelican/constants";
 
-const initialState: { items: GameNodeData[] } = {
-  items: [],
+interface SetItems {
+  items: GameNodeData[];
+  actor?: string;
+}
+
+export type ItemsToChooseSlice = {
+  items: GameNodeData[];
+  actor?: string;
+  setItems: ({ items, actor }: SetItems) => void;
 };
 
-export const itemsToChooseSlice = createSlice({
-  name: "itemsToChoose",
-  initialState,
-  reducers: {
-    setItems: (state, action: PayloadAction<GameNodeData[]>) => {
-      state.items = action.payload;
-    },
-    clear: state => {
-      state.items = [];
-    },
-  },
-});
+const initialState: GameNodeData[] = [];
 
-export const { setItems, clear } = itemsToChooseSlice.actions;
+export const itemsToChooseSlice = (set: SetState<Store>) => ({
+  items: initialState,
+  actor: "",
+  setItems: ({ items, actor }: SetItems) =>
+    set(state => ({
+      ...state,
+      choice: {
+        ...state.choice,
+        items,
+        actor: actor || undefined,
+      },
+    })),
+});

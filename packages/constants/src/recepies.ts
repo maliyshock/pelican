@@ -10,7 +10,7 @@ interface Recipe {
 }
 
 const firePlace: Recipe = {
-  requires: ["wood"],
+  requires: ["wood", "wood"],
   gives: FIRE_PLACE,
 };
 

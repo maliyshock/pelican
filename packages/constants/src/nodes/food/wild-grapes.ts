@@ -9,4 +9,5 @@ export const WILD_GRAPES: GameNodeData = {
   title: "Wild grapes",
   roles: ["food", "ingredient"],
   price: 2,
+  nutrition: 2,
 };

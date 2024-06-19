@@ -1,13 +1,15 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { SetState } from "zustand";
+import { Store } from "~/store/use-store.ts";
 
-export const cmdSlice = createSlice({
-  name: "cmd",
-  initialState: false,
-  reducers: {
-    cmdIsPressed: (_, action: PayloadAction<boolean>) => {
-      return action.payload;
-    },
-  },
+export type CmdSlice = {
+  cmdIsPressed: boolean;
+  setCmdIsPressed: (isPressed: boolean) => void;
+};
+
+export const cmdSlice = (set: SetState<Store>) => ({
+  cmdIsPressed: false,
+  setCmdIsPressed: (isPressed: boolean) =>
+    set(() => ({
+      cmdIsPressed: isPressed,
+    })),
 });
-
-export const { cmdIsPressed } = cmdSlice.actions;

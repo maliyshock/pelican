@@ -1,21 +1,43 @@
 import { Clocks } from "~/components/clocks/clocks.tsx";
 import "./header.css";
-import { useSelector } from "react-redux";
-import { RootState } from "~/store";
 import { Coin } from "~/components/ui/icons/coin.tsx";
 import { Icon } from "~/components/ui/icons/icon/icon.tsx";
-import { TypeKind } from "@pelican/constants";
+import { GameNode, RoleKind, TypeKind } from "@pelican/constants";
+import useStore from "~/store/use-store.ts";
+import { Button } from "antd";
+import { useCallback } from "react";
+import { useReactFlow } from "reactflow";
+import { changeNodeValueBy } from "~/utils/change-node-value-by.ts";
+import { getRandomNum } from "~/utils/get-random-num.ts";
 
 export function Header() {
-  const money = useSelector((state: RootState) => state.money);
-  const nodesCounter = useSelector((state: RootState) => state.nodesCounter);
-  const resourceKeys = nodesCounter["resource-deposit"] ? Object.keys(nodesCounter["resource-deposit"]).sort() : [];
+  const money = useStore(state => state.money);
+  const { nodes } = useStore(state => state.nodesCounter);
+  const resourceKeys = nodes["resource-deposit"] ? Object.keys(nodes["resource-deposit"]).sort() : [];
+  const { setNodes, getNodes } = useReactFlow();
 
   // TODO: resource deposit should includes all of the outcome resources
   // you have to use root key here
 
+  const handleFeed = useCallback(() => {
+    const player = getNodes().find(node => node.id.includes("pelican"))!;
+
+    console.log("player", player);
+
+    if (player) {
+      setNodes(prev => {
+        return changeNodeValueBy({
+          nodes: prev,
+          ids: [player.id],
+          changes: [{ keys: ["data", "profile", "digestion", "satiety"], value: getRandomNum(5) }],
+        });
+      });
+    }
+  }, [getNodes, setNodes]);
+
   return (
     <header className="header">
+      <Button onClick={handleFeed}>Feed me</Button>
       <div className="header__inner wrapper">
         <div className="header__money">
           <Icon icon={<Coin />} size="big" value={money} />
@@ -24,11 +46,11 @@ export function Header() {
           <Clocks />
         </div>
         <div className="header__resources">
-          {resourceKeys.map(key => (
-            <div key={key}>
-              {key}: {nodesCounter["resource-deposit"]![key as TypeKind]}
-            </div>
-          ))}
+          {/*{resourceKeys.map(key => (*/}
+          {/*  <div key={key}>*/}
+          {/*    {key}: {nodes["resource-deposit"]![key as RoleKind]}*/}
+          {/*  </div>*/}
+          {/*))}*/}
         </div>
       </div>
     </header>

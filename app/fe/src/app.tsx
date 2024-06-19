@@ -1,20 +1,19 @@
 import "./css/app.css";
 import { useCallback, useEffect, useState } from "react";
-import { Background, Controls, ReactFlow, useEdgesState } from "reactflow";
+import { Background, Controls, ReactFlow, useEdgesState, useNodesState } from "reactflow";
 import "reactflow/dist/style.css";
-import CustomNode from "./components/custom-node/custom-node.tsx";
-import { setScreenSize } from "./slices/screen-size.ts";
-import { useDispatch, useSelector } from "react-redux";
+import CustomNode from "./components/custom-node";
 import { useCenterCamera } from "./hooks/use-center-camera.ts";
-import { RootState } from "./store";
-import CustomEdge from "./components/custom-edge/custom-edge.tsx";
+import CustomEdge from "./components/custom-edge";
 import { useEdges } from "./hooks/use-edges.ts";
 import { Header } from "./components/ui/header/header.tsx";
 import { useKeyListener } from "./hooks/use-key-listener.ts";
 import { useOnConnect } from "./hooks/use-on-connect.ts";
 import { useNodes } from "./hooks/use-nodes.ts";
 import { useCraftingManager } from "./hooks/use-crafting-manager.ts";
-import { MakeChoice } from "./components/make-choice/make-choice.tsx";
+import useStore from "~/store/use-store.ts";
+import { MakeChoice } from "~/components/make-choice/make-choice.tsx";
+import { INIT_NODES } from "~/constants";
 
 const nodeTypes = { node: CustomNode };
 const edgeTypes = {
@@ -22,10 +21,11 @@ const edgeTypes = {
 };
 
 function App() {
-  const dispatch = useDispatch();
-  const screenSize = useSelector((state: RootState) => state.screenSize);
-  const chooseFrom = useSelector((state: RootState) => state.itemsToChoose.items);
-  const { handleOnNodesChange, handleOnNodesDelete, nodes } = useNodes();
+  const [nodes, , onNodesChange] = useNodesState(INIT_NODES);
+  const { items } = useStore(state => state.choice);
+  const setScreenSize = useStore(state => state.setScreenSize);
+  const screenSize = useStore(state => state.screenSize);
+  const { handleOnNodesDelete } = useNodes();
   const [edges, , onEdgesChange] = useEdgesState([]);
   const { isValidConnection, onEdgeUpdate, onEdgeUpdateStart, onEdgeUpdateEnd } = useEdges();
   const [cameraIsCentered, setCameraIsCentered] = useState(false);
@@ -41,15 +41,16 @@ function App() {
         const screenSize = node.getBoundingClientRect();
 
         if (screenSize?.width && screenSize?.height) {
-          dispatch(setScreenSize({ width: screenSize.width, height: screenSize.height }));
+          setScreenSize({ width: screenSize.width, height: screenSize.height });
         }
       }
     },
-    [dispatch],
+    [setScreenSize],
   );
 
   useEffect(() => {
-    if (!cameraIsCentered) {
+    if (nodes.length > 0 && !cameraIsCentered) {
+      // get first player
       const player = nodes.find(node => node.id.includes("pelican"))!;
 
       if (player) {
@@ -57,11 +58,11 @@ function App() {
         setCameraIsCentered(true);
       }
     }
-  }, [cameraIsCentered, centerCamera, nodes, screenSize]);
+  }, [centerCamera, nodes, cameraIsCentered, screenSize]);
 
   return (
     <div className="app">
-      {chooseFrom.length > 0 && <MakeChoice />}
+      {items.length > 0 && <MakeChoice />}
       <div className="node-sandbox">
         <Header />
         {/*<CenterCameraButton />*/}
@@ -77,7 +78,7 @@ function App() {
           onEdgeUpdate={onEdgeUpdate}
           onEdgeUpdateEnd={onEdgeUpdateEnd}
           onEdgeUpdateStart={onEdgeUpdateStart}
-          onNodesChange={handleOnNodesChange}
+          onNodesChange={onNodesChange}
           onNodesDelete={handleOnNodesDelete}
         >
           <Background />

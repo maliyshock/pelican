@@ -1,0 +1,32 @@
+.dmg-indicator {
+
+    color: var(--silver);
+}
+
+.dmg-indicator .card__value {
+    border: 4px solid var(--silver);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    background-image: url("/assets/bgs/scratches.svg");
+    background-size: 100%;
+    box-shadow: 0 0 0 1px white;
+}
+
+.dmg-indicator__decor {
+    position: absolute;
+    z-index: 0;
+    display: block;
+    width: 68px;
+    height: 68px;
+    transform: translate(-7%, 0%);
+    color: var(--silver);
+}
+
+.dmg-indicator__decor svg {
+    width: 100%;
+    height: 100%;
+}

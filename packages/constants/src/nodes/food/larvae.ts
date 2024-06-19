@@ -9,4 +9,5 @@ export const LARVAE: GameNodeData = {
   title: "Larvae",
   roles: ["food", "ingredient"],
   price: 2,
+  nutrition: 2,
 };

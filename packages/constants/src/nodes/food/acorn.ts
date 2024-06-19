@@ -9,4 +9,5 @@ export const ACORN: GameNodeData = {
   title: "Acorn",
   roles: ["food", "ingredient"],
   price: 2,
+  nutrition: 1,
 };

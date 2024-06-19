@@ -1,64 +1,73 @@
 import { useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { NodeProps, useReactFlow } from "reactflow";
-import { changeNodeValueBy } from "~/utils/change-node-value-by.ts";
-import { complete } from "~/slices/resource-groups.ts";
-// import { useGetProbability } from "./useGetProbability.ts";
 import { getRandomNum } from "~/utils/get-random-num.ts";
-import { RootState } from "~/store";
-import { setItems } from "~/slices/items-to-choose.ts";
 import { createNode } from "~/utils/create-node.ts";
 import { ActionKind, GameNode, GameNodeData, RESOURCE_CONTAINERS, ResourceContainer } from "@pelican/constants";
+import { useNodes } from "~/hooks/use-nodes.ts";
+import { changeNodeValueBy } from "~/utils/change-node-value-by.ts";
+import useStore from "~/store/use-store.ts";
 
-export function useGetActionCallback(nodeId: string, nodeSpecificAction: ActionKind | undefined) {
-  const { addNodes, setNodes } = useReactFlow();
-  // const getProbability = useGetProbability();
-  const dispatch = useDispatch();
-  const exploringOptions = useSelector((state: RootState) => state.player.explore.options);
+interface GetActionArgs {
+  targetNode: GameNode;
+  actorNode?: GameNode;
+  nodeSpecificAction?: ActionKind;
+}
+
+export function useGetActionCallback() {
+  const { setNodes } = useNodes();
+  const { setItems } = useStore(store => store.choice);
+  const { setComplete } = useStore(store => store.resourceGroups);
 
   return useCallback(
-    (targetNode: NodeProps<GameNodeData>) => () => {
-      if (nodeSpecificAction === "explore" || nodeSpecificAction === "harvest") {
-        // TODO: there is a conflict between setNodes and addNodes
-        setNodes((nodes: GameNode[]) => changeNodeValueBy({ nodes, ids: [targetNode.id], key: "health", value: -1 }));
-      }
+    ({ targetNode, actorNode, nodeSpecificAction }: GetActionArgs) =>
+      () => {
+        let addNodes = [];
 
-      if (nodeSpecificAction === "explore") {
-        const { type } = targetNode.data;
-        const itemsBank = RESOURCE_CONTAINERS[type as ResourceContainer];
+        if (actorNode && actorNode.data.profile) {
+          const { profile } = actorNode.data;
 
-        if (itemsBank && itemsBank.length > 0) {
-          let itemsForChoice = [];
+          if (nodeSpecificAction === "explore") {
+            const { type } = targetNode.data;
+            const itemsBank = RESOURCE_CONTAINERS[type as ResourceContainer];
 
-          for (let i = 0; i < exploringOptions; i++) {
-            const item = itemsBank[getRandomNum(itemsBank.length - 1)];
+            if (itemsBank && itemsBank.length > 0) {
+              let itemsForChoice = [] as GameNodeData[];
 
-            itemsForChoice.push(item);
+              for (let i = 0; i < profile.explore.options; i++) {
+                const item = itemsBank[getRandomNum(itemsBank.length - 1)];
+
+                itemsForChoice.push(item);
+              }
+
+              setItems({ items: itemsForChoice, actor: actorNode.id });
+            }
           }
 
-          dispatch(setItems(itemsForChoice));
+          if (nodeSpecificAction === "harvest") {
+            const nodesBank = RESOURCE_CONTAINERS[targetNode.data.type as ResourceContainer];
+            const randomItem = nodesBank?.length ? nodesBank[getRandomNum(nodesBank?.length - 1)] : undefined;
+
+            if (randomItem) {
+              const newNode = createNode({ position: { x: targetNode.position.x, y: targetNode.position.y, strict: false }, data: randomItem });
+
+              addNodes.push(newNode);
+            } else {
+              console.log("there is no item");
+            }
+          }
+
+          if (nodeSpecificAction === "explore" || nodeSpecificAction === "harvest") {
+            // TODO: there is a conflict between setNodes and addNodes
+            setNodes((prevNodes: GameNode[]) => [
+              ...changeNodeValueBy({ nodes: prevNodes, ids: [targetNode.id], changes: [{ keys: ["data", "health"], value: -1 }] }),
+              ...addNodes,
+            ]);
+          }
+
+          if (nodeSpecificAction === "craft") {
+            setComplete(targetNode.id);
+          }
         }
-      }
-
-      // TODO: we need to have a fallback in case there is no items in such rarity
-      // TODO: this is actual only for harvest and explore, it should generate different types of callbacks based on argument
-      if (nodeSpecificAction === "harvest") {
-        const nodesBank = RESOURCE_CONTAINERS[targetNode.data.type as ResourceContainer];
-        const randomItem = nodesBank?.length ? nodesBank[getRandomNum(nodesBank?.length - 1)] : undefined;
-
-        if (randomItem) {
-          const newNode = createNode({ position: { x: targetNode.xPos, y: targetNode.yPos, strict: false }, data: randomItem });
-
-          addNodes(newNode);
-        } else {
-          console.log("there is no item");
-        }
-      }
-
-      if (nodeSpecificAction === "craft") {
-        dispatch(complete(nodeId));
-      }
-    },
-    [addNodes, dispatch, exploringOptions, nodeId, nodeSpecificAction, setNodes],
+      },
+    [setComplete, setItems, setNodes],
   );
 }

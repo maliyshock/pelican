@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
-import { formatTime } from "../../utils/format-time.ts";
+import { formatTime } from "~/utils/format-time.ts";
 import "./clocks.css";
 import { Pause, Play } from "lucide-react";
-import { useDispatch, useSelector } from "react-redux";
-import { pause, play } from "../../slices/time.ts";
-import { RootState } from "../../store";
 import { Button } from "antd";
+import useStore from "~/store/use-store.ts";
 
 interface TimerProps {
   initHours?: number;
@@ -16,14 +14,14 @@ interface TimerProps {
 // TODO: speed up time ?
 // TODO: speed down time ?
 export function Clocks({ initHours = 12, initMinutes = 45 }: TimerProps) {
+  const { isOpen } = useStore(store => store.modal);
+  const setPlay = useStore(store => store.setPlay);
+  const play = useStore(store => store.play);
   const [hours, setHours] = useState(initHours);
   const [minutes, setMinutes] = useState(initMinutes);
-  const clocks = useSelector((state: RootState) => state.time);
-  const isModalOpen = useSelector((state: RootState) => state.modalStatus.isOpen);
-  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (clocks.play) {
+    if (play) {
       const minutesCountdown = setInterval(
         () =>
           setMinutes(prev => {
@@ -40,18 +38,18 @@ export function Clocks({ initHours = 12, initMinutes = 45 }: TimerProps) {
 
       return () => clearInterval(minutesCountdown);
     }
-  }, [clocks.play]);
+  }, [play]);
 
   useEffect(() => {
-    dispatch(isModalOpen ? pause() : play());
-  }, [dispatch, isModalOpen]);
+    isOpen ? setPlay(false) : setPlay(true);
+  }, [isOpen, setPlay]);
 
   return (
     <div className="clocks">
       {formatTime(hours)} : {formatTime(minutes)}
       <div className="clocks__controls">
-        <Button className="clocks__button" disabled={isModalOpen} icon={<Play />} shape="round" onClick={() => !isModalOpen && dispatch(play())} />
-        <Button className="clocks__button" disabled={isModalOpen} icon={<Pause />} shape="round" onClick={() => !isModalOpen && dispatch(pause())} />
+        <Button className="clocks__button" disabled={isOpen} icon={<Play />} shape="round" onClick={() => !isOpen && setPlay(true)} />
+        <Button className="clocks__button" disabled={isOpen} icon={<Pause />} shape="round" onClick={() => !isOpen && setPlay(false)} />
       </div>
     </div>
   );

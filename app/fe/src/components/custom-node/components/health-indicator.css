@@ -1,0 +1,23 @@
+.health-indicator .card__value{
+    background-image: url("/assets/bgs/hearts.svg");
+    background-size: 100%;
+}
+
+.health-indicator__decor {
+    position: absolute;
+    z-index: 0;
+    display: block;
+    width: 42px;
+    height: 42px;
+    transform: translate(40%, -40%) rotate(34deg);
+    color: var(--lasagna);
+}
+
+.health-indicator__decor svg {
+    width: 100%;
+    height: 100%;
+}
+
+.health-indicator .ant-progress-text {
+    color: var(--lasagna);
+}

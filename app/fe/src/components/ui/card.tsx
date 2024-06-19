@@ -3,10 +3,16 @@ import { Button } from "antd";
 import { Icon } from "./icons/icon/icon.tsx";
 import { Coin } from "./icons/coin.tsx";
 import { Timer } from "../timer/timer.tsx";
-import { Sockets } from "../custom-node/sockets.tsx";
 import { Position } from "reactflow";
 import { ReactNode } from "react";
 import { Socket } from "@pelican/constants";
+import { Sockets } from "~/components/custom-node/components/sockets.tsx";
+
+export type Value = {
+  value: number;
+  max?: number;
+  className?: string;
+};
 
 interface CardProps {
   className?: string;
@@ -16,8 +22,7 @@ interface CardProps {
     alt: string;
     src: string;
   };
-  dmg?: number;
-  health?: number;
+  values: ReactNode[];
   isConnectable?: boolean;
   isTarget?: boolean;
   inputs?: Socket[];
@@ -38,22 +43,7 @@ interface CardProps {
 const activeWrapper = { scale: 1.1 };
 const activeInnerWrapper = { boxShadow: "0 16px 12px rgba(0, 0, 0, 0.03)", outline: "4px solid var(--blue)" };
 
-export function Card({
-  className,
-  innerClassName,
-  title,
-  img,
-  dmg,
-  health,
-  inputs,
-  outputs,
-  timer,
-  price,
-  isConnectable,
-  isTarget,
-  active,
-  disabled,
-}: CardProps) {
+export function Card({ className, innerClassName, title, img, values, inputs, outputs, timer, price, isConnectable, isTarget, active, disabled }: CardProps) {
   return (
     <motion.div animate={active ? activeWrapper : {}} className={`card-wrapper ${className || ""} ${disabled ? "disabled" : ""}`} whileHover={activeWrapper}>
       <motion.div
@@ -78,16 +68,8 @@ export function Card({
             <img alt={img.alt} className="img" src={img.src} />
           </div>
         )}
-        {dmg && (
-          <div className="card__value-container card__dmg">
-            <div className="card__value">{dmg}</div>
-          </div>
-        )}
-        {health && (
-          <div className="card__value-container card__health">
-            <div className="card__value">{health}</div>
-          </div>
-        )}
+
+        {values}
       </motion.div>
 
       {inputs && <Sockets isConnectable={disabled ? false : isConnectable} isTarget={isTarget} position={Position.Left} sockets={inputs} type="target" />}

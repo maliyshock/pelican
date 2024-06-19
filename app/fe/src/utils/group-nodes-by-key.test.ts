@@ -1,4 +1,4 @@
-import { groupNodesByKey } from "./group-nodes-by-key.ts";
+import { groupNodesByKey } from "./group-node-ids-by-role.ts";
 import { FOOD, POOP, RESOURCE, STONE, WOOD } from "../../../common/src/constants/dictionary.ts";
 import { GameNode } from "../../../common/src/types";
 
