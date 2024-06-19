@@ -21,13 +21,13 @@ export function useHungerManager({ id, digestion }: HungerManager) {
 
       const timer = setInterval(() => {
         if (play) {
-          setNodes((prevNodes: GameNode[]) => {
-            return changeNodeValueBy({
+          setNodes((prevNodes: GameNode[]) =>
+            changeNodeValueBy({
               nodes: prevNodes,
               ids: [id],
               changes: [{ keys: ["data", "profile", "digestion", "satiety"], value: -1 }],
-            });
-          });
+            }),
+          );
         }
       }, hungerSpeed);
 

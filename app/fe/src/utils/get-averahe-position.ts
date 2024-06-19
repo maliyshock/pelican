@@ -1,7 +1,6 @@
 import { GameNode } from "@pelican/constants";
 
 export function getAveragePosition(nodes: GameNode[]) {
-  console.log("nodes", nodes);
   const calculations = nodes.reduce(
     (acc, item) => {
       const { position } = item;

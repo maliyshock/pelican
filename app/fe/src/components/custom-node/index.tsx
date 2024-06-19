@@ -2,7 +2,7 @@ import { NodeProps, ReactFlowState, useReactFlow, useStore as useReactFlowStore,
 import "../ui/card.css";
 import { useCallback, useEffect } from "react";
 import { useGetAction } from "~/hooks/use-get-action.ts";
-import { Card, Value } from "../ui/card.tsx";
+import { Card } from "../ui/card.tsx";
 import { GameNode, GameNodeData } from "@pelican/constants";
 import useStore from "~/store/use-store.ts";
 import { useHungerManager } from "~/components/custom-node/hooks/use-hunger-manager.ts";
@@ -27,9 +27,6 @@ export default function CustomNode(props: NodeProps<GameNodeData>) {
 
   useHungerManager({ digestion: data.profile?.digestion, id });
   const values = useGetValues(data);
-
-  console.log("data", data.type);
-  console.log("values", values);
 
   const handleSell = useCallback(() => {
     if (data.price) {

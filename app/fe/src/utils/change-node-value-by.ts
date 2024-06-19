@@ -22,7 +22,7 @@ interface ManageSatiety {
 
 export function manageSatiety({ node, prevValue, value }: ManageSatiety) {
   const { health } = node.data;
-  const { hungerStack, maxSatiety, minSatiety } = node.data.profile?.digestion;
+  const { hungerStack, maxSatiety, minSatiety } = node.data.profile!.digestion;
   const currentMaxSatiety = hungerStack > 0 ? getCurrentMaxSatiety(maxSatiety, hungerStack) : maxSatiety;
 
   if (prevValue + value === minSatiety) {
@@ -32,7 +32,7 @@ export function manageSatiety({ node, prevValue, value }: ManageSatiety) {
 
     set(node, ["data", "profile", "digestion", "hungerStack"], newHungerStack);
     set(node, ["data", "profile", "digestion", "satiety"], newSatiety);
-    set(node, ["data", "health"], health - takeDamage);
+    set(node, ["data", "health"], (health as number) - takeDamage);
     set(node, ["data", "speedPenaltyLevel"], 2);
 
     // { keys: ["data", "profile", "digestion", "hungerStack"], value: currentHungerStack },
@@ -65,7 +65,6 @@ export function changeNodeValueBy({ nodes, ids, changes }: ChangeValueBy) {
         const prevValue = get(newNode, keys);
 
         if (keys.includes("satiety")) {
-          console.log("test");
           manageSatiety({ node: newNode, prevValue, value: value as number });
         } else {
           set(newNode, keys, prevValue + value);
