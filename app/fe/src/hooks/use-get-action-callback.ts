@@ -57,7 +57,10 @@ export function useGetActionCallback() {
 
           if (nodeSpecificAction === "explore" || nodeSpecificAction === "harvest") {
             // TODO: there is a conflict between setNodes and addNodes
-            setNodes((prevNodes: GameNode[]) => [...changeNodeValueBy({ nodes: prevNodes, ids: [targetNode.id], key: "health", value: -1 }), ...addNodes]);
+            setNodes((prevNodes: GameNode[]) => [
+              ...changeNodeValueBy({ nodes: prevNodes, ids: [targetNode.id], changes: [{ keys: ["data", "health"], value: -1 }] }),
+              ...addNodes,
+            ]);
           }
 
           if (nodeSpecificAction === "craft") {

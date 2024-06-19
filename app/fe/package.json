@@ -14,10 +14,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ant-design/cssinjs": "^1.21.0",
     "@pelican/constants": "workspace:^",
     "@pelican/utils": "workspace:^",
     "@reduxjs/toolkit": "^2.2.3",
     "@types/lodash": "^4.17.5",
+    "add": "^2.0.6",
     "antd": "^5.16.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",

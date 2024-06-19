@@ -38,6 +38,9 @@ importers:
 
   app/fe:
     dependencies:
+      '@ant-design/cssinjs':
+        specifier: ^1.21.0
+        version: 1.21.0(react-dom@18.3.1)(react@18.3.1)
       '@pelican/constants':
         specifier: workspace:^
         version: link:../../packages/constants
@@ -50,6 +53,9 @@ importers:
       '@types/lodash':
         specifier: ^4.17.5
         version: 4.17.5
+      add:
+        specifier: ^2.0.6
+        version: 2.0.6
       antd:
         specifier: ^5.16.4
         version: 5.17.4(react-dom@18.3.1)(react@18.3.1)
@@ -193,8 +199,8 @@ packages:
       '@ctrl/tinycolor': 3.6.1
     dev: false
 
-  /@ant-design/cssinjs@1.20.0(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-uG3iWzJxgNkADdZmc6W0Ci3iQAUOvLMcM8SnnmWq3r6JeocACft4ChnY/YWvI2Y+rG/68QBla/O+udke1yH3vg==}
+  /@ant-design/cssinjs@1.21.0(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-gIilraPl+9EoKdYxnupxjHB/Q6IHNRjEXszKbDxZdsgv4sAZ9pjkCq8yanDWNvyfjp4leir2OVAJm0vxwKK8YA==}
     peerDependencies:
       react: '>=16.0.0'
       react-dom: '>=16.0.0'
@@ -3434,6 +3440,10 @@ packages:
     hasBin: true
     dev: true
 
+  /add@2.0.6:
+    resolution: {integrity: sha512-j5QzrmsokwWWp6kUcJQySpbG+xfOBqqKnup3OIk1pz+kB/80SLorZ9V8zHFLO92Lcd+hbvq8bT+zOGoPkmBV0Q==}
+    dev: false
+
   /ajv@6.12.6:
     resolution: {integrity: sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==}
     dependencies:
@@ -3478,7 +3488,7 @@ packages:
       react-dom: '>=16.9.0'
     dependencies:
       '@ant-design/colors': 7.0.2
-      '@ant-design/cssinjs': 1.20.0(react-dom@18.3.1)(react@18.3.1)
+      '@ant-design/cssinjs': 1.21.0(react-dom@18.3.1)(react@18.3.1)
       '@ant-design/icons': 5.3.7(react-dom@18.3.1)(react@18.3.1)
       '@ant-design/react-slick': 1.1.2(react@18.3.1)
       '@babel/runtime': 7.24.6

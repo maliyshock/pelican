@@ -8,4 +8,5 @@ export const HONEY: GameNodeData = {
   title: "Honey",
   roles: ["food", "ingredient"],
   price: 2,
+  nutrition: 2,
 };

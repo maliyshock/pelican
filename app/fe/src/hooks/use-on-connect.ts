@@ -17,11 +17,13 @@ export function useOnConnect() {
         const source = getNode(connection.source) as GameNode;
         const target = getNode(connection.target) as GameNode;
 
+        // connection between resources
         if (includes(source.data.roles, "resource") && includes(target.data.roles, "resource")) {
           linkPair({ source, target });
         }
 
-        if (includes(source.data.roles, "character") && entrancePoints[target.id] !== undefined) {
+        // connection between player and group entrance point
+        if (includes(source.data.roles, "player") && entrancePoints[target.id] !== undefined) {
           const index = entrancePoints[target.id];
           const nodes = groups[index];
           const recipeKey = getRecipeKey(nodes);

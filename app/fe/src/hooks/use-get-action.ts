@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useDebounce } from "./use-debounce.ts";
 import { useGetActionCallback } from "./use-get-action-callback.ts";
 import { GameNode } from "@pelican/constants";
@@ -27,18 +27,21 @@ export function useGetAction({ node }: UseGetAction) {
 
     if (actionByTarget) {
       if (debouncedNode.id && actor && actor.data.profile) {
+        const { speedPenaltyLevel } = actor.data;
+        const { explore, harvest, craftingSpeed } = actor.data.profile;
+
         callback = actionCallback({ targetNode: debouncedNode, actorNode: actor, nodeSpecificAction: actionByTarget?.actionName });
 
         if (actionByTarget.actionName === "explore") {
-          timer = actor.data.profile.explore.speed;
+          timer = explore.speed * speedPenaltyLevel;
         }
 
         if (actionByTarget.actionName === "harvest") {
-          timer = actor.data.profile.harvest.speed;
+          timer = harvest.speed * speedPenaltyLevel;
         }
 
         if (actionByTarget.actionName === "craft") {
-          timer = actor.data.profile.craftingSpeed;
+          timer = craftingSpeed * speedPenaltyLevel;
           // TODO: crafting time should calculated on items amount, player crafting speed and resource rarity
         }
       }

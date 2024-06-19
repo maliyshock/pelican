@@ -3,14 +3,14 @@ import { Button } from "antd";
 import { Icon } from "./icons/icon/icon.tsx";
 import { Coin } from "./icons/coin.tsx";
 import { Timer } from "../timer/timer.tsx";
-import { Sockets } from "../custom-node/sockets.tsx";
 import { Position } from "reactflow";
 import { ReactNode } from "react";
 import { Socket } from "@pelican/constants";
-import { CardValue } from "~/components/ui/card-value.tsx";
+import { Sockets } from "~/components/custom-node/components/sockets.tsx";
 
 export type Value = {
   value: number;
+  max?: number;
   className?: string;
 };
 
@@ -22,7 +22,7 @@ interface CardProps {
     alt: string;
     src: string;
   };
-  values: Value[];
+  values: ReactNode[];
   isConnectable?: boolean;
   isTarget?: boolean;
   inputs?: Socket[];
@@ -69,9 +69,7 @@ export function Card({ className, innerClassName, title, img, values, inputs, ou
           </div>
         )}
 
-        {values.map((v, index) => (
-          <CardValue key={`val_${index}`} className={v.className || ""} value={v.value} />
-        ))}
+        {values}
       </motion.div>
 
       {inputs && <Sockets isConnectable={disabled ? false : isConnectable} isTarget={isTarget} position={Position.Left} sockets={inputs} type="target" />}

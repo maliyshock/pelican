@@ -30,7 +30,9 @@ export interface GameNodeData {
   outputs?: Socket[];
   dmg?: number;
   health?: number;
+  maxHealth?: number;
   quantity?: number;
   description?: ReactNode;
   profile?: Profile;
+  nutrition?: number;
 }

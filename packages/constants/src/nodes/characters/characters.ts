@@ -10,4 +10,5 @@ export const FOX: GameNodeData = {
   roles: ["character"],
   dmg: 15,
   health: 35,
+  maxHealth: 35,
 };

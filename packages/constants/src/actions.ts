@@ -1,5 +1,3 @@
-// declare all possible actions
-
 import { RoleKind } from "~/types/roles";
 import { ActionKind } from "~/types/actions";
 
@@ -14,5 +12,8 @@ export const ACTIONS_DICTIONARY: Actions = {
     "region": ["explore"],
     "resource-deposit": ["harvest"],
     "character": ["fight", "talk"],
+  },
+  food: {
+    player: ["eat"],
   },
 };

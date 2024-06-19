@@ -1,3 +1,3 @@
-import CustomNode from "./components/custom-node/custom-node.tsx";
+import CustomNode from "./components/custom-node";
 
 export const nodeTypes = { node: CustomNode };

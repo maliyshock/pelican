@@ -140,36 +140,42 @@
 
 .card__value-container {
     position: absolute;
-    width: 40px;
-    height: 40px;
+    z-index: 2;
+    width: 44px;
+    height: 44px;
     border-radius: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 18px;
+    font-size: 18px; /*connection with theme*/
     font-weight: bold;
-    color: var(--gray);
     box-shadow: 0 0 0 2px white;
-    z-index: 2;
+    background-color: #fff;
+}
+
+.indicator .card__value {
+    background-color: #fff;
+    border: 1px solid white;
 }
 
 .card__value {
-    mix-blend-mode: multiply;
+    font-size: 18px;
+    font-weight: bold;
+    position: relative;
+    z-index: 2;
+    border-radius: 100%;
 }
 
-.bg-silver {
-    background-color: var(--silver);
-}
-
-.bg-lasagna {
-    background-color: var(--lasagna);
+.top-left {
+    left: 0;
+    top: 0;
+    transform: translate(-40%, -60%);
 }
 
 .bottom-left {
     left: 0;
     top: 100%;
     transform: translate(-40%, -60%);
-
 }
 
 .bottom-right {

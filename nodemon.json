@@ -1,5 +1,5 @@
 {
   "watch": ["packages/**/*"],
-  "ext": "json",
+  "ext": "json,ts,tsx",
   "exec": "pnpm install"
 }

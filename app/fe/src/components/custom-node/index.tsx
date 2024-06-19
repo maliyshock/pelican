@@ -5,6 +5,8 @@ import { useGetAction } from "~/hooks/use-get-action.ts";
 import { Card, Value } from "../ui/card.tsx";
 import { GameNode, GameNodeData } from "@pelican/constants";
 import useStore from "~/store/use-store.ts";
+import { useHungerManager } from "~/components/custom-node/hooks/use-hunger-manager.ts";
+import { useGetValues } from "~/components/custom-node/hooks/use-get-values.tsx";
 
 const connectionNodeIdSelector = (state: ReactFlowState) => state.connectionNodeId;
 
@@ -22,10 +24,12 @@ export default function CustomNode(props: NodeProps<GameNodeData>) {
   const isTarget = !!connectionNodeId && connectionNodeId !== id;
   const isCharacter = data.roles.includes("character");
   const isCmd = useStore(state => state.cmdIsPressed);
-  const values = [
-    ...(data.dmg ? [{ value: data.dmg, className: "bottom-left bg-silver" }] : []),
-    ...(data.health ? [{ value: data.health, className: "bottom-right bg-lasagna" }] : []),
-  ] as Value[];
+
+  useHungerManager({ digestion: data.profile?.digestion, id });
+  const values = useGetValues(data);
+
+  console.log("data", data.type);
+  console.log("values", values);
 
   const handleSell = useCallback(() => {
     if (data.price) {
@@ -39,7 +43,9 @@ export default function CustomNode(props: NodeProps<GameNodeData>) {
   }, [id, isTarget, updateNodeInternals, isConnecting]);
 
   useEffect(() => {
-    if (data.health === 0) {
+    if (data.health && data.health <= 0) {
+      // TODO: check altar
+      // TODO: trigger the end
       deleteElements({ nodes: [currentNode] });
     }
   }, [currentNode, data.health, deleteElements]);

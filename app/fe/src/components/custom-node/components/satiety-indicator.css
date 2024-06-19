@@ -1,0 +1,24 @@
+.satiety-indicator .card__value {
+    background-image: url("/assets/bgs/bubbles.svg");
+    background-size: 100%;
+    background-color: white;
+}
+
+.satiety-indicator__decor {
+    position: absolute;
+    z-index: 0;
+    display: block;
+    width: 42px;
+    height: 42px;
+    transform: translate(-50%, -50%);
+    color: var(--brown);
+}
+
+.satiety-indicator__decor svg {
+    width: 100%;
+    height: 100%;
+}
+
+.satiety-indicator .ant-progress-text {
+    color: var(--brown);
+}

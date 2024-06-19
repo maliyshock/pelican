@@ -9,4 +9,5 @@ export const EGG: GameNodeData = {
   title: "",
   roles: ["food", "ingredient"],
   price: 2,
+  nutrition: 3,
 };

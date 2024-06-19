@@ -54,3 +54,18 @@
   background-position: center;
   background-size: cover;
 }
+
+
+
+.bg-silver {
+  background-color: var(--silver);
+}
+
+.bg-brown {
+  background-color: var(--brown);
+}
+
+.bg-lasagna {
+  background-color: var(--lasagna);
+}
+

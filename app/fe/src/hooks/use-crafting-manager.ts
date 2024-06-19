@@ -13,6 +13,7 @@ interface CompleteElementsPerGroup {
   };
 }
 
+// TODO: the ides is that different nodes will have different speed for crafting depending on complexity e.t.c
 export function useCraftingManager() {
   // TODO: addNodes conflicts with setNodes - it is react flow bug
   const { deleteElements, setNodes, getNode } = useReactFlow();
@@ -23,17 +24,10 @@ export function useCraftingManager() {
     const completedElementsPerGroup = complete.reduce((acc: CompleteElementsPerGroup, id) => {
       const group = processing[id];
 
-      if (acc[group] === undefined) {
-        acc[group] = {
-          amount: 1,
-          ids: [id],
-        };
-      } else {
-        acc[group] = {
-          amount: acc[group].amount + 1,
-          ids: [...acc[group].ids, id],
-        };
-      }
+      acc[group] = {
+        amount: acc[group] === undefined ? 1 : acc[group].amount + 1,
+        ids: acc[group] === undefined ? [id] : [...acc[group].ids, id],
+      };
 
       return acc;
     }, {});
@@ -58,5 +52,5 @@ export function useCraftingManager() {
         }
       }
     }
-  }, [setNodes, complete, deleteElements, destroyGroup, groups, processing]);
+  }, [setNodes, complete, deleteElements, destroyGroup, groups, processing, getNode]);
 }

@@ -1,5 +1,6 @@
 {
   "watch": ["src/**/*"],
-  "ext": "json",
-  "exec": "pnpm build"
+  "ext": "ts",
+  "exec": "pnpm run build",
+  "ignore": ["src/index.ts", "src/types/build/**/*.ts"]
 }

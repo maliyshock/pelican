@@ -8,4 +8,5 @@ export const GRAIN: GameNodeData = {
   title: "Grain",
   roles: ["food", "ingredient"],
   price: 2,
+  nutrition: 1,
 };

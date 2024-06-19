@@ -21,6 +21,7 @@ export * from "./nodes/food/larvae";
 export * from "./nodes/food/mushroom";
 export * from "./nodes/food/wild-grapes";
 export * from "./nodes/others/poop";
+export * from "./nodes/player/digestion";
 export * from "./nodes/player/explore";
 export * from "./nodes/player/harvest";
 export * from "./nodes/player/pelican";
