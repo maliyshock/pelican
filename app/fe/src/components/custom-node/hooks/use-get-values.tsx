@@ -1,13 +1,15 @@
 import { useGetCurrentMaxSatiety } from "~/components/custom-node/hooks/use-get-current-max-satiety.ts";
 import { GameNodeData } from "@pelican/constants";
 import { ReactNode, useMemo } from "react";
-import { HealthIndicator } from "~/components/custom-node/components/health-indicator.tsx";
-import { DmgIndicator } from "~/components/custom-node/components/dmg-indicator.tsx";
-import { SatietyIndicator } from "~/components/custom-node/components/satiety-indicator.tsx";
+import { Meat } from "~/components/ui/icons/meat.tsx";
+import { Sword } from "~/components/ui/icons/sword.tsx";
+import { Heart } from "~/components/ui/icons/heart.tsx";
+import { CardIndicator } from "~/components/ui/card/indicator/card-indicator.tsx";
 
 export function useGetValues(data: GameNodeData) {
   const maxSatiety = useGetCurrentMaxSatiety(data.profile?.digestion);
   const { health, maxHealth } = data;
+  const isPlayer = data.roles.includes("player");
 
   return useMemo(() => {
     const result: ReactNode[] = [];
@@ -15,12 +17,49 @@ export function useGetValues(data: GameNodeData) {
     if (data.profile?.digestion && maxSatiety) {
       const { satiety } = data.profile.digestion;
 
-      result.push(<SatietyIndicator key="SatietyIndicator" max={maxSatiety} value={satiety} />);
+      result.push(
+        <CardIndicator
+          key="satiety-indicator"
+          className="top-left"
+          decor={isPlayer ? <Meat /> : undefined}
+          max={maxSatiety}
+          strokeColor="#BD381A"
+          trailColor="#CB9A8F"
+          type="satiety"
+          value={satiety}
+        />,
+      );
     }
 
-    if (data.dmg) result.push(<DmgIndicator key="DmgIndicator" value={data.dmg} />);
-    if (health && maxHealth) result.push(<HealthIndicator key="HealthIndicator" max={maxHealth} value={health} />);
+    if (data.dmg) {
+      result.push(
+        <CardIndicator
+          key="dmg-indicator"
+          className="bottom-left dmg-indicator"
+          decor={isPlayer ? <Sword /> : undefined}
+          strokeColor="#BD381A"
+          trailColor="#CB9A8F"
+          type="dmg"
+          value={data.dmg}
+        />,
+      );
+    }
+
+    if (data.health) {
+      result.push(
+        <CardIndicator
+          key="health-indicator"
+          className="bottom-right health-indicator"
+          decor={isPlayer ? <Heart /> : undefined}
+          max={maxHealth || health}
+          strokeColor="#FF6C6C"
+          trailColor="#FFD2D2"
+          type="health"
+          value={data.health}
+        />,
+      );
+    }
 
     return result;
-  }, [data.dmg, data.profile?.digestion, health, maxHealth, maxSatiety]);
+  }, [data.dmg, data.health, data.profile?.digestion, health, isPlayer, maxHealth, maxSatiety]);
 }

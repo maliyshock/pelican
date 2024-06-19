@@ -1,7 +1,8 @@
 import { useCallback } from "react";
-import { Card, Value } from "../ui/card.tsx";
+import { Card } from "../ui/card/card.tsx";
 import { createImg } from "~/utils/create-img";
 import { GameNodeData } from "@pelican/constants";
+import { useGetValues } from "~/components/custom-node/hooks/use-get-values.tsx";
 
 interface OptionProps {
   option: GameNodeData;
@@ -13,16 +14,14 @@ interface OptionProps {
 }
 
 export function Option({ index, option, limitIsReached, active, onSelect, onDeSelect }: OptionProps) {
+  const values = useGetValues(option);
+
   const handleSelect = useCallback(() => {
     if (!limitIsReached && !active) onSelect(index);
     if (active) onDeSelect(index);
   }, [active, index, limitIsReached, onDeSelect, onSelect]);
 
   const isDisabled = limitIsReached && !active;
-  const values = [
-    ...(option.dmg ? [{ value: option.dmg, className: "bottom-left bg-silver" }] : []),
-    ...(option.health ? [{ value: option.health, className: "bottom-right bg-lasagna" }] : []),
-  ] as Value[];
 
   return (
     <li className={`options-list__item`} onClick={isDisabled ? undefined : handleSelect}>
