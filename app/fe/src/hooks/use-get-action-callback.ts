@@ -1,10 +1,11 @@
 import { useCallback } from "react";
 import { getRandomNum } from "~/utils/get-random-num.ts";
 import { createNode } from "~/utils/create-node.ts";
-import { ActionKind, GameNode, GameNodeData, RESOURCE_CONTAINERS, ResourceContainer } from "@pelican/constants";
+import { ActionKind, GameNode, GameNodeData, PELICAN, RESOURCE_CONTAINERS, ResourceContainer } from "@pelican/constants";
 import { useNodes } from "~/hooks/use-nodes.ts";
 import { changeNodeValueBy } from "~/utils/change-node-value-by.ts";
 import useStore from "~/store/use-store.ts";
+import { getAveragePosition } from "~/utils/get-averahe-position.ts";
 
 interface GetActionArgs {
   targetNode: GameNode;
@@ -28,17 +29,22 @@ export function useGetActionCallback() {
           if (nodeSpecificAction === "explore") {
             const { type } = targetNode.data;
             const itemsBank = RESOURCE_CONTAINERS[type as ResourceContainer];
+            let itemsForChoice = [] as GameNodeData[];
 
             if (itemsBank && itemsBank.length > 0) {
-              let itemsForChoice = [] as GameNodeData[];
-
               for (let i = 0; i < profile.explore.options; i++) {
                 const item = itemsBank[getRandomNum(itemsBank.length - 1)];
 
                 itemsForChoice.push(item);
               }
+            }
 
+            if (itemsForChoice.length > 1) {
               setItems({ items: itemsForChoice, actor: actorNode.id });
+            } else {
+              const newNode = createNode({ position: { ...getAveragePosition([targetNode, actorNode]), strict: false }, data: itemsForChoice[0] });
+
+              addNodes.push(newNode);
             }
           }
 
