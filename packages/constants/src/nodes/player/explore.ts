@@ -3,7 +3,7 @@ export const EXPLORE = {
   nextLevel: 50,
   speed: 1000, //15000,
   limit: 1, // how many you can select
-  options: 2, // per 1 exploration
+  options: 1, // per 1 exploration
   exploreLevel: 1,
   // exploreRate: {
   //   [BASIC]: 80,

@@ -24,9 +24,9 @@ export default function CustomNode(props: NodeProps<GameNodeData>) {
   const isTarget = !!connectionNodeId && connectionNodeId !== id;
   const isCharacter = data.roles.includes("character");
   const isCmd = useStore(state => state.cmdIsPressed);
+  const values = useGetValues(data);
 
   useHungerManager({ digestion: data.profile?.digestion, id });
-  const values = useGetValues(data);
 
   const handleSell = useCallback(() => {
     if (data.price) {
@@ -40,7 +40,7 @@ export default function CustomNode(props: NodeProps<GameNodeData>) {
   }, [id, isTarget, updateNodeInternals, isConnecting]);
 
   useEffect(() => {
-    if (data.health && data.health <= 0) {
+    if (data.health !== undefined && data.health <= 0) {
       // TODO: check altar
       // TODO: trigger the end
       deleteElements({ nodes: [currentNode] });
