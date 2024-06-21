@@ -18,23 +18,23 @@ export function Header() {
   // TODO: resource deposit should includes all of the outcome resources
   // you have to use root key here
 
-  const handleFeed = useCallback(() => {
-    const player = getNodes().find(node => node.id.includes("pelican"))!;
-
-    if (player) {
-      setNodes(prev => {
-        return changeNodeValueBy({
-          nodes: prev,
-          ids: [player.id],
-          changes: [{ keys: ["data", "profile", "digestion", "satiety"], value: getRandomNum(5) }],
-        });
-      });
-    }
-  }, [getNodes, setNodes]);
+  // const handleFeed = useCallback(() => {
+  //   const player = getNodes().find(node => node.id.includes("pelican"))!;
+  //
+  //   if (player) {
+  //     setNodes(prev => {
+  //       return changeNodeValueBy({
+  //         nodes: prev,
+  //         ids: [player.id],
+  //         changes: [{ keys: ["data", "profile", "digestion", "satiety"], value: getRandomNum(5) }],
+  //       });
+  //     });
+  //   }
+  // }, [getNodes, setNodes]);
 
   return (
     <header className="header">
-      <Button onClick={handleFeed}>Feed me</Button>
+      {/*<Button onClick={handleFeed}>Feed me</Button>*/}
       <div className="header__inner wrapper">
         <div className="header__money">
           <Icon icon={<Coin />} size="big" value={money} />

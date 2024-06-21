@@ -14,8 +14,6 @@ export interface IndicatorProps {
   className?: string;
 }
 
-// TODO: copy-paste with health indicator
-// TODO: trailColor & strokeColor are hardcoded
 export function CardIndicator({ value, max, className, strokeColor = "", type, trailColor = "", decor = false }: IndicatorProps) {
   return (
     <div className={`card__value-container ${className || ""} ${type}-indicator indicator`}>
