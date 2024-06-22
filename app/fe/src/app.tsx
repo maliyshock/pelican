@@ -36,8 +36,6 @@ function App() {
   const onConnect = useOnConnect();
   const centerCamera = useCenterCamera();
 
-  console.log("actions", actions);
-
   useKeyListener();
   useCraftingManager();
 
@@ -67,14 +65,9 @@ function App() {
   }, [centerCamera, nodes, cameraIsCentered, screenSize]);
 
   useEffect(() => {
-    if (items.length > 0 || companionId !== undefined) {
-      setIsOpen(true);
-    } else {
-      setIsOpen(false);
-    }
+    //TODO: we might need to rework it in the future
+    setIsOpen(items.length > 0 || companionId !== undefined);
   }, [companionId, items.length, setIsOpen]);
-
-  console.log("edges", edges);
 
   return (
     <div className="app">

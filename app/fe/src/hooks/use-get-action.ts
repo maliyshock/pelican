@@ -32,7 +32,6 @@ export function useGetAction({ node }: UseGetAction) {
 
         if (actionByTarget.actionName === "explore") {
           timer = explore.speed * speedPenaltyLevel;
-          // remove on target dead
         }
 
         if (actionByTarget.actionName === "harvest") {
@@ -41,11 +40,8 @@ export function useGetAction({ node }: UseGetAction) {
 
         if (actionByTarget.actionName === "craft") {
           timer = craftingSpeed * speedPenaltyLevel;
-          // remove on target dead
           // TODO: crafting time should calculated on items amount, player crafting speed and resource rarity
         }
-
-        // talk - remove on close
       }
 
       return {
