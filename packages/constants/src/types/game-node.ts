@@ -5,6 +5,11 @@ import { TypeKind } from "~/types/build/type-kind";
 import { Profile } from "~/nodes/player/pelican";
 
 type ReactFlowNode = Omit<Node, "data">;
+type SellItem = {
+  price: number;
+  data: GameNodeData;
+};
+type Sells = Record<"nodes", SellItem[]>;
 
 export interface GameNode extends ReactFlowNode {
   data: GameNodeData;
@@ -16,6 +21,7 @@ export type Socket = {
   // type?: Resource; // type of material/resource in output (for machines)
 };
 
+// TODO: different types of nodes
 export interface GameNodeData {
   roles: RoleKind[];
   type: TypeKind;
@@ -35,4 +41,5 @@ export interface GameNodeData {
   description?: ReactNode;
   profile?: Profile;
   nutrition?: number;
+  sells?: Sells;
 }

@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useReactFlow } from "reactflow";
-import { Size } from "../slices/screen-size.ts";
+import { Size } from "~/store/slices/screen-size.ts";
 
 export function useCenterCamera() {
   const { setViewport } = useReactFlow();

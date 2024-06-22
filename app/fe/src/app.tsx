@@ -14,6 +14,7 @@ import { useCraftingManager } from "./hooks/use-crafting-manager.ts";
 import useStore from "~/store/use-store.ts";
 import { MakeChoice } from "~/components/make-choice/make-choice.tsx";
 import { INIT_NODES } from "~/constants";
+import { Talk } from "~/components/talk";
 
 const nodeTypes = { node: CustomNode };
 const edgeTypes = {
@@ -25,12 +26,17 @@ function App() {
   const { items } = useStore(state => state.choice);
   const setScreenSize = useStore(state => state.setScreenSize);
   const screenSize = useStore(state => state.screenSize);
+  const { items: actions } = useStore(state => state.actions);
+  const { companionId } = useStore(state => state.talk);
+  const { setIsOpen } = useStore(state => state.modal);
   const { handleOnNodesDelete } = useNodes();
   const [edges, , onEdgesChange] = useEdgesState([]);
-  const { isValidConnection, onEdgeUpdate, onEdgeUpdateStart, onEdgeUpdateEnd } = useEdges();
+  const { isValidConnection, onEdgeUpdate, onEdgeUpdateStart, onEdgeUpdateEnd, handleOnEdgesDelete } = useEdges();
   const [cameraIsCentered, setCameraIsCentered] = useState(false);
   const onConnect = useOnConnect();
   const centerCamera = useCenterCamera();
+
+  console.log("actions", actions);
 
   useKeyListener();
   useCraftingManager();
@@ -60,8 +66,19 @@ function App() {
     }
   }, [centerCamera, nodes, cameraIsCentered, screenSize]);
 
+  useEffect(() => {
+    if (items.length > 0 || companionId !== undefined) {
+      setIsOpen(true);
+    } else {
+      setIsOpen(false);
+    }
+  }, [companionId, items.length, setIsOpen]);
+
+  console.log("edges", edges);
+
   return (
     <div className="app">
+      {companionId !== undefined && <Talk companionId={companionId} />}
       {items.length > 0 && <MakeChoice />}
       <div className="node-sandbox">
         <Header />
@@ -75,6 +92,7 @@ function App() {
           nodeTypes={nodeTypes}
           onConnect={onConnect}
           onEdgesChange={onEdgesChange}
+          onEdgesDelete={handleOnEdgesDelete}
           onEdgeUpdate={onEdgeUpdate}
           onEdgeUpdateEnd={onEdgeUpdateEnd}
           onEdgeUpdateStart={onEdgeUpdateStart}

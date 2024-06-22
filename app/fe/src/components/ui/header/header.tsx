@@ -10,7 +10,7 @@ import { changeNodeValueBy } from "~/utils/change-node-value-by.ts";
 import { getRandomNum } from "~/utils/get-random-num.ts";
 
 export function Header() {
-  const money = useStore(state => state.money);
+  const { value } = useStore(state => state.money);
   const { nodes } = useStore(state => state.nodesCounter);
   const resourceKeys = nodes["resource-deposit"] ? Object.keys(nodes["resource-deposit"]).sort() : [];
   const { setNodes, getNodes } = useReactFlow();
@@ -37,7 +37,7 @@ export function Header() {
       {/*<Button onClick={handleFeed}>Feed me</Button>*/}
       <div className="header__inner wrapper">
         <div className="header__money">
-          <Icon icon={<Coin />} size="big" value={money} />
+          <Icon icon={<Coin />} size="big" value={value} />
         </div>
         <div className="header__clocks">
           <Clocks />

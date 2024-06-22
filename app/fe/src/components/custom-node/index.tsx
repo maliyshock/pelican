@@ -1,6 +1,6 @@
 import { NodeProps, ReactFlowState, useReactFlow, useStore as useReactFlowStore, useUpdateNodeInternals } from "reactflow";
 import "../ui/card/card.css";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useGetAction } from "~/hooks/use-get-action.ts";
 import { Card } from "../ui/card/card.tsx";
 import { GameNode, GameNodeData } from "@pelican/constants";
@@ -11,7 +11,7 @@ import { useGetValues } from "~/components/custom-node/hooks/use-get-values.tsx"
 const connectionNodeIdSelector = (state: ReactFlowState) => state.connectionNodeId;
 
 export default function CustomNode(props: NodeProps<GameNodeData>) {
-  const addMoney = useStore(store => store.addMoney);
+  const { addMoney } = useStore(store => store.money);
   const { id, isConnectable, dragging } = props;
   const { getNode } = useReactFlow();
   const currentNode = getNode(id) as GameNode;
@@ -47,6 +47,18 @@ export default function CustomNode(props: NodeProps<GameNodeData>) {
     }
   }, [currentNode, data.health, deleteElements]);
 
+  const timer = useMemo(
+    () =>
+      action?.callback && action.timer !== undefined && action?.actionName
+        ? {
+            value: action.timer,
+            actionName: action.actionName,
+            callback: action.callback,
+          }
+        : undefined,
+    [action?.actionName, action?.callback, action?.timer],
+  );
+
   return (
     <Card
       className={`${dragging ? "dragging" : ""} ${!isCharacter ? "grabbable" : ""}`}
@@ -64,15 +76,7 @@ export default function CustomNode(props: NodeProps<GameNodeData>) {
             }
           : undefined
       }
-      timer={
-        action?.callback && action?.timer && action?.actionName
-          ? {
-              value: action.timer,
-              actionName: action.actionName,
-              callback: action.callback,
-            }
-          : undefined
-      }
+      timer={timer}
       title={data.title}
       values={values}
     />

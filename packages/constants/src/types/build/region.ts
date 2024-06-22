@@ -1,2 +1,2 @@
-export const REGION = ["forest"] as const;
+export const REGION = ["forest", "glade"] as const;
 export type RegionKind = (typeof REGION)[number];

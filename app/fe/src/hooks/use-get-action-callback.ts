@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { getRandomNum } from "~/utils/get-random-num.ts";
 import { createNode } from "~/utils/create-node.ts";
-import { ActionKind, GameNode, GameNodeData, PELICAN, RESOURCE_CONTAINERS, ResourceContainer } from "@pelican/constants";
+import { ActionKind, GameNode, GameNodeData, RESOURCE_CONTAINERS, ResourceContainer } from "@pelican/constants";
 import { useNodes } from "~/hooks/use-nodes.ts";
 import { changeNodeValueBy } from "~/utils/change-node-value-by.ts";
 import useStore from "~/store/use-store.ts";
@@ -17,14 +17,19 @@ export function useGetActionCallback() {
   const { setNodes } = useNodes();
   const { setItems } = useStore(store => store.choice);
   const { setComplete } = useStore(store => store.resourceGroups);
+  const { setTalk } = useStore(store => store.talk);
 
   return useCallback(
     ({ targetNode, actorNode, nodeSpecificAction }: GetActionArgs) =>
       () => {
-        let addNodes = [];
+        let addNodes: GameNode[] = [];
 
         if (actorNode && actorNode.data.profile) {
           const { profile } = actorNode.data;
+
+          if (nodeSpecificAction === "talk") {
+            setTalk(targetNode.id);
+          }
 
           if (nodeSpecificAction === "explore") {
             const { type } = targetNode.data;
@@ -74,6 +79,6 @@ export function useGetActionCallback() {
           }
         }
       },
-    [setComplete, setItems, setNodes],
+    [setComplete, setItems, setNodes, setTalk],
   );
 }

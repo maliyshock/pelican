@@ -20,25 +20,41 @@ export type Actions = {
 
 export type ActionsSlice = {
   setActions: (payload: ActionPayload[]) => void;
-  removeAction: (target: string) => void;
-  actions: Actions;
+  deleteActions: (target: string[]) => void;
+  items: Actions;
 };
 
 export const actionsSlice = (set: SetState<Store>) => ({
-  actions: {},
+  items: {},
   setActions: (payload: ActionPayload[]) =>
     set(state => {
-      const newStateActions = { ...state.actions };
+      const newState = {
+        ...state,
+        actions: {
+          ...state.actions,
+          items: {
+            ...state.actions.items,
+          },
+        },
+      };
 
-      payload.forEach(ap => (newStateActions[ap.target] = { actionName: ap.actionName, source: ap.source }));
+      payload.forEach(ap => (newState.actions.items[ap.target] = { actionName: ap.actionName, source: ap.source }));
 
-      return { ...state, actions: newStateActions };
+      return newState;
     }),
-  removeAction: (target: string) =>
+  deleteActions: (targets: string[]) =>
     set(state => {
-      const newState = { ...state.actions };
+      const newState = {
+        ...state,
+        actions: {
+          ...state.actions,
+          items: {
+            ...state.actions.items,
+          },
+        },
+      };
 
-      delete newState[target];
+      targets.forEach(tr => delete newState.actions.items[tr]);
 
       return newState;
     }),

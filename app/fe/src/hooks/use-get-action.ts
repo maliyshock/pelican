@@ -3,7 +3,6 @@ import { useDebounce } from "./use-debounce.ts";
 import { useGetActionCallback } from "./use-get-action-callback.ts";
 import { GameNode } from "@pelican/constants";
 import useStore from "~/store/use-store.ts";
-import { Action } from "~/slices/actions.ts";
 import { useReactFlow } from "reactflow";
 
 interface UseGetAction {
@@ -14,8 +13,8 @@ interface UseGetAction {
 // node is target node
 export function useGetAction({ node }: UseGetAction) {
   const { getNode } = useReactFlow();
-  const actions = useStore(state => state.actions);
-  const actionByTarget = useMemo(() => actions[node.id], [actions, node.id]) as Action | undefined;
+  const { items: actions } = useStore(state => state.actions);
+  const actionByTarget = actions[node.id];
   const actorId = actionByTarget?.source;
   const actor = actorId ? (getNode(actorId) as GameNode) : undefined;
   const actionCallback = useGetActionCallback(); // вызов происходит часто
@@ -33,6 +32,7 @@ export function useGetAction({ node }: UseGetAction) {
 
         if (actionByTarget.actionName === "explore") {
           timer = explore.speed * speedPenaltyLevel;
+          // remove on target dead
         }
 
         if (actionByTarget.actionName === "harvest") {
@@ -41,13 +41,16 @@ export function useGetAction({ node }: UseGetAction) {
 
         if (actionByTarget.actionName === "craft") {
           timer = craftingSpeed * speedPenaltyLevel;
+          // remove on target dead
           // TODO: crafting time should calculated on items amount, player crafting speed and resource rarity
         }
+
+        // talk - remove on close
       }
 
       return {
         actor: actionByTarget.source,
-        timer,
+        timer: timer || 0,
         callback,
         actionName: actionByTarget.actionName,
       };

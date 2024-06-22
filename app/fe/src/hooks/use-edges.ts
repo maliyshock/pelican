@@ -3,9 +3,11 @@ import { Connection, Edge, getOutgoers, updateEdge, useReactFlow } from "reactfl
 import { isConnectable } from "../utils/is-connectable.ts";
 import { useDeleteEdge } from "./use-delete-edge.ts";
 import { GameNode } from "@pelican/constants";
+import useStore from "~/store/use-store.ts";
 
 export function useEdges() {
   const { getNode } = useReactFlow();
+  const { deleteActions } = useStore(store => store.actions);
   const { getEdges, getNodes, setEdges } = useReactFlow();
   const nodes: GameNode[] = getNodes();
   const edges = getEdges();
@@ -74,10 +76,20 @@ export function useEdges() {
     [deleteEdge],
   );
 
+  const handleOnEdgesDelete = useCallback(
+    (edges: Edge[]) => {
+      const ids = edges.map(edg => edg.target);
+
+      deleteActions(ids);
+    },
+    [deleteActions],
+  );
+
   return {
     isValidConnection,
     onEdgeUpdateStart,
     onEdgeUpdate,
     onEdgeUpdateEnd,
+    handleOnEdgesDelete,
   };
 }

@@ -50,6 +50,7 @@ export const RESOURCE_CONTAINERS: {
     TREE,
     POOP,
   ],
+  "glade": [FLINT, LEAFS, PLANT_FIBERS, STICK, STONE, VINE, WOOD, BERRIES_BUSH, STONE_DEPOSIT, TREE, POOP],
   // "deepForest": [],
   "tree": [WOOD], // apple // nut // stick // leaf
   "stone-deposit": [STONE],

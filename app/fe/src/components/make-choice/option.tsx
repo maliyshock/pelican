@@ -24,7 +24,7 @@ export function Option({ index, option, limitIsReached, active, onSelect, onDeSe
   const isDisabled = limitIsReached && !active;
 
   return (
-    <li className={`options-list__item`} onClick={isDisabled ? undefined : handleSelect}>
+    <li className="options-list__item" onClick={isDisabled ? undefined : handleSelect}>
       <Card
         active={active}
         className="small"
