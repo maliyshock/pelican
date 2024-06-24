@@ -29,10 +29,6 @@ export function Actions({ actionsList, target, source }: ActionsProps) {
     }
   }, [actions, actionsList, setActions, source, target]);
 
-  // useEffect(() => {
-  //   return () => deleteActions([target]);
-  // }, [deleteActions, target]);
-
   return (
     <>
       {actionsList.length > cutoff &&

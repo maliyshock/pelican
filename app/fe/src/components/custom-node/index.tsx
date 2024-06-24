@@ -19,7 +19,6 @@ export default function CustomNode(props: NodeProps<GameNodeData>) {
   const { deleteElements } = useReactFlow();
   const connectionNodeId = useReactFlowStore(connectionNodeIdSelector);
   const updateNodeInternals = useUpdateNodeInternals();
-  // TODO: trigger actions by the edges?
   const action = useGetAction({ node: currentNode });
   const isConnecting = !!connectionNodeId;
   const isTarget = !!connectionNodeId && connectionNodeId !== id;
