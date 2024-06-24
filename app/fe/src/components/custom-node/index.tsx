@@ -1,7 +1,7 @@
 import { NodeProps, ReactFlowState, useReactFlow, useStore as useReactFlowStore, useUpdateNodeInternals } from "reactflow";
 import "../ui/card/card.css";
 import { useCallback, useEffect, useMemo } from "react";
-import { useGetAction } from "~/hooks/use-get-action.ts";
+import { useGetAction } from "~/hooks/use-get-action/use-get-action.ts";
 import { Card } from "../ui/card/card.tsx";
 import { GameNode, GameNodeData } from "@pelican/constants";
 import useStore from "~/store/use-store.ts";

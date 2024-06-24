@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useDebounce } from "./use-debounce.ts";
+import { useDebounce } from "../use-debounce.ts";
 import { useGetActionCallback } from "./use-get-action-callback.ts";
 import { GameNode } from "@pelican/constants";
 import useStore from "~/store/use-store.ts";
