@@ -2,19 +2,27 @@ import { SetState } from "zustand";
 import { Store } from "~/store/use-store.ts";
 
 export type MoneySlice = {
-  money: number;
+  value: number;
   addMoney: (amount: number) => void;
   removeMoney: (amount: number) => void;
 };
 
 export const moneySlice = (set: SetState<Store>) => ({
-  money: 0,
+  value: 0,
   addMoney: (amount: number) =>
     set(state => ({
-      money: state.money + amount,
+      ...state,
+      money: {
+        ...state.money,
+        value: state.money.value + amount,
+      },
     })),
   removeMoney: (amount: number) =>
     set(state => ({
-      money: state.money - amount,
+      ...state,
+      money: {
+        ...state.money,
+        value: state.money.value - amount,
+      },
     })),
 });

@@ -18,9 +18,7 @@ function getIcon(action: ActionKind) {
 const cutoff = 1;
 
 export function Actions({ actionsList, target, source }: ActionsProps) {
-  const removeAction = useStore(store => store.removeAction);
-  const setActions = useStore(store => store.setActions);
-  const actions = useStore(store => store.actions);
+  const { setActions, items: actions } = useStore(store => store.actions);
 
   // if there is only 1 action trigger it by default
   useEffect(() => {
@@ -30,12 +28,6 @@ export function Actions({ actionsList, target, source }: ActionsProps) {
       setActions([{ target, source, actionName: action }]);
     }
   }, [actions, actionsList, setActions, source, target]);
-
-  useEffect(() => {
-    return () => {
-      removeAction(target);
-    };
-  }, [removeAction, target]);
 
   return (
     <>

@@ -1,6 +1,6 @@
 import { SetState } from "zustand";
 import { Store } from "~/store/use-store.ts";
-import { DirectedGraph, EntrancePoints } from "../utils/directed-graph.ts";
+import { DirectedGraph, EntrancePoints } from "../../utils/directed-graph.ts";
 import { GameNode } from "@pelican/constants";
 
 interface Pair {

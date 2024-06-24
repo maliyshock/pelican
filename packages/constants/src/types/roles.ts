@@ -10,5 +10,6 @@ export const ROLES = [
   "ingredient",
   "resource-deposit",
   "fertilizer",
+  "merchant",
 ] as const;
 export type RoleKind = (typeof ROLES)[number];
