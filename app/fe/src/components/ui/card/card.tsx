@@ -2,9 +2,9 @@ import { motion } from "framer-motion";
 import { Button } from "antd";
 import { Icon } from "../icons/icon/icon.tsx";
 import { Coin } from "../icons/coin.tsx";
-import { Timer } from "../../timer/timer.tsx";
+import { Timer } from "~/components/timer/timer.tsx";
 import { Position } from "reactflow";
-import { ReactNode, useEffect } from "react";
+import { ReactNode } from "react";
 import { Socket } from "@pelican/constants";
 import { Sockets } from "~/components/custom-node/components/sockets.tsx";
 
@@ -60,12 +60,6 @@ export function Card({
   disabled,
   onClick = () => {},
 }: CardProps) {
-  useEffect(() => {
-    if (timer?.value === 0) {
-      timer?.callback();
-    }
-  }, [timer]);
-
   return (
     <motion.div
       animate={active ? activeWrapper : {}}
@@ -84,7 +78,7 @@ export function Card({
             <Icon icon={<Coin />} size="fill" value={price.value} valueOnIcon />
           </Button>
         )}
-        {timer !== undefined && timer?.value !== 0 && <Timer callback={timer.callback} label={timer.actionName} time={timer.value} />}
+        {timer !== undefined && <Timer callback={timer.callback} label={timer.actionName} time={timer.value} />}
         {title && (
           <header className="card__header">
             <h3>{title}</h3>
@@ -95,7 +89,6 @@ export function Card({
             <img alt={img.alt} className="img" src={img.src} />
           </div>
         )}
-
         {values}
       </motion.div>
 

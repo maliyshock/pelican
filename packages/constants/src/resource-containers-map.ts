@@ -22,11 +22,13 @@ import { BERRIES_BUSH } from "~/nodes/resource-deposits/berries-bush";
 import { CLAY_DEPOSIT } from "~/nodes/resource-deposits/clay-deposit";
 import { LAKE } from "~/nodes/resource-deposits/lake";
 import { RIVER } from "~/nodes/resource-deposits/river";
+import { BERRY } from "~/nodes/food/berry";
+import { TRANQUIL_GLADE } from "~/nodes/regions/regions";
 
 export const RESOURCE_CONTAINERS: {
   [K in ResourceContainer]?: Array<GameNodeData>;
 } = {
-  "forest": [
+  forest: [
     ANTHILL,
     BONES,
     CANE,
@@ -50,8 +52,9 @@ export const RESOURCE_CONTAINERS: {
     TREE,
     POOP,
   ],
-  "glade": [FLINT, LEAFS, PLANT_FIBERS, STICK, STONE, VINE, WOOD, BERRIES_BUSH, STONE_DEPOSIT, TREE, POOP],
+  [TRANQUIL_GLADE.type]: [FLINT, LEAFS, PLANT_FIBERS, STICK, STONE, VINE, WOOD, BERRIES_BUSH, STONE_DEPOSIT, TREE, POOP],
   // "deepForest": [],
-  "tree": [WOOD], // apple // nut // stick // leaf
-  "stone-deposit": [STONE],
+  [TREE.type]: [WOOD], // apple // nut // stick // leaf
+  [STONE_DEPOSIT.type]: [STONE],
+  [BERRIES_BUSH.type]: [BERRY],
 };

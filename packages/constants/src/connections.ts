@@ -10,5 +10,6 @@ type Connections = Partial<{
 
 export const connections: Connections = {
   resource: ["resource"],
+  food: ["player"],
   player: "ALL",
 };

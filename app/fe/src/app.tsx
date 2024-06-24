@@ -26,8 +26,8 @@ function App() {
   const { items } = useStore(state => state.choice);
   const setScreenSize = useStore(state => state.setScreenSize);
   const screenSize = useStore(state => state.screenSize);
-  const { items: actions } = useStore(state => state.actions);
   const { companionId } = useStore(state => state.talk);
+  const actions = useStore(state => state.actions);
   const { setIsOpen } = useStore(state => state.modal);
   const { handleOnNodesDelete } = useNodes();
   const [edges, , onEdgesChange] = useEdgesState([]);

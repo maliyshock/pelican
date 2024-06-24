@@ -7,7 +7,7 @@ import useStore from "~/store/use-store.ts";
 
 export function useOnConnect() {
   const { getNode } = useReactFlow();
-  const setActions = useStore(store => store.setActions);
+  const { setActions } = useStore(store => store.actions);
   const { groups, entrancePoints, linkPair, setProcessing } = useStore(store => store.resourceGroups);
   const { setEdges } = useReactFlow();
 

@@ -12,9 +12,13 @@ interface TimerProps {
 export function Timer({ time, callback, label }: TimerProps) {
   const [key, setKey] = useState(getRandomNum(Date.now()));
   const onComplete = useCallback(() => {
-    setKey(getRandomNum(Date.now()));
+    // in case of immediate trigger we will not loop
+    if (time !== 0) {
+      setKey(getRandomNum(Date.now()));
+    }
+
     callback();
-  }, [callback]);
+  }, [callback, time]);
 
   if (callback === undefined) return;
 

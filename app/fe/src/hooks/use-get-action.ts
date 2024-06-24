@@ -4,6 +4,7 @@ import { useGetActionCallback } from "./use-get-action-callback.ts";
 import { GameNode } from "@pelican/constants";
 import useStore from "~/store/use-store.ts";
 import { useReactFlow } from "reactflow";
+import { Action } from "~/store/slices/actions.ts";
 
 interface UseGetAction {
   node: GameNode;
@@ -14,7 +15,7 @@ interface UseGetAction {
 export function useGetAction({ node }: UseGetAction) {
   const { getNode } = useReactFlow();
   const { items: actions } = useStore(state => state.actions);
-  const actionByTarget = actions[node.id];
+  const actionByTarget = actions[node.id] as Action | undefined;
   const actorId = actionByTarget?.source;
   const actor = actorId ? (getNode(actorId) as GameNode) : undefined;
   const actionCallback = useGetActionCallback(); // вызов происходит часто
@@ -24,32 +25,33 @@ export function useGetAction({ node }: UseGetAction) {
     let timer;
     let callback;
 
-    if (actionByTarget) {
-      if (debouncedNode.id && actor && actor.data.profile) {
+    if (actionByTarget && debouncedNode.id && actor) {
+      callback = actionCallback({ targetNode: debouncedNode, actorNode: actor, nodeSpecificAction: actionByTarget?.actionName });
+
+      if (actor.data.profile) {
         const { explore, harvest, craftingSpeed, speedPenaltyLevel } = actor.data.profile;
+        const { actionName } = actionByTarget;
 
-        callback = actionCallback({ targetNode: debouncedNode, actorNode: actor, nodeSpecificAction: actionByTarget?.actionName });
-
-        if (actionByTarget.actionName === "explore") {
+        if (actionName === "explore") {
           timer = explore.speed * speedPenaltyLevel;
         }
 
-        if (actionByTarget.actionName === "harvest") {
+        if (actionName === "harvest") {
           timer = harvest.speed * speedPenaltyLevel;
         }
 
-        if (actionByTarget.actionName === "craft") {
+        if (actionName === "craft") {
           timer = craftingSpeed * speedPenaltyLevel;
           // TODO: crafting time should calculated on items amount, player crafting speed and resource rarity
         }
       }
-
-      return {
-        actor: actionByTarget.source,
-        timer: timer || 0,
-        callback,
-        actionName: actionByTarget.actionName,
-      };
     }
+
+    return {
+      actor: actionByTarget?.source,
+      timer: timer || 0,
+      callback,
+      actionName: actionByTarget?.actionName,
+    };
   }, [actionByTarget, actionCallback, actor, debouncedNode]);
 }

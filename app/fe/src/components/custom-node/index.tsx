@@ -19,6 +19,7 @@ export default function CustomNode(props: NodeProps<GameNodeData>) {
   const { deleteElements } = useReactFlow();
   const connectionNodeId = useReactFlowStore(connectionNodeIdSelector);
   const updateNodeInternals = useUpdateNodeInternals();
+  // TODO: trigger actions by the edges?
   const action = useGetAction({ node: currentNode });
   const isConnecting = !!connectionNodeId;
   const isTarget = !!connectionNodeId && connectionNodeId !== id;
@@ -59,6 +60,17 @@ export default function CustomNode(props: NodeProps<GameNodeData>) {
     [action?.actionName, action?.callback, action?.timer],
   );
 
+  const price = useMemo(
+    () =>
+      data.price
+        ? {
+            value: data.price,
+            handler: handleSell,
+          }
+        : undefined,
+    [data.price, handleSell],
+  );
+
   return (
     <Card
       className={`${dragging ? "dragging" : ""} ${!isCharacter ? "grabbable" : ""}`}
@@ -68,14 +80,7 @@ export default function CustomNode(props: NodeProps<GameNodeData>) {
       isConnectable={isConnectable}
       isTarget={isTarget}
       outputs={data.outputs}
-      price={
-        data.price
-          ? {
-              value: data.price,
-              handler: handleSell,
-            }
-          : undefined
-      }
+      price={price}
       timer={timer}
       title={data.title}
       values={values}
