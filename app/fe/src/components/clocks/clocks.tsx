@@ -45,11 +45,7 @@ export function Clocks({ initHours = 12, initMinutes = 45 }: TimerProps) {
   }, [isOpen, setPlay]);
 
   const handleClick = useCallback(() => {
-    if (!play) {
-      !isOpen && setPlay(true);
-    } else {
-      !isOpen && setPlay(false);
-    }
+    !isOpen && setPlay(!play);
   }, [isOpen, play, setPlay]);
 
   return (
