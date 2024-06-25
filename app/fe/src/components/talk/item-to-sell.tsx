@@ -29,7 +29,7 @@ export function ItemToSell({ data, price }: SellItemProps) {
 
   return (
     <Card
-      className="small"
+      className="micro"
       disabled={value < price}
       img={createImg(data.type)}
       price={

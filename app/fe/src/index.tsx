@@ -12,6 +12,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         Progress: {
           circleTextFontSize: "18px",
         },
+        Button: {
+          contentFontSizeLG: 18,
+        },
       },
     }}
   >

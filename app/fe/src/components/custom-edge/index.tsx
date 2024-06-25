@@ -42,7 +42,17 @@ export default function CustomEdge(props: CustomEdgeProps) {
       <EdgeLabelRenderer>
         <div className="edge-actions" style={{ transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)` }}>
           {actionsList && actionsList.length > 0 && <Actions actionsList={actionsList} source={source} target={target} />}
-          <Button className="button" icon={<CircleX />} shape="circle" size="large" onClick={handleClose} />
+          <Button
+            className="button"
+            icon={<CircleX />}
+            shape="circle"
+            size="large"
+            onClick={handleClose}
+            onMouseDown={e => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+          />
         </div>
       </EdgeLabelRenderer>
     </>

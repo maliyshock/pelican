@@ -2,6 +2,7 @@ import { Compass, Grab, Hammer } from "lucide-react";
 import { useEffect } from "react";
 import { ActionKind } from "@pelican/constants";
 import useStore from "~/store/use-store.ts";
+import { Button } from "antd";
 
 interface ActionsProps {
   actionsList: ActionKind[];
@@ -33,14 +34,19 @@ export function Actions({ actionsList, target, source }: ActionsProps) {
     <>
       {actionsList.length > cutoff &&
         actionsList.map(item => (
-          <button
+          <Button
             key={`${target}_${item}`}
             className="button"
             disabled={!!actions[target]}
+            size="large"
             onClick={() => !actions[target] && setActions([{ target, source, actionName: item }])}
+            onMouseDown={e => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
           >
             {item} {getIcon(item)}
-          </button>
+          </Button>
         ))}
     </>
   );

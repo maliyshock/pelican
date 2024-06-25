@@ -64,7 +64,7 @@ export function Card({
     <motion.div
       animate={active ? activeWrapper : {}}
       className={`card-wrapper ${className || ""} ${disabled ? "disabled" : ""}`}
-      whileHover={activeWrapper}
+      whileTap={activeWrapper}
       onClick={onClick}
     >
       <motion.div
@@ -86,7 +86,7 @@ export function Card({
         )}
         {img && (
           <div className="card__body">
-            <img alt={img.alt} className="img" src={img.src} />
+            <img alt={img.alt} className="img card-wrapper__img" src={img.src} />
           </div>
         )}
         {values}

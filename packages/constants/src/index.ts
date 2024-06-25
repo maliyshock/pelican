@@ -7,7 +7,7 @@ export * from "./connections";
 export * from "./constants";
 export * from "./recepies";
 export * from "./resource-containers-map";
-export * from "./talk-topics";
+export * from "./dialogs/index";
 export * from "./nodes/buildings/buildings";
 export * from "./nodes/characters/characters";
 export * from "./nodes/food/acorn";

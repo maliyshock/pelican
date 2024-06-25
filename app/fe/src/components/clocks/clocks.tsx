@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { formatTime } from "~/utils/format-time.ts";
 import "./clocks.css";
 import { Pause, Play } from "lucide-react";
@@ -44,12 +44,15 @@ export function Clocks({ initHours = 12, initMinutes = 45 }: TimerProps) {
     isOpen ? setPlay(false) : setPlay(true);
   }, [isOpen, setPlay]);
 
+  const handleClick = useCallback(() => {
+    !isOpen && setPlay(!play);
+  }, [isOpen, play, setPlay]);
+
   return (
     <div className="clocks">
       {formatTime(hours)} : {formatTime(minutes)}
       <div className="clocks__controls">
-        <Button className="clocks__button" disabled={isOpen} icon={<Play />} shape="round" onClick={() => !isOpen && setPlay(true)} />
-        <Button className="clocks__button" disabled={isOpen} icon={<Pause />} shape="round" onClick={() => !isOpen && setPlay(false)} />
+        <Button className="clocks__button" disabled={isOpen} icon={play ? <Pause /> : <Play />} shape="round" onClick={handleClick} />
       </div>
     </div>
   );

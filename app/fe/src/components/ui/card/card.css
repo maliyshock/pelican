@@ -21,10 +21,24 @@
     pointer-events: none;
 }
 
-.card-wrapper.small .img{
+.card-wrapper__img{
+    min-height: 200px;
+}
+.card-wrapper.small .card-wrapper__img{
     width: 100%;
     height: 200px;
+    min-height: unset;
+}
 
+.card-wrapper.micro .card-wrapper__img{
+    width: 100%;
+    height: 100px;
+    min-height: unset;
+    object-fit: contain;
+}
+
+.card-wrapper.micro .card__inner {
+    width: 150px
 }
 
 .card__inner {

@@ -21,6 +21,7 @@ export function useGetActionCallback() {
   return useCallback(
     ({ targetNode, actorNode, nodeSpecificAction }: GetActionArgs) =>
       () => {
+        // TODO: make an object to avoid checking every single if
         if (nodeSpecificAction === "eat") {
           eat(actorNode, targetNode);
         }
