@@ -46,3 +46,13 @@ body {
 .silver {
     color: var(--silver)
 }
+
+.h3 {
+    margin: 0;
+}
+
+.ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}

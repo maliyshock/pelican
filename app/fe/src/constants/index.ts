@@ -1,5 +1,5 @@
 import { createNode } from "~/utils/create-node.ts";
-import { BERRY, FOX, PELICAN, TRANQUIL_GLADE, TREE } from "@pelican/constants";
+import { BERRY, FOX, PELICAN, TRANQUIL_GLADE } from "@pelican/constants";
 
 export const APPEARANCE_RANGE = 200;
 export const INIT_NODES = [

@@ -1,0 +1,15 @@
+.ant-drawer-title {
+    font-size: 18px;
+}
+
+.ant-drawer-header-title {
+    flex-direction: row-reverse;
+}
+
+.talk__text {
+    font-size: 18px;
+}
+
+.ant-drawer-header {
+    display: none
+}
