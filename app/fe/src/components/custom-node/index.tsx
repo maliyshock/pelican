@@ -44,6 +44,7 @@ export default function CustomNode(props: NodeProps<GameNodeData>) {
       // TODO: check altar
       // TODO: trigger the end
       deleteElements({ nodes: [currentNode] });
+      // die
     }
   }, [currentNode, data.health, deleteElements]);
 
