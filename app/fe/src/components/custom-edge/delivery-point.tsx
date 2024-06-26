@@ -8,7 +8,7 @@ interface DeliveryPointProps {
   onStart?(): void;
 }
 
-export function DeliveryPoint({ path, onEnd }: DeliveryPointProps) {
+export function DeliveryPoint({ path, onEnd, onStart }: DeliveryPointProps) {
   const play = useStore(store => store.play);
   const boxRef = useRef<SVGForeignObjectElement>(null);
   const [isSet, setIsSet] = useState(false);
