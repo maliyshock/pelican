@@ -21,10 +21,7 @@ export function createNode({ position: { x, y, strict = true }, data, draggable 
 
   return {
     id: `${data.type}_${getRandomNum(Date.now())}`,
-    data: {
-      ...data,
-      img: createImg(data.type),
-    },
+    data,
     ...(!draggable ? { dragHandle: `.this .handler .should .never .exist .for .character .type ._${getRandomNum(Date.now())}` } : {}),
     position: { x: x + rangeX, y: y + rangeY },
     type: "node",

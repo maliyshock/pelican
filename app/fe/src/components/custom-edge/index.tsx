@@ -3,11 +3,12 @@ import { CircleX } from "lucide-react";
 
 import "./custom-edge.css";
 import { Actions } from "./actions.tsx";
-import { useCallback } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useGetActionsList } from "~/hooks/use-get-actions-list.ts";
 import { Button } from "antd";
 import { useDeleteEdge } from "~/hooks/use-delete-edge.ts";
 import { ActionKind } from "@pelican/constants";
+import { DeliveryPoint } from "~/components/custom-edge/delivery-point.tsx";
 
 type CustomEdgeProps = {
   id: string;
@@ -39,6 +40,7 @@ export default function CustomEdge(props: CustomEdgeProps) {
   return (
     <>
       <BaseEdge id={id} path={edgePath} style={{ strokeWidth: "4px" }} />
+      {/*<DeliveryPoint path={edgePath} />*/}
       <EdgeLabelRenderer>
         <div className="edge-actions" style={{ transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)` }}>
           {actionsList && actionsList.length > 0 && <Actions actionsList={actionsList} source={source} target={target} />}

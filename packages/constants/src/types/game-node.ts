@@ -21,6 +21,12 @@ export type Socket = {
   // type?: Resource; // type of material/resource in output (for machines)
 };
 
+type Fuel = {
+  max: number;
+  amount: number;
+  maxHeat: number;
+};
+
 // TODO: different types of nodes
 export interface GameNodeData {
   roles: RoleKind[];
@@ -42,4 +48,5 @@ export interface GameNodeData {
   profile?: Profile;
   nutrition?: number;
   sells?: Sells;
+  fuel?: Fuel;
 }

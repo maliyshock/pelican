@@ -18,7 +18,13 @@ export const FIRE_PLACE: GameNodeData = {
   title: "Fire Place",
   type: "building",
   roles: ["building"],
-  health: 5,
+  health: 3,
+  fuel: {
+    max: 150,
+    amount: 50,
+    maxHeat: 5,
+  },
+  price: 5,
 };
 
 export const STONE_WALL: GameNodeData = {
