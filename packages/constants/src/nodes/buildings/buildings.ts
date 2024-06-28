@@ -12,17 +12,18 @@ export const TEST_STRUCTURE_ENTITY: GameNodeData = {
 };
 
 export const FIRE_PLACE: GameNodeData = {
-  inputs: [createSocket(1)],
-  outputs: [createSocket(1), createSocket(1), createSocket(1)],
+  inputs: [createSocket(1, "fuel")],
+  outputs: [createSocket(1, "heat"), createSocket(1, "heat")],
   img: createImg("fire-place"),
   title: "Fire Place",
   type: "building",
-  roles: ["building"],
+  roles: ["fire-source"],
   health: 3,
-  fuel: {
+  fire: {
     max: 150,
     amount: 50,
-    maxHeat: 5,
+    maxOutputHeat: 5,
+    speed: 1000,
   },
   price: 5,
 };

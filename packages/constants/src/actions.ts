@@ -7,6 +7,7 @@ export type Actions = {
   }>;
 };
 
+// TODO: should actions and connections live together?
 export const ACTIONS_DICTIONARY: Actions = {
   player: {
     "region": ["explore"],
@@ -15,5 +16,8 @@ export const ACTIONS_DICTIONARY: Actions = {
   },
   food: {
     player: ["eat"],
+  },
+  fuel: {
+    "fire-source": ["burn"],
   },
 };

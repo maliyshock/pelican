@@ -4,6 +4,7 @@ import useStore from "~/store/use-store.ts";
 import { useGetEat } from "~/hooks/use-get-action/use-get-eat.ts";
 import { useGetExplore } from "~/hooks/use-get-action/use-get-explore.ts";
 import { useGetHarvest } from "~/hooks/use-get-action/use-get-harvest.ts";
+import { useGetBurn } from "~/hooks/use-get-action/use-get-burn.ts";
 
 interface GetActionArgs {
   targetNode: GameNode;
@@ -15,6 +16,7 @@ export function useGetActionCallback() {
   const { setComplete } = useStore(store => store.resourceGroups);
   const { setTalk } = useStore(store => store.talk);
   const eat = useGetEat();
+  const burn = useGetBurn();
   const explore = useGetExplore();
   const harvest = useGetHarvest();
 
@@ -24,6 +26,10 @@ export function useGetActionCallback() {
         // TODO: make an object to avoid checking every single if
         if (nodeSpecificAction === "eat") {
           eat(actorNode, targetNode);
+        }
+
+        if (nodeSpecificAction === "burn") {
+          burn(actorNode, targetNode);
         }
 
         if (nodeSpecificAction === "talk") {
@@ -42,6 +48,6 @@ export function useGetActionCallback() {
           setComplete(targetNode.id);
         }
       },
-    [eat, explore, harvest, setComplete, setTalk],
+    [burn, eat, explore, harvest, setComplete, setTalk],
   );
 }

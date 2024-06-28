@@ -7,6 +7,7 @@ import { GameNode, GameNodeData } from "@pelican/constants";
 import useStore from "~/store/use-store.ts";
 import { useHungerManager } from "~/components/custom-node/hooks/use-hunger-manager.ts";
 import { useGetValues } from "~/components/custom-node/hooks/use-get-values.tsx";
+import { useFuelManager } from "~/components/custom-node/hooks/use-fuel-manager.ts";
 
 const connectionNodeIdSelector = (state: ReactFlowState) => state.connectionNodeId;
 
@@ -25,8 +26,12 @@ export default function CustomNode(props: NodeProps<GameNodeData>) {
   const isCharacter = data.roles.includes("character");
   const isCmd = useStore(state => state.cmdIsPressed);
   const values = useGetValues(data);
+  const die = useCallback(() => {
+    // console.log("die")
+  }, []);
 
   useHungerManager({ digestion: data.profile?.digestion, id });
+  useFuelManager({ fire: data?.fire, id, die });
 
   const handleSell = useCallback(() => {
     if (data.price) {
@@ -44,7 +49,7 @@ export default function CustomNode(props: NodeProps<GameNodeData>) {
       // TODO: check altar
       // TODO: trigger the end
       deleteElements({ nodes: [currentNode] });
-      // die
+      // die()
     }
   }, [currentNode, data.health, deleteElements]);
 

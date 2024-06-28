@@ -10,4 +10,5 @@ export const BERRY: GameNodeData = {
   roles: ["food", "ingredient"],
   price: 2,
   nutrition: 1,
+  health: 1,
 };
