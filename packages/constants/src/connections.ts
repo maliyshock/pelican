@@ -8,8 +8,10 @@ type Connections = Partial<{
   [key in RoleKind]: RoleKind[] | "ALL";
 }>;
 
+// TODO: should actions and connections live together?
 export const connections: Connections = {
-  resource: ["resource"],
-  food: ["player"],
-  player: "ALL",
+  "resource": ["resource", "fire-source"],
+  "food": ["player", "fire-source"],
+  "player": "ALL",
+  "fire-source": "ALL",
 };

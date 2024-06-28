@@ -14,6 +14,22 @@ export function useGetValues(data: GameNodeData) {
   return useMemo(() => {
     const result: ReactNode[] = [];
 
+    if (data.fire) {
+      const { amount, max } = data.fire;
+
+      result.push(
+        <CardIndicator
+          key="dmg-indicator"
+          className="bottom-left dmg-indicator"
+          decor={isPlayer ? <Sword /> : undefined}
+          strokeColor="#BD381A"
+          trailColor="#CB9A8F"
+          type="dmg"
+          value={amount}
+        />,
+      );
+    }
+
     if (data.profile?.digestion && maxSatiety) {
       const { satiety } = data.profile.digestion;
 
@@ -61,5 +77,5 @@ export function useGetValues(data: GameNodeData) {
     }
 
     return result;
-  }, [data.dmg, data.health, data.profile?.digestion, health, isPlayer, maxHealth, maxSatiety]);
+  }, [data.dmg, data.fire, data.health, data.profile?.digestion, health, isPlayer, maxHealth, maxSatiety]);
 }

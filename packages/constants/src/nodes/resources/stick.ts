@@ -7,6 +7,7 @@ export const STICK: GameNodeData = {
   img: createImg("stick"),
   type: "stick",
   title: "Stick",
-  roles: ["resource"],
+  roles: ["resource", "fuel"],
   price: 2,
+  fuel: 6,
 };

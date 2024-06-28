@@ -21,10 +21,11 @@ export type Socket = {
   // type?: Resource; // type of material/resource in output (for machines)
 };
 
-type Fuel = {
-  max: number;
+export type Fire = {
   amount: number;
-  maxHeat: number;
+  max: number;
+  maxOutputHeat: number;
+  speed: number;
 };
 
 // TODO: different types of nodes
@@ -48,5 +49,6 @@ export interface GameNodeData {
   profile?: Profile;
   nutrition?: number;
   sells?: Sells;
-  fuel?: Fuel;
+  fire?: Fire;
+  fuel?: number;
 }

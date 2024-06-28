@@ -1,2 +1,2 @@
-export const BUILDING = ["building", "stone-wall"] as const;
+export const BUILDING = ["stone-wall", "building"] as const;
 export type BuildingKind = (typeof BUILDING)[number];

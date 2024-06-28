@@ -1,3 +1,4 @@
+import {FireSourceKind} from "./fire-source"
 import {BuildingKind} from "./building"
 import {CharacterKind} from "./character"
 import {MerchantKind} from "./merchant"
@@ -8,5 +9,6 @@ import {ResourceKind} from "./resource"
 import {PlayerKind} from "./player"
 import {RegionKind} from "./region"
 import {ResourceDepositKind} from "./resource-deposit"
+import {FuelKind} from "./fuel"
 
-export type TypeKind = BuildingKind | CharacterKind | MerchantKind | FoodKind | IngredientKind | FertilizerKind | ResourceKind | PlayerKind | RegionKind | ResourceDepositKind;
+export type TypeKind = FireSourceKind | BuildingKind | CharacterKind | MerchantKind | FoodKind | IngredientKind | FertilizerKind | ResourceKind | PlayerKind | RegionKind | ResourceDepositKind | FuelKind;

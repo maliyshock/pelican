@@ -7,6 +7,7 @@ export const ANTHILL: GameNodeData = {
   img: createImg("stone-deposit"),
   type: "stone-deposit",
   title: "Anthill",
-  roles: ["resource"],
+  roles: ["resource", "fuel"],
   price: 2,
+  fuel: 1,
 };

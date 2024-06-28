@@ -7,6 +7,7 @@ export const SKIN: GameNodeData = {
   img: createImg("skin"),
   type: "skin",
   title: "Some, um... skin",
-  roles: ["resource"],
+  roles: ["resource", "fuel"],
   price: 2,
+  fuel: 1,
 };

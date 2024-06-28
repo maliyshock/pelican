@@ -10,4 +10,5 @@ export const FISH: GameNodeData = {
   roles: ["food", "ingredient"],
   price: 2,
   nutrition: 4,
+  health: 1,
 };

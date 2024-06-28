@@ -7,6 +7,7 @@ export const PLANK: GameNodeData = {
   img: createImg("plank"),
   type: "plank",
   title: "Plank",
-  roles: ["resource"],
+  roles: ["resource", "fuel"],
   price: 2,
+  fuel: 15,
 };

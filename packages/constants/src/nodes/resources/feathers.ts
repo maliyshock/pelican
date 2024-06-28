@@ -7,6 +7,7 @@ export const FEATHERS: GameNodeData = {
   img: createImg("feathers"),
   type: "feathers",
   title: "Feathers",
-  roles: ["resource"],
+  roles: ["resource", "fuel"],
   price: 2,
+  fuel: 1,
 };

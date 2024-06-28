@@ -7,6 +7,7 @@ export const ROPE: GameNodeData = {
   img: createImg("rope"),
   type: "rope",
   title: "Rope",
-  roles: ["resource"],
+  roles: ["resource", "fuel"],
   price: 2,
+  fuel: 6,
 };

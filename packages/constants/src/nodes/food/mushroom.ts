@@ -10,4 +10,5 @@ export const MUSHROOM: GameNodeData = {
   roles: ["food", "ingredient"],
   price: 2,
   nutrition: 3,
+  health: 1,
 };
