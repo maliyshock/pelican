@@ -8,6 +8,7 @@ import useStore from "~/store/use-store.ts";
 import { useHungerManager } from "~/components/custom-node/hooks/use-hunger-manager.ts";
 import { useGetValues } from "~/components/custom-node/hooks/use-get-values.tsx";
 import { useFuelManager } from "~/components/custom-node/hooks/use-fuel-manager.ts";
+import { useStatusesManager } from "~/components/custom-node/hooks/use-statuses-manager.ts";
 
 const connectionNodeIdSelector = (state: ReactFlowState) => state.connectionNodeId;
 
@@ -30,6 +31,7 @@ export default function CustomNode(props: NodeProps<GameNodeData>) {
     // console.log("die")
   }, []);
 
+  useStatusesManager({ data, statuses: data.statuses, id });
   useHungerManager({ digestion: data.profile?.digestion, id });
   useFuelManager({ fire: data?.fire, id, die });
 

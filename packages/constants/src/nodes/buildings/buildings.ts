@@ -23,7 +23,7 @@ export const FIRE_PLACE: GameNodeData = {
     max: 150,
     amount: 50,
     maxOutputHeat: 5,
-    speed: 1000,
+    speed: 2000,
   },
   price: 5,
 };

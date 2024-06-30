@@ -35,7 +35,9 @@ export const PELICAN: GameNodeData = {
   type: "pelican",
   roles: ["player", "character"],
   dmg: 1,
-  health: 10,
+  health: 8,
   maxHealth: 10,
+  regenSpeed: 2000,
   profile: initialPlayer,
+  statuses: {},
 };

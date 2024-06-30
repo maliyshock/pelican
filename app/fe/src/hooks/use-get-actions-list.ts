@@ -1,30 +1,24 @@
 import { useReactFlow } from "reactflow";
 import { useMemo } from "react";
-import { ACTIONS_DICTIONARY, ActionKind, GameNode } from "@pelican/constants";
+import { ACTIONS_MAP, ActionKind, GameNode } from "@pelican/constants";
 
 export function useGetActionsList(source: string, target: string) {
   const { getNode } = useReactFlow();
-  const sourceNode = getNode(source) as GameNode;
-  const targetNode = getNode(target) as GameNode;
 
   return useMemo(() => {
-    let actions: ActionKind[] = [];
+    const sourceNode = getNode(source) as GameNode;
+    const targetNode = getNode(target) as GameNode;
 
-    // TODO: this is heavy. Any other data structure or Optimisation?
-    sourceNode.data.roles.forEach(actor => {
-      targetNode.data.roles.forEach(target => {
-        const actorEntity = ACTIONS_DICTIONARY[actor];
+    const actionsSet = new Set<ActionKind>();
 
-        if (actorEntity !== undefined) {
-          const action = actorEntity[target];
+    for (const actor of sourceNode.data.roles) {
+      for (const targetRole of targetNode.data.roles) {
+        const actions = ACTIONS_MAP.get(`${actor}:${targetRole}`);
 
-          if (action !== undefined) {
-            actions = [...actions, ...action];
-          }
-        }
-      });
-    });
+        actions?.forEach(action => actionsSet.add(action));
+      }
+    }
 
-    return actions;
-  }, [sourceNode.data.roles, targetNode.data.roles]);
+    return Array.from(actionsSet);
+  }, [source, target, getNode]);
 }

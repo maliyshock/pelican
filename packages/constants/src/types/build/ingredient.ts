@@ -1,2 +1,2 @@
-export const INGREDIENT = ["acorn", "apple", "berry", "egg", "fish", "grain", "honey", "insects", "larvae", "mushroom", "wild-grapes"] as const;
+export const INGREDIENT = ["acorn", "apple", "berry", "egg", "fish", "grain", "honey", "insects", "larvae", "mushroom", "wild-grapes", "goose-grass"] as const;
 export type IngredientKind = (typeof INGREDIENT)[number];

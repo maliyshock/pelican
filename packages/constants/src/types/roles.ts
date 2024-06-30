@@ -13,5 +13,6 @@ export const ROLES = [
   "merchant",
   "fuel",
   "fire-source",
+  "herb",
 ] as const;
 export type RoleKind = (typeof ROLES)[number];
