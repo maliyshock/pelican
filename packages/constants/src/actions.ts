@@ -20,21 +20,3 @@ addAction("player", "character", "talk");
 addAction("food", "player", "eat");
 addAction("herb", "player", "eat");
 addAction("fuel", "fire-source", "burn");
-
-// // TODO: should actions and connections live together?
-// export const ACTIONS_DICTIONARY: Actions = {
-//   player: {
-//     "region": ["explore"],
-//     "resource-deposit": ["harvest"],
-//     "character": ["fight", "talk"],
-//   },
-//   food: {
-//     player: ["eat"],
-//   },
-//   herb: {
-//     player: ["eat"],
-//   },
-//   fuel: {
-//     "fire-source": ["burn"],
-//   },
-// };
