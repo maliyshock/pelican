@@ -12,6 +12,7 @@ type Connections = Partial<{
 export const connections: Connections = {
   "resource": ["resource", "fire-source"],
   "food": ["player", "fire-source"],
+  "herb": ["player", "herb"],
   "player": "ALL",
   "fire-source": "ALL",
 };

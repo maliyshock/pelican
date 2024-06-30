@@ -21,7 +21,10 @@ export function useGetEat() {
           changeNodeValueBy({
             nodes: prevNodes,
             ids: [targetNode.id],
-            changes: [{ keys: ["data", "profile", "digestion", "satiety"], value: +nutrition }],
+            changes: [
+              { keys: ["data", "profile", "digestion", "satiety"], value: +nutrition },
+              ...(actorNode.data.onConsume ? [{ keys: ["data", "statuses"], value: actorNode.data.onConsume }] : []),
+            ],
           }),
         );
         deleteElements({ nodes: [actorNode] });

@@ -2,10 +2,11 @@ import { GameNode } from "@pelican/constants";
 import { cloneDeep, get, set } from "lodash";
 import { factorial } from "~/utils/factorial.ts";
 import { getCurrentMaxSatiety } from "~/utils/get-current-max-satiety.ts";
+import { isObject } from "lodash";
 
 type Change = {
   keys: string[];
-  value?: number | string;
+  value?: any; // can be anything
 };
 
 interface ChangeValueBy {
@@ -34,10 +35,6 @@ export function manageSatiety({ node, prevValue, value }: ManageSatiety) {
     set(node, ["data", "profile", "digestion", "satiety"], newSatiety);
     set(node, ["data", "health"], (health as number) - takeDamage);
     set(node, ["data", "speedPenaltyLevel"], 2);
-
-    // { keys: ["data", "profile", "digestion", "hungerStack"], value: currentHungerStack },
-    // { keys: ["data", "health"], value: -takeDamage },
-    // { keys: ["data", "speedPenaltyLevel"], value: 2 },
   } else if (prevValue + value > currentMaxSatiety) {
     if (hungerStack === 0) {
       // TODO: set gluttony
@@ -66,8 +63,19 @@ export function changeNodeValueBy({ nodes, ids, changes }: ChangeValueBy) {
 
         if (keys.includes("satiety")) {
           manageSatiety({ node: newNode, prevValue, value: value as number });
+        } else if (keys.includes("health")) {
+          // TODO: it should be generalized
+          const max = get(newNode, ["data", "maxHealth"]);
+
+          set(newNode, keys, Math.min(prevValue + value, max as number));
         } else {
-          set(newNode, keys, prevValue + value);
+          if (Array.isArray(value)) {
+            set(newNode, keys, [...prevValue, ...value]);
+          } else if (isObject(value)) {
+            set(newNode, keys, { ...prevValue, ...(value as object) });
+          } else {
+            set(newNode, keys, prevValue + value);
+          }
         }
       });
 
