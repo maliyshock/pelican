@@ -3,7 +3,7 @@ import { getRecipeKey } from "~/utils/get-recipe-key.ts";
 import { getAveragePosition } from "~/utils/get-averahe-position.ts";
 import { createNode } from "~/utils/create-node.ts";
 import { useReactFlow } from "reactflow";
-import { RECIPES_BOOK } from "@pelican/constants";
+import { GameNode, RECIPES_BOOK } from "@pelican/constants";
 import useStore from "~/store/use-store.ts";
 
 interface CompleteElementsPerGroup {
@@ -42,7 +42,8 @@ export function useCraftingManager() {
         const recipe = RECIPES_BOOK.find(recipeKey);
 
         if (recipe) {
-          const position = getAveragePosition(groupElements.map(node => getNode(node.id)));
+          const nodes = groupElements.map(node => getNode(node.id)) as GameNode[];
+          const position = getAveragePosition(nodes);
           const element = createNode({ position, data: recipe.gives });
 
           setNodes(prevNodes => [...prevNodes, element]);

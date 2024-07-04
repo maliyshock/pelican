@@ -3,6 +3,7 @@ import { Store } from "~/store/use-store.ts";
 import { NodesCounter, groupNodeIdsByRole } from "~/utils/group-node-ids-by-role.ts";
 import { INIT_NODES } from "~/constants";
 import { GameNode } from "@pelican/constants";
+import { cloneDeep, unset } from "lodash";
 
 export type NodesCounterSlice = {
   nodes: NodesCounter;
@@ -26,17 +27,9 @@ export const groupNodesIdsSlice = (set: SetState<Store>) => ({
 
       return nodes.reduce((acc, item) => {
         const mainRole = item.data.roles[0];
-        const nodesByRole = acc.nodesCounter.nodes[mainRole];
+        const newNodes = cloneDeep(acc.nodesCounter.nodes);
 
-        if (nodesByRole && nodesByRole.length > 0) {
-          acc = {
-            ...acc,
-            nodesCounter: {
-              ...acc.nodesCounter,
-              [mainRole]: nodesByRole.filter(id => id !== item.id),
-            },
-          };
-        }
+        unset(newNodes, [mainRole, item.data.type, item.id]);
 
         return acc;
       }, newState);
@@ -49,13 +42,15 @@ export const groupNodesIdsSlice = (set: SetState<Store>) => ({
         const mainRole = item.data.roles[0];
         const nodesByRole = newState.nodesCounter.nodes[mainRole];
 
-        if (nodesByRole && nodesByRole.length > 0) {
-          nodesByRole.push(item.id);
+        if (nodesByRole) {
           acc = {
             ...acc,
             nodesCounter: {
               ...acc.nodesCounter,
-              [mainRole]: [...nodesByRole],
+              nodes: {
+                ...acc.nodesCounter.nodes,
+                [mainRole]: { ...acc.nodesCounter.nodes[mainRole], ...nodesByRole },
+              },
             },
           };
         }

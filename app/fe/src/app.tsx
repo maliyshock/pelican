@@ -25,6 +25,7 @@ function App() {
   const [nodes, , onNodesChange] = useNodesState(INIT_NODES);
   const { items } = useStore(state => state.choice);
   const setScreenSize = useStore(state => state.setScreenSize);
+  const nodesCounter = useStore(state => state.nodesCounter);
   const screenSize = useStore(state => state.screenSize);
   const { companionId } = useStore(state => state.talk);
   const { setIsOpen } = useStore(state => state.modal);
@@ -34,6 +35,8 @@ function App() {
   const [cameraIsCentered, setCameraIsCentered] = useState(false);
   const onConnect = useOnConnect();
   const centerCamera = useCenterCamera();
+
+  console.log("nodesCounter", nodesCounter);
 
   useKeyListener();
   useCraftingManager();

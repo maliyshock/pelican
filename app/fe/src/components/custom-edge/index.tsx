@@ -3,7 +3,7 @@ import { CircleX } from "lucide-react";
 
 import "./custom-edge.css";
 import { Actions } from "./actions.tsx";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback } from "react";
 import { useGetActionsList } from "~/hooks/use-get-actions-list.ts";
 import { Button } from "antd";
 import { useDeleteEdge } from "~/hooks/use-delete-edge.ts";

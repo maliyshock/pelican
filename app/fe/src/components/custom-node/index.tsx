@@ -31,7 +31,7 @@ export default function CustomNode(props: NodeProps<GameNodeData>) {
     // console.log("die")
   }, []);
 
-  useStatusesManager({ data, statuses: data.statuses, id });
+  useStatusesManager({ data, statuses: data.statuses || {}, id });
   useHungerManager({ digestion: data.profile?.digestion, id });
   useFuelManager({ fire: data?.fire, id, die });
 
