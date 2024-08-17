@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Node } from "reactflow";
+import { Node } from "@xyflow/react";
 import { RoleKind } from "~/types/roles";
 import { TypeKind } from "~/types/build/type-kind";
 import { Profile } from "~/nodes/player/pelican";

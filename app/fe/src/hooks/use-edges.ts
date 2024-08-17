@@ -1,17 +1,15 @@
 import { useCallback, useRef } from "react";
-import { Connection, Edge, getOutgoers, updateEdge, useReactFlow } from "reactflow";
+import { Connection, Edge, getOutgoers, reconnectEdge, useReactFlow } from "@xyflow/react";
 import { isConnectable } from "../utils/is-connectable.ts";
-import { useDeleteEdge } from "./use-delete-edge.ts";
 import { GameNode } from "@pelican/constants";
-import useStore from "~/store/use-store.ts";
+import { useConnectionManager } from "~/hooks/use-connection-manager/use-connection-manager.ts";
 
 export function useEdges() {
-  const { getNode } = useReactFlow();
-  const { deleteActions } = useStore(store => store.actions);
-  const { getEdges, getNodes, setEdges } = useReactFlow();
-  const nodes: GameNode[] = getNodes();
+  const { getNode, deleteElements, getEdges, getNodes, setEdges } = useReactFlow();
+  const nodes = getNodes<GameNode>();
   const edges = getEdges();
-  const deleteEdge = useDeleteEdge();
+  const manageConnection = useConnectionManager();
+
   const edgeUpdateSuccessful = useRef(true);
 
   const isValidConnection = useCallback(
@@ -23,22 +21,20 @@ export function useEdges() {
       // * второй уровень валидации проверять тип input и output, если они указаны
       // * ну и настроить катчер чтобы мы смотрели все вышеперечисленное и выбирали подходящее
       // * описать возможное максимальное количество соединений
-
-      // target and source should always exist during the connection
-      // const target = nodes.find(node => node.id === connection.target)!;
-      // const source = nodes.find(node => node.id === connection.source)!;
+      console.log("is valid connection");
 
       if (connection.source && connection.target) {
         const source = getNode(connection.source) as GameNode;
         const target = getNode(connection.target) as GameNode;
 
-        const hasCycle = (node: GameNode, visited = new Set()) => {
+        const hasCycle = (node, visited = new Set()) => {
           if (visited.has(node.id)) return false;
           visited.add(node.id);
+          const outGoers = getOutgoers(node, nodes, edges);
 
-          for (const outgoer of getOutgoers(node, nodes, edges)) {
-            if (outgoer.id === connection.source) return true;
-            if (hasCycle(outgoer, visited)) return true;
+          for (const outGoer of outGoers) {
+            if (outGoer.id === connection.source) return true;
+            if (hasCycle(outGoer, visited)) return true;
           }
         };
 
@@ -53,43 +49,36 @@ export function useEdges() {
     [getNode, nodes, edges],
   );
 
-  const onEdgeUpdateStart = useCallback(() => {
+  const onReconnectStart = useCallback(() => {
     edgeUpdateSuccessful.current = false;
   }, []);
 
-  const onEdgeUpdate = useCallback(
+  const onReconnect = useCallback(
     (oldEdge: Edge, newConnection: Connection) => {
       edgeUpdateSuccessful.current = true;
-      setEdges(els => updateEdge(oldEdge, newConnection, els));
+      setEdges(els => reconnectEdge(oldEdge, newConnection, els));
     },
     [setEdges],
   );
 
-  const onEdgeUpdateEnd = useCallback(
+  const onReconnectEnd = useCallback(
     (_: MouseEvent | TouchEvent, edge: Edge) => {
       if (!edgeUpdateSuccessful.current) {
-        deleteEdge(edge);
+        deleteElements({ edges: [edge] });
       }
 
       edgeUpdateSuccessful.current = true;
     },
-    [deleteEdge],
+    [deleteElements],
   );
 
-  const handleOnEdgesDelete = useCallback(
-    (edges: Edge[]) => {
-      const ids = edges.map(edg => edg.target);
-
-      deleteActions(ids);
-    },
-    [deleteActions],
-  );
+  const handleOnEdgesDelete = useCallback((edges: Edge[]) => manageConnection(edges, "disconnect"), [manageConnection]);
 
   return {
     isValidConnection,
-    onEdgeUpdateStart,
-    onEdgeUpdate,
-    onEdgeUpdateEnd,
+    onReconnectStart,
+    onReconnect,
+    onReconnectEnd,
     handleOnEdgesDelete,
   };
 }

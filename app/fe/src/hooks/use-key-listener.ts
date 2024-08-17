@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import useStore from "~/store/use-store.ts";
 
 export function useKeyListener() {
-  const setCmdIsPressed = useStore(store => store.setCmdIsPressed);
+  const { setCmdIsPressed } = useStore(store => store.cmd);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {

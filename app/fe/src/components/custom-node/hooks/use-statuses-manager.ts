@@ -2,7 +2,7 @@ import { GameNode, GameNodeData, Statuses } from "@pelican/constants";
 import { useEffect } from "react";
 import { changeNodeValueBy } from "~/utils/change-node-value-by.ts";
 import useStore from "~/store/use-store.ts";
-import { useReactFlow } from "reactflow";
+import { useReactFlow } from "@xyflow/react";
 
 interface StatusesManager {
   data: GameNodeData;

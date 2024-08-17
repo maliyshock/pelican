@@ -9,31 +9,34 @@ import { ScreenSizeSlice, screenSizeSlice } from "~/store/slices/screen-size.ts"
 import { ResourceGroupsSlice, resourceGroupsSlice } from "~/store/slices/resource-groups.ts";
 import { NodesCounterSlice, groupNodesIdsSlice } from "~/store/slices/nodes-counter.ts";
 import { TalkSlice, talkSlice } from "~/store/slices/talk.ts";
+import { PlayerSubscriptions, playerSubscriptionSlice } from "~/store/slices/player-subscriptions.ts";
 
-export type Store = { actions: ActionsSlice } & { nodesCounter: NodesCounterSlice } & CmdSlice & { choice: ItemsToChooseSlice } & {
-    modal: ModalStatusSlice;
-  } & {
-    money: MoneySlice;
-  } & TimeSlice &
-  ScreenSizeSlice & {
-    resourceGroups: ResourceGroupsSlice;
-  } & {
-    talk: TalkSlice;
-  };
+// prettier-ignore
+export type Store =
+  { actions: ActionsSlice } &
+  { nodesCounter: NodesCounterSlice } &
+  { cmd: CmdSlice } &
+  { choice: ItemsToChooseSlice } &
+  { modal: ModalStatusSlice;} &
+  { money: MoneySlice } &
+  TimeSlice &
+  ScreenSizeSlice &
+  { resourceGroups: ResourceGroupsSlice } &
+  { talk: TalkSlice } &
+  { playerSubscription: PlayerSubscriptions};
 
 const useStore = create<Store>(set => ({
   actions: { ...actionsSlice(set) },
   nodesCounter: { ...groupNodesIdsSlice(set) },
-  ...cmdSlice(set),
-  choice: {
-    ...itemsToChooseSlice(set),
-  },
+  cmd: { ...cmdSlice(set) },
+  choice: { ...itemsToChooseSlice(set) },
   modal: { ...modalStatusSlice(set) },
   money: { ...moneySlice(set) },
   ...timeSlice(set),
   ...screenSizeSlice(set),
   resourceGroups: { ...resourceGroupsSlice(set) },
   talk: { ...talkSlice(set) },
+  playerSubscription: { ...playerSubscriptionSlice(set) },
 }));
 
 export default useStore;

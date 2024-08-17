@@ -20,7 +20,6 @@ export const itemsToChooseSlice = (set: SetState<Store>) => ({
   actor: "",
   setItems: ({ items, actor }: SetItems) =>
     set(state => ({
-      ...state,
       choice: {
         ...state.choice,
         items,

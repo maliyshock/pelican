@@ -1,5 +1,5 @@
 import { useGetValues } from "~/components/custom-node/hooks/use-get-values.tsx";
-import { useReactFlow } from "reactflow";
+import { useReactFlow } from "@xyflow/react";
 import useStore from "~/store/use-store.ts";
 import { useCallback } from "react";
 import { createNode } from "~/utils/create-node.ts";

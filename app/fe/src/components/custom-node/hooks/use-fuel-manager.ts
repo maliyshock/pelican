@@ -1,5 +1,5 @@
 import useStore from "~/store/use-store.ts";
-import { useReactFlow } from "reactflow";
+import { useReactFlow } from "@xyflow/react";
 import { useEffect } from "react";
 import { Fire, GameNode } from "@pelican/constants";
 import { changeNodeValueBy } from "~/utils/change-node-value-by.ts";

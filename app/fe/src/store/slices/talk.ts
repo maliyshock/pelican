@@ -10,7 +10,6 @@ export const talkSlice = (set: SetState<Store>) => ({
   companionId: undefined,
   setTalk: (id?: string) =>
     set(store => ({
-      ...store,
       talk: {
         ...store.talk,
         companionId: id,

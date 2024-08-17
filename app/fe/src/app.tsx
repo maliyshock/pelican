@@ -1,7 +1,7 @@
 import "./css/app.css";
 import { useCallback, useEffect, useState } from "react";
-import { Background, Controls, ReactFlow, useEdgesState, useNodesState } from "reactflow";
-import "reactflow/dist/style.css";
+import { Background, Controls, ReactFlow, useEdgesState, useNodesState } from "@xyflow/react";
+import "@xyflow/react/dist/style.css";
 import CustomNode from "./components/custom-node";
 import { useCenterCamera } from "./hooks/use-center-camera.ts";
 import CustomEdge from "./components/custom-edge";
@@ -23,6 +23,7 @@ const edgeTypes = {
 
 function App() {
   const [nodes, , onNodesChange] = useNodesState(INIT_NODES);
+  const { items: playerSubscription } = useStore(state => state.playerSubscription);
   const { items } = useStore(state => state.choice);
   const setScreenSize = useStore(state => state.setScreenSize);
   const nodesCounter = useStore(state => state.nodesCounter);
@@ -31,12 +32,10 @@ function App() {
   const { setIsOpen } = useStore(state => state.modal);
   const { handleOnNodesDelete } = useNodes();
   const [edges, , onEdgesChange] = useEdgesState([]);
-  const { isValidConnection, onEdgeUpdate, onEdgeUpdateStart, onEdgeUpdateEnd, handleOnEdgesDelete } = useEdges();
+  const { isValidConnection, onReconnect, onReconnectStart, onReconnectEnd, handleOnEdgesDelete } = useEdges();
   const [cameraIsCentered, setCameraIsCentered] = useState(false);
   const onConnect = useOnConnect();
   const centerCamera = useCenterCamera();
-
-  console.log("nodesCounter", nodesCounter);
 
   useKeyListener();
   useCraftingManager();
@@ -88,11 +87,11 @@ function App() {
           onConnect={onConnect}
           onEdgesChange={onEdgesChange}
           onEdgesDelete={handleOnEdgesDelete}
-          onEdgeUpdate={onEdgeUpdate}
-          onEdgeUpdateEnd={onEdgeUpdateEnd}
-          onEdgeUpdateStart={onEdgeUpdateStart}
           onNodesChange={onNodesChange}
           onNodesDelete={handleOnNodesDelete}
+          onReconnect={onReconnect}
+          onReconnectEnd={onReconnectEnd}
+          onReconnectStart={onReconnectStart}
         >
           <Background />
           <Controls />

@@ -1,36 +1,32 @@
 import { SetState } from "zustand";
 import { Store } from "~/store/use-store.ts";
-import { DirectedGraph, EntrancePoints } from "../../utils/directed-graph.ts";
+import { DirectedGraph, IndexMap } from "~/utils/directed-graph.ts";
 import { GameNode } from "@pelican/constants";
 
-interface Pair {
+export interface Pair {
   source: GameNode;
   target: GameNode;
 }
-
-interface Processing extends EntrancePoints {}
 
 const graph = new DirectedGraph<GameNode>();
 
 interface State {
   groups: GameNode[][];
-  entrancePoints: EntrancePoints;
-  processing: Processing;
+  entrancePoints: IndexMap;
+  processing: IndexMap;
   complete: string[];
+  nodesMap: IndexMap;
 }
 
-export type ResourceGroupsSlice = {
-  groups: GameNode[][];
-  entrancePoints: EntrancePoints;
-  processing: Processing;
-  complete: string[];
+export interface ResourceGroupsSlice extends State {
   destroyGroup: (index: number) => void;
   linkPair: (pair: Pair) => void;
   removeNodes: (nodes: GameNode[]) => void;
-  removeConnection: (pair: Pair) => void;
-  setProcessing: (processing: Processing) => void;
+  unlinkPair: (pair: Pair) => void;
+  stopProcessing: (ids: string[]) => void;
+  setProcessing: (processing: IndexMap) => void;
   setComplete: (id: string) => void;
-};
+}
 
 const initialState: State = {
   ...graph.getResult(),
@@ -54,7 +50,6 @@ export const resourceGroupsSlice = (set: SetState<Store>) => ({
       newGroups.splice(index, 1);
 
       return {
-        ...state,
         resourceGroups: {
           ...state.resourceGroups,
           complete: newComplete,
@@ -62,9 +57,8 @@ export const resourceGroupsSlice = (set: SetState<Store>) => ({
         },
       };
     }),
-  setProcessing: (processing: Processing) =>
+  setProcessing: (processing: IndexMap) =>
     set(state => ({
-      ...state,
       resourceGroups: {
         ...state.resourceGroups,
         processing: {
@@ -73,9 +67,23 @@ export const resourceGroupsSlice = (set: SetState<Store>) => ({
         },
       },
     })),
+  stopProcessing: (ids: string[]) =>
+    set(state => {
+      const newProcessing = { ...state.resourceGroups.processing };
+
+      for (let id of ids) {
+        delete newProcessing[id];
+      }
+
+      return {
+        resourceGroups: {
+          ...state.resourceGroups,
+          processing: newProcessing,
+        },
+      };
+    }),
   setComplete: (id: string) =>
     set(state => ({
-      ...state,
       resourceGroups: {
         ...state.resourceGroups,
         complete: [...state.resourceGroups.complete, id],
@@ -92,7 +100,19 @@ export const resourceGroupsSlice = (set: SetState<Store>) => ({
       }
 
       return {
-        ...state,
+        resourceGroups: {
+          ...state.resourceGroups,
+          ...graph.getResult(),
+        },
+      };
+    }),
+  unlinkPair: (pair: Pair) =>
+    set(state => {
+      const { source, target } = pair;
+
+      graph.removeConnection(source.id, target.id);
+
+      return {
         resourceGroups: {
           ...state.resourceGroups,
           ...graph.getResult(),
@@ -104,21 +124,6 @@ export const resourceGroupsSlice = (set: SetState<Store>) => ({
       nodes.forEach(node => graph.removeNode(node.id));
 
       return {
-        ...state,
-        resourceGroups: {
-          ...state.resourceGroups,
-          ...graph.getResult(),
-        },
-      };
-    }),
-  removeConnection: (pair: Pair) =>
-    set(state => {
-      const { source, target } = pair;
-
-      graph.removeConnection(source.id, target.id);
-
-      return {
-        ...state,
         resourceGroups: {
           ...state.resourceGroups,
           ...graph.getResult(),

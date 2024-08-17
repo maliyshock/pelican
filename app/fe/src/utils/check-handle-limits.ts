@@ -1,4 +1,4 @@
-import { Connection, Edge } from "reactflow";
+import { Connection, Edge } from "@xyflow/react";
 import { GameNode } from "@pelican/constants";
 
 interface CheckHandleLimits {

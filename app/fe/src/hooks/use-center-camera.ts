@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { useReactFlow } from "reactflow";
+import { useReactFlow } from "@xyflow/react";
 import { Size } from "~/store/slices/screen-size.ts";
 
 export function useCenterCamera() {

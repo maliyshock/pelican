@@ -1,5 +1,5 @@
 import { getIntersection } from "./get-intersection.ts";
-import { Connection, Edge } from "reactflow";
+import { Connection, Edge } from "@xyflow/react";
 import { isBelowLimit } from "./check-handle-limits.ts";
 import { GameNode, RoleKind, connections } from "@pelican/constants";
 

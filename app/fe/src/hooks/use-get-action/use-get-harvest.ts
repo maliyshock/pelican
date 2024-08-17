@@ -22,10 +22,11 @@ export function useGetHarvest() {
         console.log("there is no item");
       }
 
-      setNodes((prevNodes: GameNode[]) => [
-        ...changeNodeValueBy({ nodes: prevNodes, ids: [targetNode.id], changes: [{ keys: ["data", "health"], value: -1 }] }),
-        ...addNodes,
-      ]);
+      setNodes((prevNodes: GameNode[]) => {
+        const result = changeNodeValueBy({ nodes: prevNodes, ids: [targetNode.id], changes: [{ keys: ["data", "health"], value: -1 }] });
+
+        return [...result, ...addNodes];
+      });
     },
     [setNodes],
   );

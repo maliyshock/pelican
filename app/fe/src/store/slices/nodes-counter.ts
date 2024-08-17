@@ -15,7 +15,6 @@ export const groupNodesIdsSlice = (set: SetState<Store>) => ({
   nodes: groupNodeIdsByRole({ nodes: INIT_NODES, initAcc: {} as NodesCounter }),
   setNodes: (nodes: GameNode[]) =>
     set(state => ({
-      ...state,
       nodesCounter: {
         ...state.nodesCounter,
         nodes: groupNodeIdsByRole({ nodes, initAcc: state.nodesCounter.nodes }),

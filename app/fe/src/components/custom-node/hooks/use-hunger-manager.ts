@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { changeNodeValueBy } from "~/utils/change-node-value-by.ts";
 import useStore from "~/store/use-store.ts";
-import { useReactFlow } from "reactflow";
+import { useReactFlow } from "@xyflow/react";
 import { Digestion, GameNode } from "@pelican/constants";
 import { useGetCurrentMaxSatiety } from "~/components/custom-node/hooks/use-get-current-max-satiety.ts";
 

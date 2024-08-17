@@ -51,6 +51,7 @@ export function manageSatiety({ node, prevValue, value }: ManageSatiety) {
   }
 }
 
+// TODO: refactor this. This looks awefull
 // supports only numbers for now
 export function changeNodeValueBy({ nodes, ids, changes }: ChangeValueBy) {
   return nodes.map(node => {
@@ -67,7 +68,7 @@ export function changeNodeValueBy({ nodes, ids, changes }: ChangeValueBy) {
           // TODO: it should be generalized
           const max = get(newNode, ["data", "maxHealth"]);
 
-          set(newNode, keys, Math.min(prevValue + value, max as number));
+          set(newNode, keys, max ? Math.min(prevValue + value, max) : prevValue + value);
         } else {
           if (Array.isArray(value)) {
             set(newNode, keys, [...prevValue, ...value]);
