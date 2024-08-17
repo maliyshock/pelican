@@ -3,7 +3,7 @@ import { useDebounce } from "../use-debounce.ts";
 import { useGetActionCallback } from "./use-get-action-callback.ts";
 import { GameNode } from "@pelican/constants";
 import useStore from "~/store/use-store.ts";
-import { useReactFlow } from "reactflow";
+import { useReactFlow } from "@xyflow/react";
 import { Action } from "~/store/slices/actions.ts";
 
 interface UseGetAction {

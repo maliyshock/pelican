@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { getRecipeKey } from "~/utils/get-recipe-key.ts";
 import { getAveragePosition } from "~/utils/get-averahe-position.ts";
 import { createNode } from "~/utils/create-node.ts";
-import { useReactFlow } from "reactflow";
-import { GameNode, RECIPES_BOOK } from "@pelican/constants";
+import { useReactFlow } from "@xyflow/react";
+import { RECIPES_BOOK } from "@pelican/constants";
 import useStore from "~/store/use-store.ts";
 
 interface CompleteElementsPerGroup {
@@ -13,7 +13,10 @@ interface CompleteElementsPerGroup {
   };
 }
 
-// TODO: the ides is that different nodes will have different speed for crafting depending on complexity e.t.c
+// TODO: the idea is that different nodes will have different speed for crafting depending on complexity e.t.c
+// This manager tracks all of completed processes (craftings) with all nodes which had it
+// it will clean up the group in the store and delete nodes
+// which will trigger unlink handler, which will clear up graph nodes and groups
 export function useCraftingManager() {
   // TODO: addNodes conflicts with setNodes - it is react flow bug
   const { deleteElements, setNodes, getNode } = useReactFlow();
@@ -42,8 +45,7 @@ export function useCraftingManager() {
         const recipe = RECIPES_BOOK.find(recipeKey);
 
         if (recipe) {
-          const nodes = groupElements.map(node => getNode(node.id)) as GameNode[];
-          const position = getAveragePosition(nodes);
+          const position = getAveragePosition(groupElements);
           const element = createNode({ position, data: recipe.gives });
 
           setNodes(prevNodes => [...prevNodes, element]);

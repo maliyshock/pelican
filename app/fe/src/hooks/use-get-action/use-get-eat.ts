@@ -3,7 +3,7 @@ import { changeNodeValueBy } from "~/utils/change-node-value-by.ts";
 import { GameNode } from "@pelican/constants";
 import useStore from "~/store/use-store.ts";
 import { useNodes } from "~/hooks/use-nodes.ts";
-import { useReactFlow } from "reactflow";
+import { useReactFlow } from "@xyflow/react";
 
 export function useGetEat() {
   const { deleteElements } = useReactFlow();

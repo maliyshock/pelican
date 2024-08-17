@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { Modal } from "antd";
 import "./make-choice.css";
 import { createNode } from "~/utils/create-node.ts";
-import { useReactFlow } from "reactflow";
+import { useReactFlow } from "@xyflow/react";
 import useStore from "~/store/use-store.ts";
 import { GameNode, GameNodeData } from "@pelican/constants";
 import { OptionsList } from "~/components/ui/options-list";

@@ -5,7 +5,7 @@ import { Icon } from "~/components/ui/icons/icon/icon.tsx";
 import useStore from "~/store/use-store.ts";
 import { Button } from "antd";
 import { useCallback } from "react";
-import { useReactFlow } from "reactflow";
+import { useReactFlow } from "@xyflow/react";
 import { changeNodeValueBy } from "~/utils/change-node-value-by.ts";
 import { getRandomNum } from "~/utils/get-random-num.ts";
 

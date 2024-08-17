@@ -1,4 +1,4 @@
-import { useReactFlow } from "reactflow";
+import { useReactFlow } from "@xyflow/react";
 import { Button, Drawer } from "antd";
 import useStore from "~/store/use-store.ts";
 import { DIALOGS, GameNode, SellItem } from "@pelican/constants";

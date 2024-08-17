@@ -9,7 +9,10 @@ export type CmdSlice = {
 export const cmdSlice = (set: SetState<Store>) => ({
   cmdIsPressed: false,
   setCmdIsPressed: (isPressed: boolean) =>
-    set(() => ({
-      cmdIsPressed: isPressed,
+    set(state => ({
+      cmd: {
+        ...state.cmd,
+        cmdIsPressed: isPressed,
+      },
     })),
 });

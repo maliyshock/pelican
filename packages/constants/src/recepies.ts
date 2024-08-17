@@ -9,6 +9,11 @@ interface Recipe {
   gives: GameNodeData;
 }
 
+const something: Recipe = {
+  requires: ["wood", "wood"],
+  gives: FIRE_PLACE,
+};
+
 const firePlace: Recipe = {
   requires: ["stick", "stick", "flint"],
   gives: FIRE_PLACE,
@@ -41,5 +46,6 @@ const RECIPES_BOOK = new RecipesBook();
 
 RECIPES_BOOK.add(firePlace);
 RECIPES_BOOK.add(stoneWall);
+RECIPES_BOOK.add(something);
 
 export { RECIPES_BOOK };

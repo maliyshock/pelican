@@ -20,7 +20,7 @@ export type Actions = {
 
 export type ActionsSlice = {
   setActions: (payload: ActionPayload[]) => void;
-  deleteActions: (target: string[]) => void;
+  deleteActions: (targets: string[]) => void;
   items: Actions;
 };
 
@@ -29,7 +29,6 @@ export const actionsSlice = (set: SetState<Store>) => ({
   setActions: (payload: ActionPayload[]) =>
     set(state => {
       const newState = {
-        ...state,
         actions: {
           ...state.actions,
           items: {
@@ -45,7 +44,6 @@ export const actionsSlice = (set: SetState<Store>) => ({
   deleteActions: (targets: string[]) =>
     set(state => {
       const newState = {
-        ...state,
         actions: {
           ...state.actions,
           items: {

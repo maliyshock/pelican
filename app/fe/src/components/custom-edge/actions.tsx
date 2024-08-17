@@ -16,23 +16,21 @@ function getIcon(action: ActionKind) {
   if (action === "craft") return <Hammer />;
 }
 
-const cutoff = 1;
-
 export function Actions({ actionsList, target, source }: ActionsProps) {
   const { setActions, items: actions } = useStore(store => store.actions);
 
   // if there is only 1 action trigger it by default
   useEffect(() => {
-    if (actionsList.length === cutoff && !actions[target]) {
+    if (actionsList.length === 1) {
       const action = actionsList[0];
 
       setActions([{ target, source, actionName: action }]);
     }
-  }, [actions, actionsList, setActions, source, target]);
+  }, [actionsList, setActions, source, target]);
 
   return (
     <>
-      {actionsList.length > cutoff &&
+      {actionsList.length > 1 &&
         actionsList.map(item => (
           <Button
             key={`${target}_${item}`}

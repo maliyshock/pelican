@@ -1,4 +1,4 @@
-import { Handle, Position } from "reactflow";
+import { Handle, Position } from "@xyflow/react";
 import { ArrowRightFromLine, ArrowRightToLine } from "lucide-react";
 import { Socket } from "@pelican/constants";
 import useStore from "~/store/use-store.ts";
@@ -12,7 +12,7 @@ interface SocketsProps {
 }
 
 export function Sockets({ type, isTarget, sockets, isConnectable, position }: SocketsProps) {
-  const isCmd = useStore(state => state.cmdIsPressed);
+  const { cmdIsPressed: isCmd } = useStore(state => state.cmd);
   const isInput = type === "target";
 
   return (

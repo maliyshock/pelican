@@ -17,6 +17,7 @@ addAction("player", "region", "explore");
 addAction("player", "resource-deposit", "harvest");
 addAction("player", "character", "fight");
 addAction("player", "character", "talk");
+
 addAction("food", "player", "eat");
 addAction("herb", "player", "eat");
 addAction("fuel", "fire-source", "burn");

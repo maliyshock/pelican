@@ -3,7 +3,7 @@ import { Button } from "antd";
 import { Icon } from "../icons/icon/icon.tsx";
 import { Coin } from "../icons/coin.tsx";
 import { Timer } from "~/components/timer/timer.tsx";
-import { Position } from "reactflow";
+import { Position } from "@xyflow/react";
 import { ReactNode } from "react";
 import { Socket } from "@pelican/constants";
 import { Sockets } from "~/components/custom-node/components/sockets.tsx";
@@ -78,7 +78,7 @@ export function Card({
             <Icon icon={<Coin />} size="fill" value={price.value} valueOnIcon />
           </Button>
         )}
-        {timer !== undefined && <Timer callback={timer.callback} label={timer.actionName} time={timer.value} />}
+        {timer !== undefined && timer.value > 0 && <Timer callback={timer.callback} label={timer.actionName} time={timer.value} />}
         {title && (
           <header className="card__header">
             <h3>{title}</h3>

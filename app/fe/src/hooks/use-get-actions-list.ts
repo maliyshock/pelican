@@ -1,4 +1,4 @@
-import { useReactFlow } from "reactflow";
+import { useReactFlow } from "@xyflow/react";
 import { useMemo } from "react";
 import { ACTIONS_MAP, ActionKind, GameNode } from "@pelican/constants";
 

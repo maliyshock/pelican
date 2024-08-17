@@ -1,14 +1,15 @@
-import { BaseEdge, EdgeLabelRenderer, Position, getSimpleBezierPath, useReactFlow } from "reactflow";
+import { BaseEdge, EdgeLabelRenderer, Position, getSimpleBezierPath, useReactFlow } from "@xyflow/react";
 import { CircleX } from "lucide-react";
 
 import "./custom-edge.css";
 import { Actions } from "./actions.tsx";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useGetActionsList } from "~/hooks/use-get-actions-list.ts";
 import { Button } from "antd";
-import { useDeleteEdge } from "~/hooks/use-delete-edge.ts";
 import { ActionKind } from "@pelican/constants";
 import { DeliveryPoint } from "~/components/custom-edge/delivery-point.tsx";
+import useStore from "~/store/use-store.ts";
+import { useConnectionManager } from "~/hooks/use-connection-manager/use-connection-manager.ts";
 
 type CustomEdgeProps = {
   id: string;
@@ -21,7 +22,7 @@ type CustomEdgeProps = {
 };
 
 export default function CustomEdge(props: CustomEdgeProps) {
-  const { getEdge } = useReactFlow();
+  const { getEdge, deleteElements, getNode } = useReactFlow();
   const { id, sourceX, sourceY, targetX, targetY, source, target } = props;
   const [edgePath, labelX, labelY] = getSimpleBezierPath({
     sourceX,
@@ -31,11 +32,9 @@ export default function CustomEdge(props: CustomEdgeProps) {
     sourcePosition: Position.Right,
     targetPosition: Position.Left,
   });
-  const deleteEdge = useDeleteEdge();
-
   const actionsList: ActionKind[] | undefined = useGetActionsList(source, target);
   const edge = getEdge(id);
-  const handleClose = useCallback(() => edge && deleteEdge(edge), [deleteEdge, edge]);
+  const handleClose = useCallback(() => edge && deleteElements({ edges: [edge] }), [deleteElements, edge]);
 
   return (
     <>
