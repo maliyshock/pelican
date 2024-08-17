@@ -3,13 +3,11 @@ import { CircleX } from "lucide-react";
 
 import "./custom-edge.css";
 import { Actions } from "./actions.tsx";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { useGetActionsList } from "~/hooks/use-get-actions-list.ts";
 import { Button } from "antd";
 import { ActionKind } from "@pelican/constants";
 import { DeliveryPoint } from "~/components/custom-edge/delivery-point.tsx";
-import useStore from "~/store/use-store.ts";
-import { useConnectionManager } from "~/hooks/use-connection-manager/use-connection-manager.ts";
 
 type CustomEdgeProps = {
   id: string;
@@ -22,7 +20,7 @@ type CustomEdgeProps = {
 };
 
 export default function CustomEdge(props: CustomEdgeProps) {
-  const { getEdge, deleteElements, getNode } = useReactFlow();
+  const { getEdge, deleteElements } = useReactFlow();
   const { id, sourceX, sourceY, targetX, targetY, source, target } = props;
   const [edgePath, labelX, labelY] = getSimpleBezierPath({
     sourceX,

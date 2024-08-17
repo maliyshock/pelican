@@ -1,7 +1,6 @@
 import { useCallback } from "react";
 import { Connection, Edge, useReactFlow } from "@xyflow/react";
-import { GameNode, RECIPES_BOOK } from "@pelican/constants";
-import { getRecipeKey } from "~/utils/get-recipe-key.ts";
+import { GameNode } from "@pelican/constants";
 import useStore from "~/store/use-store.ts";
 import { useManagePair } from "~/hooks/use-connection-manager/use-manage-pair.ts";
 
@@ -21,7 +20,6 @@ export function useConnectionManager() {
         if (type === "connect") {
           if (source.data.roles.includes("resource") && target.data.roles.includes("resource")) {
             managePair({ source, target, type });
-            // in Theory i can get a group index from the store and check wanever there is a change check if there is a complete recipe or not
           }
 
           // connection between player and group entrance point

@@ -23,10 +23,8 @@ const edgeTypes = {
 
 function App() {
   const [nodes, , onNodesChange] = useNodesState(INIT_NODES);
-  const actions = useStore(state => state.actions);
   const { items: playerSubscription } = useStore(state => state.playerSubscription);
   const { items } = useStore(state => state.choice);
-  const resourceGroups = useStore(state => state.resourceGroups);
   const setScreenSize = useStore(state => state.setScreenSize);
   const nodesCounter = useStore(state => state.nodesCounter);
   const screenSize = useStore(state => state.screenSize);

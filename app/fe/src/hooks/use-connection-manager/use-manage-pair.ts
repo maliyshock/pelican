@@ -12,8 +12,7 @@ export function useManagePair() {
   const { groups, nodesMap, linkPair, unlinkPair, stopProcessing } = useStore(store => store.resourceGroups);
   const { deleteActions } = useStore(store => store.actions);
 
-  // check if there is a group
-  // reset processing and all current actions of source/target and other group members
+  // check if there is a group and reset processing and all current actions of source/target and other group members
   // another action should be triggered in place of usage
   return useCallback(
     ({ source, target, type }: ManagePairArgs) => {

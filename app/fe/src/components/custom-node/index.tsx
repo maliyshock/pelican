@@ -3,30 +3,20 @@ import "../ui/card/card.css";
 import { useCallback, useEffect, useMemo } from "react";
 import { useGetAction } from "~/hooks/use-get-action/use-get-action.ts";
 import { Card } from "../ui/card/card.tsx";
-import { GameNode, GameNodeData, RECIPES_BOOK } from "@pelican/constants";
+import { GameNode, GameNodeData } from "@pelican/constants";
 import useStore from "~/store/use-store.ts";
 import { useHungerManager } from "~/components/custom-node/hooks/use-hunger-manager.ts";
 import { useGetValues } from "~/components/custom-node/hooks/use-get-values.tsx";
 import { useFuelManager } from "~/components/custom-node/hooks/use-fuel-manager.ts";
 import { useStatusesManager } from "~/components/custom-node/hooks/use-statuses-manager.ts";
-import { useConnectionManager } from "~/hooks/use-connection-manager/use-connection-manager.ts";
-import { getRecipeKey } from "~/utils/get-recipe-key.ts";
 import { usePlayerSubscriptionManager } from "~/components/custom-node/hooks/use-player-subscription-manager.ts";
 
 const connectionNodeIdSelector = (state: ReactFlowState) => state.connection.fromHandle?.nodeId;
 
-// situations:
-// connected to the group - track group
-// connected to the node without group and group gonna be created later on
-// how to get group ? i need an id of target
-
 export default function CustomNode(props: NodeProps<GameNodeData>) {
   const { id, isConnectable, dragging } = props;
   const { addMoney } = useStore(store => store.money);
-
   const { cmdIsPressed: isCmd } = useStore(state => state.cmd);
-  const { nodesMap } = useStore(state => state.resourceGroups);
-
   const { getNode, deleteElements } = useReactFlow();
   const connectionNodeId = useReactFlowStore(connectionNodeIdSelector);
   const currentNode = getNode(id) as GameNode;
