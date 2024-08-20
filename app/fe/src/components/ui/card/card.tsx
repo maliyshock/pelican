@@ -15,6 +15,7 @@ export type Value = {
 };
 
 interface CardProps {
+  isOrigin: boolean;
   className?: string;
   innerClassName?: string;
   title?: ReactNode;
@@ -45,6 +46,7 @@ const activeWrapper = { scale: 1.1 };
 const activeInnerWrapper = { boxShadow: "0 16px 12px rgba(0, 0, 0, 0.03)", outline: "4px solid var(--blue)" };
 
 export function Card({
+  isOrigin,
   className,
   innerClassName,
   title,
@@ -92,6 +94,7 @@ export function Card({
         {values}
       </motion.div>
 
+      {isOrigin && <div className={"handle-overlay handle-reset"} style={{ backgroundColor: "red" }}></div>}
       {inputs && <Sockets isConnectable={disabled ? false : isConnectable} isTarget={isTarget} position={Position.Left} sockets={inputs} type="target" />}
       {outputs && <Sockets isConnectable={disabled ? false : isConnectable} isTarget={isTarget} position={Position.Right} sockets={outputs} type="source" />}
     </motion.div>

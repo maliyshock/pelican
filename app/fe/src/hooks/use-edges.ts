@@ -15,13 +15,6 @@ export function useEdges() {
   const isValidConnection = useCallback(
     (connection: Connection) => {
       // TODO: add validation of handles here
-      // validation rules:
-      // * можно соединять только то что описано как возможное для соединения
-      // * как вариант, описать возможные типы соединений и проверять типы
-      // * второй уровень валидации проверять тип input и output, если они указаны
-      // * ну и настроить катчер чтобы мы смотрели все вышеперечисленное и выбирали подходящее
-      // * описать возможное максимальное количество соединений
-      console.log("is valid connection");
 
       if (connection.source && connection.target) {
         const source = getNode(connection.source) as GameNode;
@@ -41,7 +34,7 @@ export function useEdges() {
         if (target?.id === connection.source) return false;
 
         // source and target should always exist
-        return !!target && !hasCycle(target) && isConnectable({ source, target, edges, connection });
+        return !!target && !hasCycle(target) && isConnectable({ source, target, edges });
       }
 
       return false;

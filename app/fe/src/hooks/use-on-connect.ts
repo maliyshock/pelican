@@ -13,8 +13,7 @@ export function useOnConnect() {
 
         return setEdges(oldEdges => {
           // TODO: fix this hardcode later - there should be validation to the target input types and connection to specific one
-
-          const newConnection = { ...connection, sourceHandle: "source-0", targetHandle: "target-0", type: "custom-edge" } as Connection;
+          const newConnection = { ...connection, sourceHandle: 0, targetHandle: 0, type: "custom-edge" } as Connection;
 
           // so it actually put connections as edges...🤷
           return addEdge(newConnection, oldEdges);

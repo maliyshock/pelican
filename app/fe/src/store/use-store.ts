@@ -26,17 +26,17 @@ export type Store =
   { playerSubscription: PlayerSubscriptions};
 
 const useStore = create<Store>(set => ({
-  actions: { ...actionsSlice(set) },
-  nodesCounter: { ...groupNodesIdsSlice(set) },
-  cmd: { ...cmdSlice(set) },
-  choice: { ...itemsToChooseSlice(set) },
-  modal: { ...modalStatusSlice(set) },
-  money: { ...moneySlice(set) },
+  actions: actionsSlice(set),
+  nodesCounter: groupNodesIdsSlice(set),
+  cmd: cmdSlice(set),
+  choice: itemsToChooseSlice(set),
+  modal: modalStatusSlice(set),
+  money: moneySlice(set),
   ...timeSlice(set),
   ...screenSizeSlice(set),
-  resourceGroups: { ...resourceGroupsSlice(set) },
-  talk: { ...talkSlice(set) },
-  playerSubscription: { ...playerSubscriptionSlice(set) },
+  resourceGroups: resourceGroupsSlice(set),
+  talk: talkSlice(set),
+  playerSubscription: playerSubscriptionSlice(set),
 }));
 
 export default useStore;
