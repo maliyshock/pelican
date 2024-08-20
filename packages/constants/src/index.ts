@@ -54,6 +54,7 @@ export * from "./types/game-node";
 export * from "./types/resource-container";
 export * from "./types/roles";
 export * from "./types/socket-type";
+export * from "./types/socket";
 export * from "./types/statuses";
 export * from "./types/build/building";
 export * from "./types/build/character";

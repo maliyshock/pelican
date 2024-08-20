@@ -2,8 +2,8 @@ import { GameNodeData } from "~/types/game-node";
 import { createImg, createSocket } from "@pelican/utils";
 
 export const ACORN: GameNodeData = {
-  inputs: [createSocket(1)],
-  outputs: [createSocket(1)],
+  inputs: [createSocket({ index: 0 })],
+  outputs: [createSocket({ index: 0 })],
   img: createImg("acorn"),
   type: "acorn",
   title: "Acorn",

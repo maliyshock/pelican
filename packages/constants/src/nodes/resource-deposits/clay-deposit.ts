@@ -3,8 +3,8 @@ import { createSocket } from "@pelican/utils";
 import { createImg } from "@pelican/utils";
 
 export const CLAY_DEPOSIT: GameNodeData = {
-  inputs: [createSocket(1)],
-  outputs: [createSocket(1)],
+  inputs: [createSocket({ index: 0 })],
+  outputs: [createSocket({ index: 0 })],
   img: createImg("clay-deposit"),
   type: "clay-deposit",
   title: "Clay deposit",

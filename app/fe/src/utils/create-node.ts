@@ -1,6 +1,5 @@
 import { getRandomNum } from "./get-random-num.ts";
 import { getBool } from "./get-bool.ts";
-import { createImg } from "./create-img.ts";
 import { GameNode, GameNodeData } from "@pelican/constants";
 import { APPEARANCE_RANGE } from "~/constants";
 

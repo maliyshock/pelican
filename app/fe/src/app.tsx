@@ -23,10 +23,8 @@ const edgeTypes = {
 
 function App() {
   const [nodes, , onNodesChange] = useNodesState(INIT_NODES);
-  const { items: playerSubscription } = useStore(state => state.playerSubscription);
   const { items } = useStore(state => state.choice);
   const setScreenSize = useStore(state => state.setScreenSize);
-  const nodesCounter = useStore(state => state.nodesCounter);
   const screenSize = useStore(state => state.screenSize);
   const { companionId } = useStore(state => state.talk);
   const { setIsOpen } = useStore(state => state.modal);

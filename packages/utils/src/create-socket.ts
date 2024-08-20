@@ -1,6 +1,5 @@
-import generateID from "~/generate-id";
-import { SocketTypeKind } from "@pelican/constants";
+import { Socket } from "@pelican/constants";
 
-export default function createSocket(limit: number, type?: SocketTypeKind) {
-  return { id: generateID(), type: type, ...(limit ? { limit } : {}) };
+export default function createSocket({ id, limit, type }: Socket): Socket {
+  return { id, limit, type };
 }

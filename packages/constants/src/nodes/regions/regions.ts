@@ -2,7 +2,7 @@ import { GameNodeData } from "~/types/game-node";
 import { createImg, createSocket } from "@pelican/utils";
 
 export const FOREST: GameNodeData = {
-  inputs: [createSocket(1)],
+  inputs: [createSocket({ index: 0 })],
   img: createImg("forest"),
   type: "forest",
   title: "Forest",
@@ -11,7 +11,7 @@ export const FOREST: GameNodeData = {
 };
 
 export const TRANQUIL_GLADE: GameNodeData = {
-  inputs: [createSocket(1)],
+  inputs: [createSocket({ index: 0 })],
   img: createImg("tranquil_glade"),
   type: "glade",
   title: "The Tranquil Glade",

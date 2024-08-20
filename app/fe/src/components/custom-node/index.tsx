@@ -1,4 +1,4 @@
-import { NodeProps, ReactFlowState, useReactFlow, useStore as useReactFlowStore, useUpdateNodeInternals } from "@xyflow/react";
+import { NodeProps, ReactFlowState, useConnection, useReactFlow, useStore as useReactFlowStore, useUpdateNodeInternals } from "@xyflow/react";
 import "../ui/card/card.css";
 import { useCallback, useEffect, useMemo } from "react";
 import { useGetAction } from "~/hooks/use-get-action/use-get-action.ts";
@@ -10,14 +10,24 @@ import { useGetValues } from "~/components/custom-node/hooks/use-get-values.tsx"
 import { useFuelManager } from "~/components/custom-node/hooks/use-fuel-manager.ts";
 import { useStatusesManager } from "~/components/custom-node/hooks/use-statuses-manager.ts";
 import { usePlayerSubscriptionManager } from "~/components/custom-node/hooks/use-player-subscription-manager.ts";
+import { isConnectable } from "~/utils/is-connectable.ts";
 
 const connectionNodeIdSelector = (state: ReactFlowState) => state.connection.fromHandle?.nodeId;
 
 export default function CustomNode(props: NodeProps<GameNodeData>) {
-  const { id, isConnectable, dragging } = props;
+  const { getEdges, getNode, deleteElements } = useReactFlow();
+  const { id, isConnectable: connectable, dragging } = props;
   const { addMoney } = useStore(store => store.money);
   const { cmdIsPressed: isCmd } = useStore(state => state.cmd);
-  const { getNode, deleteElements } = useReactFlow();
+  const { inProgress, fromNode } = useConnection();
+  const availableToConnect = useMemo(() => {
+    if (fromNode) {
+      return connectable && isConnectable({ source: fromNode as GameNode, target: props as GameNode, edges: getEdges() });
+    }
+
+    return connectable;
+  }, [connectable, fromNode, getEdges, props]);
+  const isOrigin = connectable && inProgress && fromNode?.id === id;
   const connectionNodeId = useReactFlowStore(connectionNodeIdSelector);
   const currentNode = getNode(id) as GameNode;
   const { data } = currentNode;
@@ -85,7 +95,8 @@ export default function CustomNode(props: NodeProps<GameNodeData>) {
       img={data.img}
       innerClassName={`${isCmd && !isCharacter ? "cmd" : ""}`}
       inputs={data.inputs}
-      isConnectable={isConnectable}
+      isConnectable={availableToConnect}
+      isOrigin={isOrigin}
       isTarget={isTarget}
       outputs={data.outputs}
       price={price}

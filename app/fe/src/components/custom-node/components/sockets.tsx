@@ -1,4 +1,4 @@
-import { Handle, Position } from "@xyflow/react";
+import { Handle, Position, useConnection } from "@xyflow/react";
 import { ArrowRightFromLine, ArrowRightToLine } from "lucide-react";
 import { Socket } from "@pelican/constants";
 import useStore from "~/store/use-store.ts";
@@ -17,7 +17,7 @@ export function Sockets({ type, isTarget, sockets, isConnectable, position }: So
 
   return (
     <>
-      {isTarget && isInput && (
+      {isTarget && isInput && isConnectable && (
         <Handle
           key="target-catcher"
           className={`handle-overlay handle-reset ${isCmd ? "" : "transparent"} ${isTarget ? "catcher" : ""}`}
@@ -27,7 +27,7 @@ export function Sockets({ type, isTarget, sockets, isConnectable, position }: So
         />
       )}
 
-      {!isInput && (
+      {!isInput && isConnectable && (
         <Handle
           key="source-catcher"
           className={`handle-overlay handle-reset ${isCmd ? "" : "transparent"}`}
@@ -38,11 +38,11 @@ export function Sockets({ type, isTarget, sockets, isConnectable, position }: So
       )}
 
       <div className={`card__connectors ${isInput ? "card__inputs" : "card__outputs"}`}>
-        {sockets?.map((_input, index) => (
+        {sockets?.map((socket, index) => (
           <Handle
             key={`${type}-${index}`}
             className={`handle ${isInput ? "input" : ""} handle-reset`}
-            id={`${type}-${index}`}
+            id={socket.id.toString()}
             isConnectable={isConnectable}
             position={position}
             type={type}

@@ -1,24 +1,35 @@
 import { getIntersection } from "./get-intersection.ts";
-import { Connection, Edge } from "@xyflow/react";
-import { isBelowLimit } from "./check-handle-limits.ts";
+import { Edge } from "@xyflow/react";
 import { GameNode, RoleKind, connections } from "@pelican/constants";
 
 interface IsConnectable {
   source: GameNode;
   target: GameNode;
-  connection: Connection;
   edges: Edge[];
 }
 
 // describes if nodes can be connected based on connection rules
 // should debounce?
-export function isConnectable({ source, target, edges, connection }: IsConnectable) {
+export function isConnectable({ source, target, edges }: IsConnectable) {
   const targetRoles = target.data.roles;
   const sourceRoles = source.data.roles;
   let intersections: RoleKind[] = [];
+  let availableHandlers = target.data.inputs;
 
-  if (!isBelowLimit({ source, target, edges, connection })) {
-    return false;
+  // TODO: we should always have 1 limit for now.
+  // is there connection ?
+  // if (!isBelowLimit({ source, target, edges, connection })) {
+  //   return false;
+  // }
+
+  if (target.data.inputs !== undefined) {
+    const edgesOfTarget = edges.filter(edg => edg.target === target.id);
+
+    // we need to get available handlers (with no edges)
+    if (edgesOfTarget.length > 0) {
+      // availableHandlers = target.data.inputs - edgesWithInputHandlers;
+      availableHandlers = target.data.inputs.filter(socket => !edgesOfTarget.find(edg => edg.targetHandle === socket.id));
+    }
   }
 
   for (let i = 0; i < sourceRoles.length; i++) {
@@ -32,5 +43,5 @@ export function isConnectable({ source, target, edges, connection }: IsConnectab
     }
   }
 
-  return intersections.length > 0;
+  return intersections.length > 0 && availableHandlers && availableHandlers.length > 0;
 }
