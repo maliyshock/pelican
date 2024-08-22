@@ -1,4 +1,4 @@
-import { BaseEdge, EdgeLabelRenderer, Position, getSimpleBezierPath, useReactFlow } from "@xyflow/react";
+import { EdgeLabelRenderer, Position, getSimpleBezierPath, useReactFlow } from "@xyflow/react";
 import { CircleX } from "lucide-react";
 
 import "./custom-edge.css";
@@ -8,6 +8,7 @@ import { useGetActionsList } from "~/hooks/use-get-actions-list.ts";
 import { Button } from "antd";
 import { ActionKind } from "@pelican/constants";
 import { DeliveryPoint } from "~/components/custom-edge/delivery-point.tsx";
+import { ConnectionLineRenderer } from "~/components/ui/connection-line-renderer.tsx";
 
 type CustomEdgeProps = {
   id: string;
@@ -36,7 +37,7 @@ export default function CustomEdge(props: CustomEdgeProps) {
 
   return (
     <>
-      <BaseEdge id={id} path={edgePath} style={{ strokeWidth: "4px" }} />
+      <ConnectionLineRenderer path={edgePath} type="source" />
       {/*<DeliveryPoint path={edgePath} />*/}
       <EdgeLabelRenderer>
         <div className="edge-actions" style={{ transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)` }}>

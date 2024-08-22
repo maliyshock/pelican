@@ -68,3 +68,7 @@
   background-color: var(--lasagna);
 }
 
+.arrowhead-marker {
+  color: var(--blue)
+}
+

@@ -1,0 +1,12 @@
+
+.stroke-animated {
+    stroke-dasharray: 10 10;
+    animation: dash 0.3s linear infinite;
+}
+
+@keyframes dash {
+    to {
+        stroke-dashoffset: -20;
+    }
+}
+

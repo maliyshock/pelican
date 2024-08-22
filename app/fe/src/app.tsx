@@ -15,6 +15,7 @@ import useStore from "~/store/use-store.ts";
 import { MakeChoice } from "~/components/make-choice/make-choice.tsx";
 import { INIT_NODES } from "~/constants";
 import { Talk } from "~/components/talk";
+import { ConnectionLine } from "~/components/connection-line/connection-line.tsx";
 
 const nodeTypes = { node: CustomNode };
 const edgeTypes = {
@@ -75,8 +76,31 @@ function App() {
       <div className="node-sandbox">
         <Header />
         {/*<CenterCameraButton />*/}
+        <svg style={{ position: "absolute", top: 0, left: 0 }}>
+          <defs>
+            <marker
+              className="arrowhead-marker"
+              id="marker"
+              markerHeight="20"
+              markerUnits="userSpaceOnUse"
+              markerWidth="20"
+              orient="auto-start-reverse"
+              refX="325"
+              refY="325"
+              viewBox="0 0 649 649"
+            >
+              <path
+                clipRule="evenodd"
+                d="M133.097 21.1209C161.226 -7.04029 206.833 -7.04029 234.963 21.1209L538 324.5L234.963 627.879C206.833 656.04 161.226 656.04 133.097 627.879C104.968 599.718 104.968 554.06 133.097 525.899L334.269 324.5L133.097 123.101C104.968 94.9402 104.968 49.282 133.097 21.1209Z"
+                fill="#00A6FF"
+                fillRule="evenodd"
+              />
+            </marker>
+          </defs>
+        </svg>
         <ReactFlow
           ref={ref}
+          connectionLineComponent={ConnectionLine}
           edges={edges}
           edgeTypes={edgeTypes}
           isValidConnection={isValidConnection}

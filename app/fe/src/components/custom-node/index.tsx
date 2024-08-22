@@ -54,7 +54,7 @@ export default function CustomNode(props: NodeProps<GameNodeData>) {
   }, [addMoney, data.price, deleteElements, id]);
 
   useEffect(() => {
-    updateNodeInternals(id);
+    // updateNodeInternals(id); // - it mess with position of the line
   }, [id, isTarget, updateNodeInternals, isConnecting]);
 
   useEffect(() => {

@@ -143,13 +143,14 @@
     transform: translateX(-50%);
 }
 
-.card__header {
-    text-align: center;
-}
-
 .card__header, .card__footer {
     width: 100%;
     padding: 12px;
+}
+
+.card__header {
+    text-align: center;
+    padding-top: 24px;
 }
 
 .card__value-container {
@@ -228,4 +229,10 @@
 
 .card__header * {
     margin: 0;
+}
+
+.card__timer {
+    position: absolute;
+    left: 0;
+    right: 0;
 }
