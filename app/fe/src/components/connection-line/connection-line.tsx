@@ -12,8 +12,6 @@ export type ConnectionLineProps = {
 export function ConnectionLine({ fromX, fromY, toX, toY }: ConnectionLineProps) {
   const { fromHandle } = useConnection();
 
-  console.log("ConnectionLine fromY", fromY);
-
   if (fromHandle === null || fromHandle === undefined) return null;
 
   return <ConnectionLineRenderer marker="marker" path={`M${fromX},${fromY} C ${fromX} ${toY} ${fromX} ${toY} ${toX},${toY}`} type={fromHandle.type} />;

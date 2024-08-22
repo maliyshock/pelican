@@ -88,7 +88,6 @@ function App() {
               refX="325"
               refY="325"
               viewBox="0 0 649 649"
-              // viewBox="-10 -10 20 20"
             >
               <path
                 clipRule="evenodd"
