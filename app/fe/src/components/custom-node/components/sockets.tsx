@@ -1,7 +1,8 @@
-import { Handle, Position, useConnection } from "@xyflow/react";
+import { Handle, Position } from "@xyflow/react";
 import { ArrowRightFromLine, ArrowRightToLine } from "lucide-react";
 import { Socket } from "@pelican/constants";
 import useStore from "~/store/use-store.ts";
+import { MouseEvent as ReactMouseEvent, useCallback, useRef } from "react";
 
 interface SocketsProps {
   type: "target" | "source";
@@ -12,8 +13,24 @@ interface SocketsProps {
 }
 
 export function Sockets({ type, isTarget, sockets, isConnectable, position }: SocketsProps) {
+  const refs = useRef<HTMLDivElement[]>([]);
+
   const { cmdIsPressed: isCmd } = useStore(state => state.cmd);
   const isInput = type === "target";
+  const handleMouseDown = useCallback((e: ReactMouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (refs.current.length > 0) {
+      // TODO: fix hardcode later get available
+      refs.current[0].dispatchEvent(new MouseEvent("mousedown", e.nativeEvent));
+    }
+  }, []);
+
+  function setRef(index) {
+    return el => {
+      refs.current[index] = el;
+    };
+  }
 
   return (
     <>
@@ -28,12 +45,11 @@ export function Sockets({ type, isTarget, sockets, isConnectable, position }: So
       )}
 
       {!isInput && isConnectable && (
-        <Handle
+        <div
           key="source-catcher"
-          className={`handle-overlay handle-reset ${isCmd ? "" : "transparent"}`}
+          className={`handle-overlay nodrag nopan source handle-reset ${isCmd ? "" : "transparent"}`}
           id="source-catcher"
-          position={position}
-          type="source"
+          onMouseDown={e => handleMouseDown(e)}
         />
       )}
 
@@ -41,6 +57,7 @@ export function Sockets({ type, isTarget, sockets, isConnectable, position }: So
         {sockets?.map((socket, index) => (
           <Handle
             key={`${type}-${index}`}
+            ref={setRef(index)}
             className={`handle ${isInput ? "input" : ""} handle-reset`}
             id={socket.id.toString()}
             isConnectable={isConnectable}

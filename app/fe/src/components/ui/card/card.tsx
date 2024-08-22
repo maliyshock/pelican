@@ -80,7 +80,7 @@ export function Card({
             <Icon icon={<Coin />} size="fill" value={price.value} valueOnIcon />
           </Button>
         )}
-        {timer !== undefined && timer.value > 0 && <Timer callback={timer.callback} label={timer.actionName} time={timer.value} />}
+        {timer !== undefined && timer.value > 0 && <Timer callback={timer.callback} className="card__timer" label={timer.actionName} time={timer.value} />}
         {title && (
           <header className="card__header">
             <h3>{title}</h3>
@@ -94,7 +94,7 @@ export function Card({
         {values}
       </motion.div>
 
-      {isOrigin && <div className={"handle-overlay handle-reset"} style={{ backgroundColor: "red" }}></div>}
+      {isOrigin && <div className="handle-overlay handle-reset" style={{ backgroundColor: "red" }}></div>}
       {inputs && <Sockets isConnectable={disabled ? false : isConnectable} isTarget={isTarget} position={Position.Left} sockets={inputs} type="target" />}
       {outputs && <Sockets isConnectable={disabled ? false : isConnectable} isTarget={isTarget} position={Position.Right} sockets={outputs} type="source" />}
     </motion.div>

@@ -7,13 +7,13 @@ import { useConnectionManager } from "~/hooks/use-connection-manager/use-connect
 export function useEdges() {
   const { getNode, deleteElements, getEdges, getNodes, setEdges } = useReactFlow();
   const nodes = getNodes<GameNode>();
-  const edges = getEdges();
   const manageConnection = useConnectionManager();
 
   const edgeUpdateSuccessful = useRef(true);
 
   const isValidConnection = useCallback(
     (connection: Connection) => {
+      const edges = getEdges();
       // TODO: add validation of handles here
 
       if (connection.source && connection.target) {
@@ -39,7 +39,7 @@ export function useEdges() {
 
       return false;
     },
-    [getNode, nodes, edges],
+    [getEdges, getNode, nodes],
   );
 
   const onReconnectStart = useCallback(() => {

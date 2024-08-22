@@ -6,10 +6,11 @@ import { getRandomNum } from "~/utils/get-random-num.ts";
 interface TimerProps {
   time: number;
   label?: string;
+  className: string;
   callback(): void;
 }
 
-export function Timer({ time, callback, label }: TimerProps) {
+export function Timer({ time, callback, label, className }: TimerProps) {
   const [key, setKey] = useState(getRandomNum(Date.now()));
   const onComplete = useCallback(() => {
     // in case of immediate trigger we will not loop
@@ -23,7 +24,7 @@ export function Timer({ time, callback, label }: TimerProps) {
   if (callback === undefined) return;
 
   return (
-    <div className="timer">
+    <div className={`${className} timer`}>
       <div className="timer__label">{label}</div>;
       <Line key={key} duration={time} onComplete={onComplete} />
     </div>
