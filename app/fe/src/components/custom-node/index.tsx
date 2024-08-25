@@ -41,6 +41,8 @@ export default function CustomNode(props: NodeProps<GameNodeData>) {
     // console.log("die")
   }, []);
 
+  const items = data.roles.includes("player") ? new Array(4).fill(0) : [];
+
   usePlayerSubscriptionManager(id);
   useStatusesManager({ data, statuses: data.statuses || {}, id });
   useHungerManager({ digestion: data.profile?.digestion, id });
@@ -98,6 +100,7 @@ export default function CustomNode(props: NodeProps<GameNodeData>) {
       isConnectable={availableToConnect}
       isOrigin={isOrigin}
       isTarget={isTarget}
+      items={items}
       outputs={data.outputs}
       price={price}
       timer={timer}

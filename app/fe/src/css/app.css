@@ -52,6 +52,7 @@
   background-image: url("/assets/template.jpg");
   background-position: center;
   background-size: cover;
+
 }
 
 
@@ -70,5 +71,11 @@
 
 .arrowhead-marker {
   color: var(--blue)
+}
+
+.ant-btn-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 

@@ -1,5 +1,7 @@
 import { createRoot } from "react-dom/client";
 import App from "./app.tsx";
+import "./css/reset.css";
+import "./css/font.css";
 import "./css/index.css";
 import { ReactFlowProvider } from "@xyflow/react";
 import { ConfigProvider } from "antd";

@@ -1,0 +1,24 @@
+@font-face {
+    font-family: 'asl';
+    src: url('assets/fonts/asl-light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'asl';
+    src: url('assets/fonts/asl-regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'asl';
+    src: url('assets/fonts/asl-bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+body {
+    font-family: 'asl', sans-serif;
+}

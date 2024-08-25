@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { CSSProperties, useCallback, useState } from "react";
 import "./timer.css";
 import { Line } from "./line.tsx";
 import { getRandomNum } from "~/utils/get-random-num.ts";
@@ -12,6 +12,7 @@ interface TimerProps {
 
 export function Timer({ time, callback, label, className }: TimerProps) {
   const [key, setKey] = useState(getRandomNum(Date.now()));
+  const style: CSSProperties = time < 50 ? { visibility: "hidden" } : {};
   const onComplete = useCallback(() => {
     // in case of immediate trigger we will not loop
     if (time !== 0) {
@@ -24,8 +25,8 @@ export function Timer({ time, callback, label, className }: TimerProps) {
   if (callback === undefined) return;
 
   return (
-    <div className={`${className} timer`}>
-      <div className="timer__label">{label}</div>;
+    <div className={`${className} timer`} style={style}>
+      <div className="timer__label">{label}</div>
       <Line key={key} duration={time} onComplete={onComplete} />
     </div>
   );

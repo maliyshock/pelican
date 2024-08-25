@@ -32,6 +32,8 @@ export function Sockets({ type, isTarget, sockets, isConnectable, position }: So
     };
   }
 
+  console.log("sockets", sockets);
+
   return (
     <>
       {isTarget && isInput && isConnectable && (
