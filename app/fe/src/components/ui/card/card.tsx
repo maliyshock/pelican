@@ -41,26 +41,24 @@ interface CardProps {
 const activeWrapper = { scale: 1.1 };
 const activeInnerWrapper = { boxShadow: "0 16px 12px rgba(0, 0, 0, 0.03)", outline: "4px solid var(--blue)" };
 
-export function Card(props: CardProps) {
-  const {
-    items = [],
-    isOrigin = false,
-    className,
-    innerClassName,
-    title,
-    img,
-    values,
-    inputs,
-    outputs,
-    timer,
-    price,
-    isConnectable,
-    isTarget,
-    active,
-    disabled,
-    onClick = () => {},
-  } = props;
-
+export function Card({
+  items = [],
+  isOrigin = false,
+  className,
+  innerClassName,
+  title,
+  img,
+  values,
+  inputs,
+  outputs,
+  timer,
+  price,
+  isConnectable,
+  isTarget,
+  active,
+  disabled,
+  onClick = () => {},
+}: CardProps) {
   return (
     <motion.div
       animate={active ? activeWrapper : {}}
@@ -85,14 +83,14 @@ export function Card(props: CardProps) {
             <h3>{title}</h3>
           </header>
         )}
-        {(img || items.length > 0) && (
+        {(img || items!.length > 0) && (
           <div className="card__body">
             <img alt={img.alt} className="img card-wrapper__img" src={img.src} />
 
-            {items.length > 0 && (
+            {items!.length > 0 && (
               <div className="card__items items">
                 <ul className="items__list">
-                  {items.map((item, index) => (
+                  {items!.map((item, index) => (
                     <li key={`item_${index}`} className="items__item">
                       <InventoryItemBorder className="items__item-border" />
                     </li>

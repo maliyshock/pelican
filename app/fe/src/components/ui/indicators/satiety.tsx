@@ -1,6 +1,6 @@
 import "./satiety.scss";
 import "./indicator.scss";
-import { IndicatorValue } from "~/components/ui/indicators/indicator-value.tsx";
+import { IndicatorValue } from "~/components/ui/card/indicator-value.tsx";
 
 type SatietyProps = {
   value: number;
@@ -9,6 +9,8 @@ type SatietyProps = {
 
 export function Satiety({ value, max }: SatietyProps) {
   const percent = Math.round(100 - (value / max) * 100);
+
+  console.log("Satiety percent", percent);
 
   return (
     <div className="satiety-indicator indicator">
@@ -83,7 +85,7 @@ export function Satiety({ value, max }: SatietyProps) {
               <g className="satiety-indicator__glare" id="satiety-indicator__glare">
                 <path
                   d="M41.3613 58.0548C41.3613 58.0078 41.4161 57.953 41.4788 57.9295C41.5414 57.8982 41.5962 57.8434 41.5962 57.7886C41.5962 57.7416 41.7137 57.6476 41.8546 57.5928C47.5701 55.0639 52.025 52.5115 55.971 49.505C61.4673 45.3241 65.2097 40.603 67.3941 35.0754C70.565 27.0581 69.7586 18.845 65.2489 13.2314C64.278 12.0178 62.9392 10.7729 61.5612 9.8099C60.9349 9.37145 59.4316 8.49456 59.3063 8.49456C59.2515 8.49456 59.2124 8.43975 59.2124 8.37712C59.2124 7.83689 62.8218 9.24618 64.8496 10.585C69.1088 13.3958 71.5672 17.608 72.2092 23.206C72.3345 24.2708 72.264 27.8176 72.0996 28.8902C71.3402 33.8775 69.281 38.4421 65.9065 42.6465C61.5612 48.0644 53.4969 53.5372 44.6888 57.0526C42.2774 58.0156 41.3613 58.2896 41.3613 58.0548Z"
-                  fill="#FF9700"
+                  fill="#000000"
                 />
               </g>
             </g>
