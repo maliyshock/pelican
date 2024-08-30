@@ -1,0 +1,15 @@
+@import "indicator";
+
+.dmg-indicator {
+	bottom: 0;
+	left: 0;
+	width: 92px;
+	height: 92px;
+	transform: translate(-40%, 40%);
+
+	&__value-container {
+		transform: translate(calc(-50% + 6px), calc(50% - 20px));
+		left: 50%;
+		top: 50%;
+	}
+}

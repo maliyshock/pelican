@@ -5,6 +5,7 @@ import { Sword } from "~/components/ui/icons/sword.tsx";
 import { Heart } from "~/components/ui/icons/heart.tsx";
 import { CardIndicator } from "~/components/ui/card/indicator/card-indicator.tsx";
 import { Satiety } from "~/components/ui/indicators/satiety.tsx";
+import { Dmg } from "~/components/ui/indicators/dmg.tsx";
 
 export function useGetValues(data: GameNodeData) {
   const maxSatiety = useGetCurrentMaxSatiety(data.profile?.digestion);
@@ -37,17 +38,7 @@ export function useGetValues(data: GameNodeData) {
     }
 
     if (data.dmg) {
-      result.push(
-        <CardIndicator
-          key="dmg-indicator"
-          className="bottom-left dmg-indicator"
-          decor={isPlayer ? <Sword /> : undefined}
-          strokeColor="#BD381A"
-          trailColor="#CB9A8F"
-          type="dmg"
-          value={data.dmg}
-        />,
-      );
+      result.push(<Dmg key="dmg-indicator" value={data.dmg} />);
     }
 
     if (data.health) {
