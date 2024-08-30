@@ -15,7 +15,7 @@ export function useGetValues(data: GameNodeData) {
     const result: ReactNode[] = [];
 
     if (data.fire) {
-      const { amount, max } = data.fire;
+      const { amount } = data.fire;
 
       result.push(
         <CardIndicator

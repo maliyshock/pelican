@@ -11,6 +11,7 @@
     "build": "tsc && vite build",
     "test": "jest --verbose",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "ts": "tsc",
     "preview": "vite preview"
   },
   "dependencies": {

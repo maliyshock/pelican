@@ -1,6 +1,4 @@
 import "./satiety.css";
-import { useEffect, useRef, useState } from "react";
-import { usePrevious } from "~/utils/use-prev.ts";
 import { IndicatorValue } from "~/components/ui/indicators/indicator-value.tsx";
 
 type SatietyProps = {

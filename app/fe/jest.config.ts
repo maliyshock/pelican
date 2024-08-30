@@ -1,4 +1,4 @@
-export default {
+const config = {
   transform: {
     "^.+\\.ts?$": "ts-jest",
   },
@@ -6,3 +6,5 @@ export default {
     "^~/(.*)$": "<rootDir>/src/$1",
   },
 };
+
+export default config;

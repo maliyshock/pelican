@@ -10,6 +10,7 @@ type Dependencies = Record<string, any>;
 
 export function useEffectDebug(effect: EffectCallback, dependencies: Dependencies) {
   const prevDepsRef = useRef<Dependencies | null>(null);
+  const deps: Array<any> = Object.values(dependencies);
 
   useEffect(() => {
     const prevDeps = prevDepsRef.current;
@@ -36,5 +37,5 @@ export function useEffectDebug(effect: EffectCallback, dependencies: Dependencie
     prevDepsRef.current = dependencies;
 
     return effect();
-  }, Object.values(dependencies));
+  }, deps);
 }
