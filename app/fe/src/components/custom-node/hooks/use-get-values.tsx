@@ -2,7 +2,6 @@ import { useGetCurrentMaxSatiety } from "~/components/custom-node/hooks/use-get-
 import { GameNodeData } from "@pelican/constants";
 import { ReactNode, useMemo } from "react";
 import { Sword } from "~/components/ui/icons/sword.tsx";
-import { CardIndicator } from "~/components/ui/card/indicator/card-indicator.tsx";
 import { Satiety } from "~/components/ui/indicators/satiety.tsx";
 import { Dmg } from "~/components/ui/indicators/dmg.tsx";
 import { Hp } from "~/components/ui/indicators/hp.tsx";
@@ -18,17 +17,7 @@ export function useGetValues(data: GameNodeData) {
     if (data.fire) {
       const { amount } = data.fire;
 
-      result.push(
-        <CardIndicator
-          key="dmg-indicator"
-          className="bottom-left dmg-indicator"
-          decor={isPlayer ? <Sword /> : undefined}
-          strokeColor="#BD381A"
-          trailColor="#CB9A8F"
-          type="dmg"
-          value={amount}
-        />,
-      );
+      result.push(<Dmg key="fire-indicator" value={amount} />);
     }
 
     if (data.profile?.digestion && maxSatiety) {
