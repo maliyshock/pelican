@@ -54,29 +54,6 @@
     top: 50%;
 }
 
-.satiety-indicator__diff {
-    position: absolute;
-    z-index: 1;
-    color: green;
-    font-size: 36px;
-    font-weight: bold;
-    animation: rise 2s ease-in, fadeOut 3s linear;
-    animation-fill-mode: forwards;
-}
-
-.satiety-indicator__diff.negative {
-    color: red;
-}
-
-@keyframes fadeOut {
-    0% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
-}
-
 @keyframes darkWaveAnimation {
     0% {
         transform: translateX(0%);
@@ -91,7 +68,7 @@
         transform: translateY(0%);
     }
     100% {
-        transform: translateY(-140%);
+        transform: translateY(-125%);
     }
 }
 

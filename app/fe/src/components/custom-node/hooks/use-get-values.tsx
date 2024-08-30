@@ -1,7 +1,6 @@
 import { useGetCurrentMaxSatiety } from "~/components/custom-node/hooks/use-get-current-max-satiety.ts";
 import { GameNodeData } from "@pelican/constants";
 import { ReactNode, useMemo } from "react";
-import { Meat } from "~/components/ui/icons/meat.tsx";
 import { Sword } from "~/components/ui/icons/sword.tsx";
 import { Heart } from "~/components/ui/icons/heart.tsx";
 import { CardIndicator } from "~/components/ui/card/indicator/card-indicator.tsx";

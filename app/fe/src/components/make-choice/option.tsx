@@ -1,8 +1,9 @@
 import { useCallback } from "react";
 import { Card } from "../ui/card/card.tsx";
-import { createImg } from "~/utils/create-img";
+
 import { GameNodeData } from "@pelican/constants";
 import { useGetValues } from "~/components/custom-node/hooks/use-get-values.tsx";
+import { createImg } from "@pelican/utils";
 
 interface OptionProps {
   option: GameNodeData;

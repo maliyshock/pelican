@@ -84,14 +84,14 @@ export function Talk({ companionId }: TalkProps) {
   }, [talkAbout]);
 
   return (
-    <Drawer open={true} placement="bottom" title={`${companion?.data.title}`} onClose={handleOnClose}>
+    <Drawer open={true} placement="bottom" title={`${companion?.data.title}`} onClick={() => console.log("click")} onClose={handleOnClose}>
       {/*// chat*/}
       {/*// topics*/}
       {talkAbout === undefined && (
         <ul className="ul topics-list">
           {topics?.map(topic => <Topic key={topic.title} id={topic.id} title={topic.title} onClick={() => setTalkAbout(topic.id)} />)}
 
-          {companion.data.sells && <Topic id="sell" title={"Lets trade!"} onClick={() => setTalkAbout("sell")} />}
+          {companion.data.sells && <Topic id="sell" title="Lets trade!" onClick={() => setTalkAbout("sell")} />}
         </ul>
       )}
 

@@ -1,6 +1,7 @@
 import "./satiety.css";
 import { useEffect, useRef, useState } from "react";
-import { usePrevious } from "~/utils/use-prev.tsx";
+import { usePrevious } from "~/utils/use-prev.ts";
+import { IndicatorValue } from "~/components/ui/indicators/indicator-value.tsx";
 
 type SatietyProps = {
   value: number;
@@ -8,19 +9,11 @@ type SatietyProps = {
 };
 
 export function Satiety({ value, max }: SatietyProps) {
-  // const prevValue = useRef(value);
   const percent = Math.round(100 - (value / max) * 100);
-  const prevValue = usePrevious(value);
-  const diff = prevValue ? value - prevValue : null;
 
   return (
     <div className="satiety-indicator">
-      <div className="satiety-indicator__value-container">
-        <div className="satiety-indicator__current-value stroke-text">{value}</div>
-        <div key={diff} className={`satiety-indicator__diff ${diff > 0 ? "positive" : "negative"}`}>
-          {diff}
-        </div>
-      </div>
+      <IndicatorValue className="satiety-indicator__value-container" value={value} />
       <svg className="satiety-indicator__icon" fill="none" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
         <g className="satiety-indicator__stomac" id="satiety-indicator__stomac">
           <g className="satiety-indicator__external" id="satiety-indicator__external">

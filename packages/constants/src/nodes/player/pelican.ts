@@ -29,8 +29,8 @@ const initialPlayer: Profile = {
 };
 
 export const PELICAN: GameNodeData = {
-  inputs: [createSocket({ index: 0 })],
-  outputs: [createSocket({ index: 0 })],
+  inputs: [createSocket({ id: "target_0" })],
+  outputs: [createSocket({ id: "source_0" })],
   img: createImg("pelican"),
   type: "pelican",
   roles: ["player", "character"],

@@ -1,5 +1,5 @@
 import { GameNodeData } from "~/types/game-node";
-import { FIRE_PLACE, STONE_WALL } from "~/nodes/buildings/buildings";
+import { FIRE_PLACE } from "~/nodes/buildings/buildings";
 
 import { CONCAT_SYMBOL } from "~/constants";
 import { ResourceKind } from "~/types/build/resource";
@@ -17,11 +17,6 @@ const something: Recipe = {
 const firePlace: Recipe = {
   requires: ["stick", "stick", "flint"],
   gives: FIRE_PLACE,
-};
-
-const stoneWall: Recipe = {
-  requires: ["stone", "stone"],
-  gives: STONE_WALL,
 };
 
 class RecipesBook {
@@ -45,7 +40,6 @@ class RecipesBook {
 const RECIPES_BOOK = new RecipesBook();
 
 RECIPES_BOOK.add(firePlace);
-RECIPES_BOOK.add(stoneWall);
 RECIPES_BOOK.add(something);
 
 export { RECIPES_BOOK };

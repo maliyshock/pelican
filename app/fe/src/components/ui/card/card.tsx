@@ -10,8 +10,8 @@ import { Sockets } from "~/components/custom-node/components/sockets.tsx";
 import { InventoryItemBorder } from "~/components/ui/icons/inventory-item-border.tsx";
 
 interface CardProps {
-  items: [];
-  isOrigin: boolean;
+  items?: Array<string>;
+  isOrigin?: boolean;
   className?: string;
   innerClassName?: string;
   title?: ReactNode;
@@ -41,24 +41,26 @@ interface CardProps {
 const activeWrapper = { scale: 1.1 };
 const activeInnerWrapper = { boxShadow: "0 16px 12px rgba(0, 0, 0, 0.03)", outline: "4px solid var(--blue)" };
 
-export function Card({
-  items,
-  isOrigin,
-  className,
-  innerClassName,
-  title,
-  img,
-  values,
-  inputs,
-  outputs,
-  timer,
-  price,
-  isConnectable,
-  isTarget,
-  active,
-  disabled,
-  onClick = () => {},
-}: CardProps) {
+export function Card(props: CardProps) {
+  const {
+    items = [],
+    isOrigin = false,
+    className,
+    innerClassName,
+    title,
+    img,
+    values,
+    inputs,
+    outputs,
+    timer,
+    price,
+    isConnectable,
+    isTarget,
+    active,
+    disabled,
+    onClick = () => {},
+  } = props;
+
   return (
     <motion.div
       animate={active ? activeWrapper : {}}
