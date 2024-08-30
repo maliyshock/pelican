@@ -1,0 +1,62 @@
+
+.hp-indicator {
+	bottom: 0;
+	right: 0;
+	width: 90px;
+	height: 90px;
+	transform: translate(40%, 40%);
+
+	&__value-container {
+		transform: translate(-50%, calc(50% - 15px));
+		left: 50%;
+		top: 50%;
+	}
+}
+
+.hp-indicator__hp_mask {
+	mask-type: alpha;
+}
+
+.hp-indicator__wave {
+	animation: waveAnimation 2s infinite linear;
+	transform-box: fill-box;
+	transform-origin: center;
+}
+
+.hp-indicator__dark-wave {
+	animation: darkWaveAnimation 2.5s infinite linear;
+	transform-box: fill-box;
+	transform-origin: center;
+}
+
+.hp-indicator__hp-level {
+	transform: translateY(0%);
+	transition: transform 0.2s ease;
+}
+
+.hp-indicator__soft-light {
+	mix-blend-mode: soft-light;
+}
+
+.hp-indicator__color {
+	mix-blend-mode: color;
+	opacity: 0.2;
+}
+
+@keyframes darkWaveAnimation {
+	0% {
+		transform: translateX(0%);
+	}
+	100% {
+		transform: translateX(50%);
+	}
+}
+
+@keyframes waveAnimation {
+	0% {
+		transform: translateX(0%);
+	}
+	100% {
+		transform: translateX(-50%);
+	}
+}

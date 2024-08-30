@@ -1,4 +1,5 @@
 import { Progress } from "antd";
+import "./indicator.scss";
 
 interface IndicatorProps {
   strokeColor: string;
