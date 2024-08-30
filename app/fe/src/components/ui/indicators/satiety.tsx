@@ -1,4 +1,5 @@
-import "./satiety.css";
+import "./satiety.scss";
+import "./indicator.scss";
 import { IndicatorValue } from "~/components/ui/indicators/indicator-value.tsx";
 
 type SatietyProps = {
@@ -10,7 +11,7 @@ export function Satiety({ value, max }: SatietyProps) {
   const percent = Math.round(100 - (value / max) * 100);
 
   return (
-    <div className="satiety-indicator">
+    <div className="satiety-indicator indicator">
       <IndicatorValue className="satiety-indicator__value-container" value={value} />
       <svg className="satiety-indicator__icon" fill="none" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
         <g className="satiety-indicator__stomac" id="satiety-indicator__stomac">

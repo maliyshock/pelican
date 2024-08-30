@@ -1,5 +1,4 @@
 import { usePrevious } from "~/utils/use-prev.ts";
-import "./indicator.css";
 
 type IndicatorValueProps = {
   className?: string;

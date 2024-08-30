@@ -1,6 +1,4 @@
 import { Indicator } from "~/components/ui/indicator.tsx";
-import "./health-indicator.css";
-import "./dmg-indicator.css";
 import { ReactNode } from "react";
 
 export interface IndicatorProps {

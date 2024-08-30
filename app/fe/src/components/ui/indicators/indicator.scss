@@ -1,0 +1,40 @@
+.indicator {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	z-index: 0;
+
+	&__diff {
+		position: absolute;
+		z-index: 1;
+		color: var(--green);
+		font-size: 48px;
+		font-weight: bold;
+		animation: rise 2s ease-in, fadeOut 4s linear;
+		animation-fill-mode: forwards;
+
+		&.negative {
+			color: var(--red);
+		}
+	}
+
+	&__value-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color: white;
+		position: absolute;
+		font-size: 26px;
+		font-weight: bold;
+	}
+}
+
+@keyframes fadeOut {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
