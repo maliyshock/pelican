@@ -1,6 +1,7 @@
 :root {
     --almost-black: #242424;
     --almost-white: #f9f9f9;
+    --green: #00E175;
     --yellow: #ffc900;
     --orange: #ffb600;
     --blue: #00a6ff;
@@ -9,6 +10,7 @@
     --brown: #BD381A;
     --red: #FF004DFF;
     --lasagna: #ff6c6c;
+    --light-gray: #D0D2D5;
     --gray: #808080FF;
 
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -55,4 +57,37 @@ body {
     padding: 0;
     margin: 0;
     list-style: none;
+}
+
+.arrowhead-marker {
+    fill: var(--blue)
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.stroke-text {
+    text-shadow:
+            -1px -1px 0 #000,
+            1px -1px 0 #000,
+            -1px 1px 0 #000,
+            1px 1px 0 #000;
+}
+
+/* Проверка поддержки -webkit-text-stroke */
+@supports (-webkit-text-stroke: 1.5px black) {
+    .stroke-text {
+        -webkit-text-stroke: 1.5px black;
+        text-shadow: none;
+    }
+}
+
+/* Проверка поддержки text-stroke */
+@supports (text-stroke: 1.5px black) {
+    .stroke-text {
+        text-stroke: 1.5px black;
+        text-shadow: none;
+        paint-order: fill stroke;
+    }
 }

@@ -2,8 +2,8 @@ import { GameNodeData } from "~/types/game-node";
 import { createImg, createSocket } from "@pelican/utils";
 
 export const FLINT: GameNodeData = {
-  inputs: [createSocket({ index: 0 })],
-  outputs: [createSocket({ index: 0 })],
+  inputs: [createSocket({ id: "target_0" })],
+  outputs: [createSocket({ id: "source_0" })],
   img: createImg("flint"),
   type: "flint",
   title: "Flint",

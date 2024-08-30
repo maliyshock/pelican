@@ -37,7 +37,7 @@ export function Sockets({ type, isTarget, sockets, isConnectable, position }: So
       {isTarget && isInput && isConnectable && (
         <Handle
           key="target-catcher"
-          className={`handle-overlay handle-reset ${isCmd ? "" : "transparent"} ${isTarget ? "catcher" : ""}`}
+          className={`handle-overlay react-flow__handle handle-reset ${isCmd ? "" : "transparent"} ${isTarget ? "catcher" : ""}`}
           id="target-catcher"
           position={position}
           type="target"
@@ -58,8 +58,8 @@ export function Sockets({ type, isTarget, sockets, isConnectable, position }: So
           <Handle
             key={`${type}-${index}`}
             ref={setRef(index)}
-            className={`handle ${isInput ? "input" : ""} handle-reset`}
-            id={socket.id.toString()}
+            className={`handle react-flow__handle ${isInput ? "input" : ""} handle-reset`}
+            id={socket.id}
             isConnectable={isConnectable}
             position={position}
             type={type}

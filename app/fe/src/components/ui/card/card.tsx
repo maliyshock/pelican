@@ -7,15 +7,11 @@ import { Position } from "@xyflow/react";
 import { ReactNode } from "react";
 import { Socket } from "@pelican/constants";
 import { Sockets } from "~/components/custom-node/components/sockets.tsx";
-
-export type Value = {
-  value: number;
-  max?: number;
-  className?: string;
-};
+import { InventoryItemBorder } from "~/components/ui/icons/inventory-item-border.tsx";
 
 interface CardProps {
-  isOrigin: boolean;
+  items?: Array<string>;
+  isOrigin?: boolean;
   className?: string;
   innerClassName?: string;
   title?: ReactNode;
@@ -45,23 +41,26 @@ interface CardProps {
 const activeWrapper = { scale: 1.1 };
 const activeInnerWrapper = { boxShadow: "0 16px 12px rgba(0, 0, 0, 0.03)", outline: "4px solid var(--blue)" };
 
-export function Card({
-  isOrigin,
-  className,
-  innerClassName,
-  title,
-  img,
-  values,
-  inputs,
-  outputs,
-  timer,
-  price,
-  isConnectable,
-  isTarget,
-  active,
-  disabled,
-  onClick = () => {},
-}: CardProps) {
+export function Card(props: CardProps) {
+  const {
+    items = [],
+    isOrigin = false,
+    className,
+    innerClassName,
+    title,
+    img,
+    values,
+    inputs,
+    outputs,
+    timer,
+    price,
+    isConnectable,
+    isTarget,
+    active,
+    disabled,
+    onClick = () => {},
+  } = props;
+
   return (
     <motion.div
       animate={active ? activeWrapper : {}}
@@ -72,7 +71,7 @@ export function Card({
       <motion.div
         animate={active ? activeInnerWrapper : {}}
         className={`card__inner ${innerClassName || ""}`}
-        initial={{ boxShadow: "0 0px 12px rgba(0, 0, 0, 0.06)" }}
+        initial={{ boxShadow: "0 0px 12px rgba(0, 0, 0, 0.06)", outline: "2px solid black" }}
         whileHover={!disabled ? { boxShadow: "0 16px 12px rgba(0, 0, 0, 0.03)", outline: "4px solid var(--blue)" } : {}}
       >
         {price && (
@@ -80,15 +79,27 @@ export function Card({
             <Icon icon={<Coin />} size="fill" value={price.value} valueOnIcon />
           </Button>
         )}
-        {timer !== undefined && timer.value > 0 && <Timer callback={timer.callback} className="card__timer" label={timer.actionName} time={timer.value} />}
+        {timer !== undefined && <Timer callback={timer.callback} className="card__timer" label={timer.actionName} time={timer.value} />}
         {title && (
           <header className="card__header">
             <h3>{title}</h3>
           </header>
         )}
-        {img && (
+        {(img || items.length > 0) && (
           <div className="card__body">
             <img alt={img.alt} className="img card-wrapper__img" src={img.src} />
+
+            {items.length > 0 && (
+              <div className="card__items items">
+                <ul className="items__list">
+                  {items.map((item, index) => (
+                    <li key={`item_${index}`} className="items__item">
+                      <InventoryItemBorder className="items__item-border" />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         )}
         {values}

@@ -1,10 +1,10 @@
 import { useGetCurrentMaxSatiety } from "~/components/custom-node/hooks/use-get-current-max-satiety.ts";
 import { GameNodeData } from "@pelican/constants";
 import { ReactNode, useMemo } from "react";
-import { Meat } from "~/components/ui/icons/meat.tsx";
 import { Sword } from "~/components/ui/icons/sword.tsx";
 import { Heart } from "~/components/ui/icons/heart.tsx";
 import { CardIndicator } from "~/components/ui/card/indicator/card-indicator.tsx";
+import { Satiety } from "~/components/ui/indicators/satiety.tsx";
 
 export function useGetValues(data: GameNodeData) {
   const maxSatiety = useGetCurrentMaxSatiety(data.profile?.digestion);
@@ -31,20 +31,9 @@ export function useGetValues(data: GameNodeData) {
     }
 
     if (data.profile?.digestion && maxSatiety) {
-      const { satiety } = data.profile.digestion;
+      const { satiety, maxSatiety } = data.profile.digestion;
 
-      result.push(
-        <CardIndicator
-          key="satiety-indicator"
-          className="top-left"
-          decor={isPlayer ? <Meat /> : undefined}
-          max={maxSatiety}
-          strokeColor="#BD381A"
-          trailColor="#CB9A8F"
-          type="satiety"
-          value={satiety}
-        />,
-      );
+      result.push(<Satiety key="satiety-indicator" max={maxSatiety} value={satiety} />);
     }
 
     if (data.dmg) {

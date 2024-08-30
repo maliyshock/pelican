@@ -1,5 +1,4 @@
 import { Indicator } from "~/components/ui/indicator.tsx";
-import "./satiety-indicator.css";
 import "./health-indicator.css";
 import "./dmg-indicator.css";
 import { ReactNode } from "react";

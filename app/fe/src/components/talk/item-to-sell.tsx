@@ -5,7 +5,7 @@ import { useCallback } from "react";
 import { createNode } from "~/utils/create-node.ts";
 import { GameNode, GameNodeData } from "@pelican/constants";
 import { Card } from "~/components/ui/card/card.tsx";
-import { createImg } from "~/utils/create-img.ts";
+import { createImg } from "@pelican/utils";
 
 interface SellItemProps {
   data: GameNodeData;

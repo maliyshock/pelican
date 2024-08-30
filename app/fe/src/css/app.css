@@ -54,8 +54,6 @@
   background-size: cover;
 }
 
-
-
 .bg-silver {
   background-color: var(--silver);
 }
@@ -70,5 +68,11 @@
 
 .arrowhead-marker {
   color: var(--blue)
+}
+
+.ant-btn-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
