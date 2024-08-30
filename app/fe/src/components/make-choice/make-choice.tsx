@@ -25,7 +25,7 @@ export function MakeChoice() {
     // we need to have an access to character position by id
     const newNodes = selected.map(item => createNode({ data: item, position: { x: 0, y: 0, strict: false } }));
 
-    // addNodes(newNodes);
+    addNodes(newNodes);
   }, [addNodes, selected, setItems]);
 
   return (
