@@ -31,7 +31,7 @@ export function useGetValues(data: GameNodeData) {
     }
 
     if (data.health) {
-      result.push(<Hp key="hp-indicator" value={data.health} max={maxHealth! || health!} />);
+      result.push(<Hp simple={!isPlayer} key="hp-indicator" value={data.health} max={maxHealth! || health!} />);
     }
 
     return result;
