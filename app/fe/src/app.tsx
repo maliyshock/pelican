@@ -1,4 +1,4 @@
-import "./css/app.css";
+import "./css/app.scss";
 import { useCallback, useEffect, useState } from "react";
 import { Background, Controls, ReactFlow, useEdgesState, useNodesState } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
