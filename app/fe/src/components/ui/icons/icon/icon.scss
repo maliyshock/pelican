@@ -1,0 +1,44 @@
+.icon {
+    $c: &;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    &__value {
+        font-size: 18px;
+    }
+
+    &__container {
+        width: 25px;
+        height: 25px;
+    }
+
+    &.middle {
+        #{$c}__container {
+            width: 32px;
+            height: 32px;
+        }
+    }
+
+    &.big {
+        #{$c}__container {
+            width: 56px;
+            height: 56px;
+        }
+        #{$c}__value {
+            font-size: 32px;
+            font-weight: bold;
+        }
+    }
+
+    &.fill {
+        width: 100%;
+        height: 100%;
+
+        #{$c}__container {
+            width: 100%;
+            height: 100%;
+        }
+    }
+}

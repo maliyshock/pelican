@@ -84,7 +84,7 @@ export function Talk({ companionId }: TalkProps) {
   }, [talkAbout]);
 
   return (
-    <Drawer open={true} placement="bottom" title={`${companion?.data.title}`} onClick={() => console.log("click")} onClose={handleOnClose}>
+    <Drawer open={true} placement="bottom" title={`${companion?.data.title}`} onClose={handleOnClose}>
       {/*// chat*/}
       {/*// topics*/}
       {talkAbout === undefined && (

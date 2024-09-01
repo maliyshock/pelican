@@ -13,7 +13,7 @@ interface SellItemProps {
 }
 
 export function ItemToSell({ data, price }: SellItemProps) {
-  const values = useGetValues(data);
+  const values = useGetValues({ ...data, price });
   const { setNodes } = useReactFlow();
   const { value, removeMoney } = useStore(store => store.money);
 
@@ -27,21 +27,5 @@ export function ItemToSell({ data, price }: SellItemProps) {
     }
   }, [data, price, removeMoney, setNodes, value]);
 
-  return (
-    <Card
-      className="micro"
-      disabled={value < price}
-      img={createImg(data.type)}
-      price={
-        price
-          ? {
-              value: price,
-            }
-          : undefined
-      }
-      title={data.title}
-      values={values}
-      onClick={handleClick}
-    />
-  );
+  return <Card className="micro" disabled={value < price} img={createImg(data.type)} title={data.title} values={values} onClick={handleClick} />;
 }

@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { Button } from "antd";
 import { Icon } from "../icons/icon/icon.tsx";
 import { Coin } from "../icons/coin.tsx";
 import { Timer } from "~/components/timer/timer.tsx";
@@ -52,7 +51,6 @@ export function Card({
   inputs,
   outputs,
   timer,
-  price,
   isConnectable,
   isTarget,
   active,
@@ -72,11 +70,6 @@ export function Card({
         initial={{ boxShadow: "0 0px 12px rgba(0, 0, 0, 0.06)", outline: "2px solid black" }}
         whileHover={!disabled ? { boxShadow: "0 16px 12px rgba(0, 0, 0, 0.03)", outline: "4px solid var(--blue)" } : {}}
       >
-        {price && (
-          <Button className="card__value-container card__sale" shape="circle" onClick={() => price?.handler && price.handler()}>
-            <Icon icon={<Coin />} size="fill" value={price.value} valueOnIcon />
-          </Button>
-        )}
         {timer !== undefined && <Timer callback={timer.callback} className="card__timer" label={timer.actionName} time={timer.value} />}
         {title && (
           <header className="card__header">

@@ -20,10 +20,10 @@
   border-radius: 0;
   font-size: 18px;
   padding: 2px 6px;
-}
 
-.input:focus {
-  outline: 1px solid skyblue;
+  &:focus {
+    outline: 1px solid skyblue;
+  }
 }
 
 .app {
@@ -39,19 +39,19 @@
 
 .img {
   position: relative;
-}
 
-.img:before {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-  content: '';
-  background-image: url("/assets/template.jpg");
-  background-position: center;
-  background-size: cover;
+  &:before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    content: '';
+    background-image: url("/assets/template.jpg");
+    background-position: center;
+    background-size: cover;
+  }
 }
 
 .bg-silver {
@@ -74,5 +74,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.btn-reset {
+  padding: 0;
+  background: unset;
+  border: unset;
+  box-shadow: unset;
+
+  &:active, &:focus {
+    background: unset;
+    border: unset;
+    box-shadow: unset;
+  }
 }
 

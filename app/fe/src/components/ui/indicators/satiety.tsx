@@ -10,8 +10,6 @@ type SatietyProps = {
 export function Satiety({ value, max }: SatietyProps) {
   const percent = Math.round(100 - (value / max) * 100);
 
-  console.log("Satiety percent", percent);
-
   return (
     <div className="satiety-indicator indicator">
       <IndicatorValue className="satiety-indicator__value-container" value={value} />

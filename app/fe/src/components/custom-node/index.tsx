@@ -1,5 +1,5 @@
 import { NodeProps, ReactFlowState, useConnection, useReactFlow, useStore as useReactFlowStore, useUpdateNodeInternals } from "@xyflow/react";
-import "../ui/card/card.css";
+import "../ui/card/card.scss";
 import { useCallback, useEffect, useMemo } from "react";
 import { useGetAction } from "~/hooks/use-get-action/use-get-action.ts";
 import { Card } from "../ui/card/card.tsx";
@@ -17,7 +17,6 @@ const connectionNodeIdSelector = (state: ReactFlowState) => state.connection.fro
 export default function CustomNode(props: NodeProps<GameNodeData>) {
   const { getEdges, getNode, deleteElements } = useReactFlow();
   const { id, isConnectable: connectable, dragging } = props;
-  const { addMoney } = useStore(store => store.money);
   const { cmdIsPressed: isCmd } = useStore(state => state.cmd);
   const { inProgress, fromNode } = useConnection();
   const availableToConnect = useMemo(() => {
@@ -36,7 +35,7 @@ export default function CustomNode(props: NodeProps<GameNodeData>) {
   const isConnecting = !!connectionNodeId;
   const isTarget = !!connectionNodeId && connectionNodeId !== id;
   const isCharacter = data.roles.includes("character");
-  const values = useGetValues(data);
+  const values = useGetValues(data, id);
   const die = useCallback(() => {
     // console.log("die")
   }, []);
@@ -47,13 +46,6 @@ export default function CustomNode(props: NodeProps<GameNodeData>) {
   useStatusesManager({ data, statuses: data.statuses || {}, id });
   useHungerManager({ digestion: data.profile?.digestion, id });
   useFuelManager({ fire: data?.fire, id, die });
-
-  const handleSell = useCallback(() => {
-    if (data.price) {
-      deleteElements({ nodes: [{ id }] });
-      addMoney(data.price);
-    }
-  }, [addMoney, data.price, deleteElements, id]);
 
   useEffect(() => {
     // updateNodeInternals(id); // - it mess with position of the line
@@ -80,17 +72,6 @@ export default function CustomNode(props: NodeProps<GameNodeData>) {
     [action?.actionName, action?.callback, action?.timer],
   );
 
-  const price = useMemo(
-    () =>
-      data.price
-        ? {
-            value: data.price,
-            handler: handleSell,
-          }
-        : undefined,
-    [data.price, handleSell],
-  );
-
   return (
     <Card
       className={`${dragging ? "dragging" : ""} ${!isCharacter ? "grabbable" : ""}`}
@@ -102,7 +83,6 @@ export default function CustomNode(props: NodeProps<GameNodeData>) {
       isTarget={isTarget}
       items={items}
       outputs={data.outputs}
-      price={price}
       timer={timer}
       title={data.title}
       values={values}
