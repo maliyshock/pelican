@@ -1,6 +1,6 @@
 import "./css/app.scss";
 import { useCallback, useEffect, useState } from "react";
-import { Background, Controls, ReactFlow, useEdgesState, useNodesState } from "@xyflow/react";
+import { Background, Controls, ReactFlow, useEdgesState, useNodesState, useReactFlow, NodeChange } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import CustomNode from "./components/custom-node";
 import { useCenterCamera } from "./hooks/use-center-camera.ts";
@@ -16,6 +16,8 @@ import { MakeChoice } from "~/components/make-choice/make-choice.tsx";
 import { INIT_NODES } from "~/constants";
 import { Talk } from "~/components/talk";
 import { ConnectionLine } from "~/components/connection-line/connection-line.tsx";
+import { useCollisionManager } from "~/hooks/use-collision-manager.tsx";
+import { GameNode } from "@pelican/constants";
 
 const nodeTypes = { node: CustomNode };
 const edgeTypes = {
@@ -25,6 +27,7 @@ const edgeTypes = {
 function App() {
   const [nodes, , onNodesChange] = useNodesState(INIT_NODES);
   const { items } = useStore(state => state.choice);
+  const { setNodeChanges } = useStore(state => state.nodeChanges);
   const setScreenSize = useStore(state => state.setScreenSize);
   const screenSize = useStore(state => state.screenSize);
   const { companionId } = useStore(state => state.talk);
@@ -36,6 +39,7 @@ function App() {
   const onConnect = useOnConnect();
   const centerCamera = useCenterCamera();
 
+  useCollisionManager();
   useKeyListener();
   useCraftingManager();
 
@@ -50,6 +54,14 @@ function App() {
       }
     },
     [setScreenSize],
+  );
+
+  const handleOnNodesChange = useCallback(
+    (changes: NodeChange<GameNode>[]) => {
+      setNodeChanges(changes);
+      onNodesChange(changes);
+    },
+    [onNodesChange, setNodeChanges],
   );
 
   useEffect(() => {
@@ -99,6 +111,10 @@ function App() {
           </defs>
         </svg>
         <ReactFlow
+          translateExtent={[
+            [-1800, -1200],
+            [1800, 1200],
+          ]}
           ref={ref}
           connectionLineComponent={ConnectionLine}
           edges={edges}
@@ -109,7 +125,7 @@ function App() {
           onConnect={onConnect}
           onEdgesChange={onEdgesChange}
           onEdgesDelete={handleOnEdgesDelete}
-          onNodesChange={onNodesChange}
+          onNodesChange={handleOnNodesChange}
           onNodesDelete={handleOnNodesDelete}
           onReconnect={onReconnect}
           onReconnectEnd={onReconnectEnd}

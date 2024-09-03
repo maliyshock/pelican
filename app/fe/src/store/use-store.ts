@@ -10,6 +10,7 @@ import { ResourceGroupsSlice, resourceGroupsSlice } from "~/store/slices/resourc
 import { NodesCounterSlice, groupNodesIdsSlice } from "~/store/slices/nodes-counter.ts";
 import { TalkSlice, talkSlice } from "~/store/slices/talk.ts";
 import { PlayerSubscriptions, playerSubscriptionSlice } from "~/store/slices/player-subscriptions.ts";
+import { nodeChangesSlice, NodeChangesSlice } from "~/store/slices/node-changes.ts";
 
 // prettier-ignore
 export type Store =
@@ -23,7 +24,8 @@ export type Store =
   ScreenSizeSlice &
   { resourceGroups: ResourceGroupsSlice } &
   { talk: TalkSlice } &
-  { playerSubscription: PlayerSubscriptions};
+  { playerSubscription: PlayerSubscriptions} &
+  { nodeChanges: NodeChangesSlice};
 
 const useStore = create<Store>(set => ({
   actions: actionsSlice(set),
@@ -37,6 +39,7 @@ const useStore = create<Store>(set => ({
   resourceGroups: resourceGroupsSlice(set),
   talk: talkSlice(set),
   playerSubscription: playerSubscriptionSlice(set),
+  nodeChanges: nodeChangesSlice(set),
 }));
 
 export default useStore;

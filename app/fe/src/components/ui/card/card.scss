@@ -176,6 +176,14 @@
     }
 }
 
+.react-flow__node:not(.dragging) {
+    transition: transform 1s ease-out;
+}
+
+.react-flow__node.dragging {
+    transition: unset!important;
+}
+
 .items {
     &__list {
         list-style-type: none;
