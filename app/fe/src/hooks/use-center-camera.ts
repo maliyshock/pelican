@@ -12,7 +12,7 @@ export function useCenterCamera() {
           {
             x: xPos + screenSize.width / 2,
             y: yPos + screenSize.height / 2,
-            zoom: 1,
+            zoom: 0.7,
           },
           { duration: 800 },
         );
