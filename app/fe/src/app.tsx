@@ -32,7 +32,6 @@ function App() {
   const screenSize = useStore(state => state.screenSize);
   const { companionId } = useStore(state => state.talk);
   const { setIsOpen } = useStore(state => state.modal);
-  const { handleOnNodesDelete } = useNodes();
   const [edges, , onEdgesChange] = useEdgesState([]);
   const { isValidConnection, onReconnect, onReconnectStart, onReconnectEnd, handleOnEdgesDelete } = useEdges();
   const [cameraIsCentered, setCameraIsCentered] = useState(false);
@@ -126,7 +125,6 @@ function App() {
           onEdgesChange={onEdgesChange}
           onEdgesDelete={handleOnEdgesDelete}
           onNodesChange={handleOnNodesChange}
-          onNodesDelete={handleOnNodesDelete}
           onReconnect={onReconnect}
           onReconnectEnd={onReconnectEnd}
           onReconnectStart={onReconnectStart}

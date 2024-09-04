@@ -41,7 +41,7 @@ export function useGetActionCallback() {
         }
 
         if (nodeSpecificAction === "harvest") {
-          harvest(targetNode);
+          harvest(targetNode.id);
         }
 
         if (nodeSpecificAction === "craft") {

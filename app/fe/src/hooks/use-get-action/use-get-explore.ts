@@ -5,11 +5,11 @@ import { createNode } from "~/utils/create-node.ts";
 import { getAveragePosition } from "~/utils/get-averahe-position.ts";
 import useStore from "~/store/use-store.ts";
 import { changeNodeValueBy } from "~/utils/change-node-value-by.ts";
-import { useNodes } from "~/hooks/use-nodes.ts";
+import { useReactFlow } from "@xyflow/react";
 
 export function useGetExplore() {
+  const { setNodes } = useReactFlow();
   const { setItems } = useStore(store => store.choice);
-  const { setNodes } = useNodes();
 
   return useCallback(
     (actorNode: GameNode, targetNode: GameNode) => {

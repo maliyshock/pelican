@@ -2,12 +2,10 @@ import { useCallback } from "react";
 import { changeNodeValueBy } from "~/utils/change-node-value-by.ts";
 import { GameNode } from "@pelican/constants";
 import useStore from "~/store/use-store.ts";
-import { useNodes } from "~/hooks/use-nodes.ts";
 import { useReactFlow } from "@xyflow/react";
 
 export function useGetEat() {
-  const { deleteElements } = useReactFlow();
-  const { setNodes } = useNodes();
+  const { deleteElements, setNodes } = useReactFlow();
   const { deleteActions } = useStore(store => store.actions);
 
   return useCallback(
@@ -17,7 +15,7 @@ export function useGetEat() {
       deleteActions([targetNode.id]);
 
       if (nutrition !== undefined) {
-        setNodes(prevNodes =>
+        setNodes((prevNodes: GameNode[]) =>
           changeNodeValueBy({
             nodes: prevNodes,
             ids: [targetNode.id],
