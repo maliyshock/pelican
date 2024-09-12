@@ -20,7 +20,7 @@ export function ItemToSell({ data, price }: SellItemProps) {
   const handleClick = useCallback(() => {
     if (value >= price) {
       removeMoney(price);
-      const newNode = createNode({ position: { x: 0, y: 0 }, data });
+      const newNode = createNode({ type: "node", position: { x: 0, y: 0 }, data });
 
       // TODO:  find player
       setNodes((prevNodes: GameNode[]) => [...prevNodes, newNode]);

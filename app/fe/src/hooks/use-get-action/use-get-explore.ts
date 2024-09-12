@@ -30,7 +30,7 @@ export function useGetExplore() {
       if (itemsForChoice.length > 1) {
         setItems({ items: itemsForChoice, actor: actorNode.id });
       } else {
-        const newNode = createNode({ position: { ...getAveragePosition([targetNode, actorNode]), strict: false }, data: itemsForChoice[0] });
+        const newNode = createNode({ type: "node", position: { ...getAveragePosition([targetNode, actorNode]), strict: false }, data: itemsForChoice[0] });
 
         addNodes.push(newNode);
       }

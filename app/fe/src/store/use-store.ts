@@ -11,6 +11,7 @@ import { NodesCounterSlice, groupNodesIdsSlice } from "~/store/slices/nodes-coun
 import { TalkSlice, talkSlice } from "~/store/slices/talk.ts";
 import { PlayerSubscriptions, playerSubscriptionSlice } from "~/store/slices/player-subscriptions.ts";
 import { nodeChangesSlice, NodeChangesSlice } from "~/store/slices/node-changes.ts";
+import { MapSizeSlice, mapSizeSlice } from "~/store/slices/map-size.ts";
 
 // prettier-ignore
 export type Store =
@@ -25,7 +26,8 @@ export type Store =
   { resourceGroups: ResourceGroupsSlice } &
   { talk: TalkSlice } &
   { playerSubscription: PlayerSubscriptions} &
-  { nodeChanges: NodeChangesSlice};
+  { nodeChanges: NodeChangesSlice} &
+  { mapSize: MapSizeSlice };
 
 const useStore = create<Store>(set => ({
   actions: actionsSlice(set),
@@ -40,6 +42,7 @@ const useStore = create<Store>(set => ({
   talk: talkSlice(set),
   playerSubscription: playerSubscriptionSlice(set),
   nodeChanges: nodeChangesSlice(set),
+  mapSize: mapSizeSlice(set),
 }));
 
 export default useStore;

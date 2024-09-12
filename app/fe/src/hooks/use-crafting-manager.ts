@@ -46,7 +46,7 @@ export function useCraftingManager() {
 
         if (recipe) {
           const position = getAveragePosition(groupElements);
-          const element = createNode({ position, data: recipe.gives });
+          const element = createNode({ type: "node", position, data: recipe.gives });
 
           setNodes(prevNodes => [...prevNodes, element]);
 

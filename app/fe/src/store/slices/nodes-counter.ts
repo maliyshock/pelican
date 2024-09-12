@@ -12,7 +12,7 @@ export type NodesCounterSlice = {
 };
 
 export const groupNodesIdsSlice = (set: SetState<Store>) => ({
-  nodes: groupNodeIdsByRole({ nodes: INIT_NODES, initAcc: {} as NodesCounter }),
+  nodes: groupNodeIdsByRole({ nodes: INIT_NODES.filter(nd => nd.type === "node"), initAcc: {} as NodesCounter }),
   setNodes: (nodes: GameNode[]) =>
     set(state => ({
       nodesCounter: {

@@ -1,0 +1,32 @@
+.header {
+    position: sticky;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background: var(--almost-white);
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+
+    &__inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        width: 100%;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    &__resources {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    &__money {
+        color: var(--yellow);
+    }
+}
