@@ -1,11 +1,13 @@
 import { useEffect, useRef } from "react";
-import { Application, Container } from "pixi.js";
+import { Application, Assets, Ticker } from "pixi.js";
 import { NodeProps } from "@xyflow/react";
 import "./border-node.scss";
-import { loadImages } from "~/components/border-node/utils/load-images.ts";
-const OVERLAP_FACTOR = 0.25;
+import { createChunk } from "~/components/border-node/utils/create-chunk";
 
 export type Avoid = "right" | "bottom" | "left" | "top";
+export type Orientation = "album" | "portrait";
+
+const MIN_DISTANCE_SCALE = 0.2;
 
 interface BorderNodeProps extends NodeProps {
   width: number;
@@ -15,31 +17,19 @@ interface BorderNodeProps extends NodeProps {
   };
 }
 
-type Orientation = "album" | "portrait";
-
-interface Chunk {
-  orientation: Orientation;
-  x: number;
-  y: number;
-  chunkSize: number;
-  images: HTMLImageElement[];
-}
-
-function createChunk({ orientation, x, y, chunkSize, images }: Chunk) {
-  const cloudContainer = new Container();
-
-  return cloudContainer;
-}
-
 export function BorderNode({ width, height, data }: BorderNodeProps) {
   const { avoid } = data;
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
+    let app: Application;
+    const tickerFunctions: (() => void)[] = [];
+
     const run = async () => {
       if (canvasRef.current !== null) {
-        const images = await loadImages(13);
-        const app = new Application();
+        const images = new Array(12).fill(0).map((_, i) => `/assets/particles/magic-fog/${i}.png`);
+        const textures = await Promise.all(images.map(url => Assets.load(url)));
+
         const options = {
           canvas: canvasRef.current!,
           width,
@@ -47,29 +37,49 @@ export function BorderNode({ width, height, data }: BorderNodeProps) {
           backgroundAlpha: 0,
         };
 
-        // Initialize the application
-        await app.init(options);
+        // Создаём приложение PixiJS
+        app = new Application();
+        app.init(options);
 
         const orientation: Orientation = width > height ? "album" : "portrait";
         const chunkSize = Math.min(width, height);
-        const chunkCounter = Math.max(width, height) / chunkSize;
+        const chunkCounter = Math.ceil(Math.max(width, height) / chunkSize);
+        const minDistance = chunkSize * MIN_DISTANCE_SCALE; // Настройте при необходимости
+        let counter = 0;
 
-        // Создаем несколько облаков
+        // Создаём несколько чанков
         for (let i = 0; i < chunkCounter; i++) {
-          const chunk = createChunk({
-            orientation,
+          const { cloudContainer, count, tickers } = createChunk({
             x: orientation === "album" ? i * chunkSize : 0,
             y: orientation === "portrait" ? i * chunkSize : 0,
             chunkSize,
-            images,
+            textures,
+            minDistance,
+            avoid,
           });
 
-          app.stage.addChild(chunk);
+          counter += count;
+          app.stage.addChild(cloudContainer);
+
+          // Собираем функции тикеров для последующего удаления
+          tickerFunctions.push(...tickers);
         }
       }
     };
 
     run();
+
+    // Очистка при размонтировании компонента
+    return () => {
+      if (app) {
+        app.destroy(true, true);
+      }
+
+      // Удаляем функции из тикера
+      tickerFunctions.forEach(fn => {
+        Ticker.shared.remove(fn);
+      });
+    };
   }, [width, height, avoid]);
 
   return (

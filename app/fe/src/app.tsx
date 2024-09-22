@@ -1,6 +1,6 @@
 import "./css/app.scss";
 import { useCallback, useEffect, useState } from "react";
-import { Background, Controls, ReactFlow, useEdgesState, useNodesState, useReactFlow, NodeChange } from "@xyflow/react";
+import { Background, Controls, NodeChange, ReactFlow, useEdgesState, useNodesState, useReactFlow } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import CustomNode from "./components/custom-node";
 import { useCenterCamera } from "./hooks/use-center-camera.ts";
@@ -38,6 +38,8 @@ function App() {
   const [cameraIsCentered, setCameraIsCentered] = useState(false);
   const onConnect = useOnConnect();
   const centerCamera = useCenterCamera();
+
+  console.log("edges", edges);
 
   useCollisionManager();
   useKeyListener();
@@ -111,7 +113,6 @@ function App() {
           </defs>
         </svg>
         <ReactFlow
-          translateExtent={mapSize}
           ref={ref}
           connectionLineComponent={ConnectionLine}
           edges={edges}
@@ -119,6 +120,7 @@ function App() {
           isValidConnection={isValidConnection}
           nodes={nodes}
           nodeTypes={nodeTypes}
+          translateExtent={mapSize}
           onConnect={onConnect}
           onEdgesChange={onEdgesChange}
           onEdgesDelete={handleOnEdgesDelete}

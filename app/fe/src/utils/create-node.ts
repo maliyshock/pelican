@@ -16,7 +16,7 @@ interface CreateNode {
 }
 
 // TODO: inputs and outputs types for the future
-export function createNode({ position: { x, y, strict = true }, data, type, draggable = true, ...rest }: CreateNode<T>) {
+export function createNode({ position: { x, y, strict = true }, data, type, draggable = true, ...rest }: CreateNode) {
   const posX = strict ? x : x + getRandomNum(APPEARANCE_RANGE) * (getBool() ? 1 : -1);
   const posY = strict ? y : y + getRandomNum(APPEARANCE_RANGE) * (getBool() ? 1 : -1);
 
