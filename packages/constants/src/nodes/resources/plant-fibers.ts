@@ -9,4 +9,5 @@ export const PLANT_FIBERS: GameNodeData = {
   title: "Plant Fibers",
   roles: ["resource"],
   price: 2,
+  draggable: true,
 };

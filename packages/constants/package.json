@@ -9,8 +9,8 @@
     "watch": "nodemon",
     "build": "rm -rf dist && pnpm run types:build && pnpm run barrels:generate && tsc && tsc-alias -p tsconfig.json",
     "types:clean": "[ -d ./src/types/build ] && rm -r ./src/types/build || echo 'Directory does not exist'",
-    "types:build": "pnpm run types:clean && pnpm tsx processNodes.ts ",
-    "barrels:generate": "barrelsby -D -d ./src -e 'processNodes'"
+    "types:build": "pnpm run types:clean && pnpm tsx build-types.ts ",
+    "barrels:generate": "barrelsby -D -d ./src -e 'build-types'"
   },
   "keywords": [],
   "author": "",

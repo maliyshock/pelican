@@ -40,4 +40,5 @@ export const PELICAN: GameNodeData = {
   regenSpeed: 2000,
   profile: initialPlayer,
   statuses: {},
+  draggable: true,
 };

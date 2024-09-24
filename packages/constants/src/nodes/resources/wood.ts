@@ -11,4 +11,5 @@ export const WOOD: GameNodeData = {
   price: 1,
   health: 3,
   fuel: 30,
+  draggable: true,
 };

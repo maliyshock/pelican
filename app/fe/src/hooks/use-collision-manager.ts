@@ -38,7 +38,7 @@ export function useCollisionManager() {
 
             if (intersections.length > 0) {
               intersections
-                .filter(nd => nd.movable === true)
+                .filter(nd => nd.data.draggable === true)
                 .forEach(intersection => {
                   if (intersection?.measured === undefined || node?.measured === undefined) {
                     return;

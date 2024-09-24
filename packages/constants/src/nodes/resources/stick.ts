@@ -10,4 +10,5 @@ export const STICK: GameNodeData = {
   roles: ["resource", "fuel"],
   price: 2,
   fuel: 6,
+  draggable: true,
 };

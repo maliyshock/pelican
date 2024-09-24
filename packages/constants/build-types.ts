@@ -1,8 +1,8 @@
-import fs from "fs";
-import path from "path";
-import camelCase from "lodash/camelCase.js";
-import upperFirst from "lodash/upperFirst.js";
-import snakeCase from "lodash/snakeCase.js";
+import * as fs from "fs";
+import * as path from "path";
+import camelCase from "lodash/camelCase";
+import upperFirst from "lodash/upperFirst";
+import snakeCase from "lodash/snakeCase";
 
 const nodesDir = "./src/nodes"; // путь к папке nodes
 const typesDir = "./src/types/build"; // путь к папке types

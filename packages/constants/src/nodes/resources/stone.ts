@@ -8,4 +8,5 @@ export const STONE: GameNodeData = {
   title: "Piece of stone",
   roles: ["resource"],
   price: 1,
+  draggable: true,
 };

@@ -21,7 +21,7 @@ export const INIT_NODES = [
     className: "",
     data: {
       avoid: "bottom",
-      movable: "false",
+      draggable: false,
     },
     style: { width: 2 * MAP_SIZE_WIDTH, height: `${FOG_SIZE}px` },
     draggable: false,
@@ -33,7 +33,7 @@ export const INIT_NODES = [
     position: { x: -MAP_SIZE_WIDTH, y: -MAP_SIZE_HEIGHT, strict: true },
     data: {
       avoid: "right",
-      movable: "false",
+      draggable: false,
     },
     style: { height: 2 * MAP_SIZE_HEIGHT, width: `${FOG_SIZE}px` },
     draggable: false,
@@ -45,7 +45,7 @@ export const INIT_NODES = [
     position: { x: -MAP_SIZE_WIDTH, y: MAP_SIZE_HEIGHT - FOG_SIZE, strict: true },
     data: {
       avoid: "top",
-      movable: "false",
+      draggable: false,
     },
     style: { width: 2 * MAP_SIZE_WIDTH, height: "200px" },
     draggable: false,
@@ -57,7 +57,7 @@ export const INIT_NODES = [
     position: { x: MAP_SIZE_WIDTH - FOG_SIZE, y: -MAP_SIZE_HEIGHT, strict: true },
     data: {
       avoid: "left",
-      movable: "false",
+      draggable: false,
     },
     style: { height: 2 * MAP_SIZE_HEIGHT, width: "200px" },
     draggable: false,

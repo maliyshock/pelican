@@ -24,7 +24,7 @@ export function createNode({ position: { x, y, strict = true }, data, type, drag
     ...rest,
     id: generateID(data?.type || type),
     data,
-    ...(!draggable ? { dragHandle: `.nodrag ._${getRandomNum(Date.now())}` } : {}),
+    ...(!draggable ? { dragHandle: "nodrag" } : {}),
     position: { x: posX, y: posY },
     type,
   } as GameNode;

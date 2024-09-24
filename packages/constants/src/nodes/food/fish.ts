@@ -11,4 +11,5 @@ export const FISH: GameNodeData = {
   price: 2,
   nutrition: 4,
   health: 1,
+  draggable: true,
 };

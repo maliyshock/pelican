@@ -12,4 +12,5 @@ export const BERRIES_BUSH: GameNodeData = {
   health: 3,
   description:
     "Small Bush with Juicy Berries: nature's snack bar, conveniently bite-sized and packed with a burst of flavor, perfect for foragers and hungry hikers looking for a sweet, tangy treat straight from the wild.",
+  draggable: true,
 };

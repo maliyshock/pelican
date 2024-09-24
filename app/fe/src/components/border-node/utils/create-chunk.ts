@@ -1,6 +1,7 @@
 import { Container, Sprite, Texture, Ticker } from "pixi.js";
 import { Avoid } from "~/components/border-node";
-import { Point, generatePoints } from "~/components/border-node/utils/generate-points.ts";
+import { generatePoints } from "~/components/border-node/utils/generate-points.ts";
+import { fixPosition } from "~/components/border-node/utils/fix-position.ts";
 
 interface Chunk {
   x: number;
@@ -11,49 +12,16 @@ interface Chunk {
   avoid: Avoid;
 }
 
-interface ExtendedSprite extends Sprite {
+export interface ExtendedSprite extends Sprite {
   originalWidth: number;
   originalHeight: number;
   initialScale: number;
 }
 
-interface FixPosition {
-  avoid: Avoid;
-  point: Point;
-  chunkSize: number;
-  sprite: ExtendedSprite;
-}
-
-const OFFSET = 0.6;
 const OPACITY_LIMIT = 0.8;
-
-function fixPosition({ cx, cy, avoid, point, chunkSize, sprite }: FixPosition) {
-  let { x: spriteX, y: spriteY } = point;
-  const { originalWidth, originalHeight } = sprite;
-  const maxX = chunkSize - originalWidth * OFFSET;
-  const maxY = chunkSize - originalHeight * OFFSET;
-
-  switch (avoid) {
-    case "top":
-      spriteY = Math.max(spriteY, originalHeight);
-      break;
-    case "bottom":
-      spriteY = Math.min(spriteY, maxY);
-      break;
-    case "left":
-      spriteX = Math.max(spriteX, originalWidth);
-      break;
-    case "right":
-      spriteX = Math.min(spriteX, maxX);
-      break;
-  }
-
-  return { spriteX, spriteY };
-}
 
 export function createChunk({ x, y, chunkSize, textures, minDistance, avoid }: Chunk) {
   const cloudContainer = new Container();
-  let count = 0;
   const tickers: (() => void)[] = [];
   const points = generatePoints({ startX: x, startY: y, chunkSize, minDistance });
   const ticker = Ticker.shared;
@@ -102,17 +70,10 @@ export function createChunk({ x, y, chunkSize, textures, minDistance, avoid }: C
       }
     };
 
-    // Добавляем функцию анимации в тикер
     ticker.add(animate);
-
-    // Сохраняем функцию для последующего удаления
     tickers.push(animate);
-
-    // Добавляем спрайт в контейнер
     cloudContainer.addChild(sprite);
-
-    count++;
   });
 
-  return { cloudContainer, count, tickers };
+  return { cloudContainer, tickers };
 }

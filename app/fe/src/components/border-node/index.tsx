@@ -39,17 +39,17 @@ export function BorderNode({ width, height, data }: BorderNodeProps) {
 
         // Создаём приложение PixiJS
         app = new Application();
-        app.init(options);
+        await app.init(options);
 
         const orientation: Orientation = width > height ? "album" : "portrait";
         const chunkSize = Math.min(width, height);
         const chunkCounter = Math.ceil(Math.max(width, height) / chunkSize);
         const minDistance = chunkSize * MIN_DISTANCE_SCALE; // Настройте при необходимости
-        let counter = 0;
 
         // Создаём несколько чанков
+        // TODO: не нужны тут чанки получается
         for (let i = 0; i < chunkCounter; i++) {
-          const { cloudContainer, count, tickers } = createChunk({
+          const { cloudContainer, tickers } = createChunk({
             x: orientation === "album" ? i * chunkSize : 0,
             y: orientation === "portrait" ? i * chunkSize : 0,
             chunkSize,
@@ -58,7 +58,6 @@ export function BorderNode({ width, height, data }: BorderNodeProps) {
             avoid,
           });
 
-          counter += count;
           app.stage.addChild(cloudContainer);
 
           // Собираем функции тикеров для последующего удаления

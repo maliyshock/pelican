@@ -52,6 +52,7 @@ export interface GameNodeData {
   fuel?: number;
   onConsume?: Statuses;
   statuses?: Statuses;
+  draggable?: boolean;
 }
 
 // export interface Character extends Omit<GameNodeData, "price"> {

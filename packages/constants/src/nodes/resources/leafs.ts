@@ -9,4 +9,5 @@ export const LEAFS: GameNodeData = {
   title: "Leafs",
   roles: ["resource"],
   price: 2,
+  draggable: true,
 };

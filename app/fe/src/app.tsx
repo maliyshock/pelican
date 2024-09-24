@@ -15,7 +15,7 @@ import { MakeChoice } from "~/components/make-choice/make-choice.tsx";
 import { INIT_NODES } from "~/constants";
 import { Talk } from "~/components/talk";
 import { ConnectionLine } from "~/components/connection-line/connection-line.tsx";
-import { useCollisionManager } from "~/hooks/use-collision-manager.tsx";
+import { useCollisionManager } from "~/hooks/use-collision-manager.ts";
 import { GameNode } from "@pelican/constants";
 import { BorderNode } from "~/components/border-node";
 
@@ -38,8 +38,6 @@ function App() {
   const [cameraIsCentered, setCameraIsCentered] = useState(false);
   const onConnect = useOnConnect();
   const centerCamera = useCenterCamera();
-
-  console.log("edges", edges);
 
   useCollisionManager();
   useKeyListener();

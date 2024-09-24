@@ -12,4 +12,5 @@ export const GOOSE_GRASS: GameNodeData = {
   nutrition: 1,
   onConsume: { "health-regen": 3 },
   health: 1,
+  draggable: true,
 };

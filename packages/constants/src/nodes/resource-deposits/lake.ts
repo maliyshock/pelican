@@ -11,4 +11,5 @@ export const LAKE: GameNodeData = {
   price: 2,
   description:
     "nature's tranquil bathtub, perfect for serene reflections, spontaneous swims, and the occasional paddleboat adventure, serving as a picturesque reminder that even the planet likes to take a moment to just float",
+  draggable: true,
 };

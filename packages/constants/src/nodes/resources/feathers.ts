@@ -10,4 +10,5 @@ export const FEATHERS: GameNodeData = {
   roles: ["resource", "fuel"],
   price: 2,
   fuel: 1,
+  draggable: true,
 };

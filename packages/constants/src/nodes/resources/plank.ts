@@ -10,4 +10,5 @@ export const PLANK: GameNodeData = {
   roles: ["resource", "fuel"],
   price: 2,
   fuel: 15,
+  draggable: true,
 };

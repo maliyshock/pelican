@@ -9,4 +9,5 @@ export const BONES: GameNodeData = {
   title: "Bones",
   roles: ["resource"],
   price: 2,
+  draggable: true,
 };
