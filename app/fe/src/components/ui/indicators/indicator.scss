@@ -4,6 +4,8 @@
 	align-items: center;
 	position: absolute;
 	z-index: 1;
+	transform-style: preserve-3d;
+	//will-change: transform;
 
 	&__diff {
 		position: absolute;
@@ -25,7 +27,7 @@
 		align-items: center;
 		color: white;
 		position: absolute;
-		font-size: 26px;
+		font-size: 38px;
 		font-weight: bold;
 	}
 }

@@ -11,4 +11,5 @@ export const MUSHROOM: GameNodeData = {
   price: 2,
   nutrition: 3,
   health: 1,
+  draggable: true,
 };

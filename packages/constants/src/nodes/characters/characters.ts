@@ -35,4 +35,5 @@ export const FOX: GameNodeData = {
   health: 35,
   maxHealth: 35,
   sells: SELLS,
+  draggable: false,
 };

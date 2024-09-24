@@ -10,4 +10,5 @@ export const TREE: GameNodeData = {
   roles: ["resource-deposit"],
   price: 2,
   health: 3,
+  draggable: true,
 };

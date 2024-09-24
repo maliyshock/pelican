@@ -9,4 +9,5 @@ export const VINE: GameNodeData = {
   title: "Vine",
   roles: ["resource"],
   price: 2,
+  draggable: true,
 };

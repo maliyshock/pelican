@@ -8,6 +8,7 @@ export const FOREST: GameNodeData = {
   title: "Forest",
   health: 3,
   roles: ["region"],
+  draggable: true,
 };
 
 export const TRANQUIL_GLADE: GameNodeData = {
@@ -17,4 +18,5 @@ export const TRANQUIL_GLADE: GameNodeData = {
   title: "The Tranquil Glade",
   health: 3,
   roles: ["region"],
+  draggable: true,
 };

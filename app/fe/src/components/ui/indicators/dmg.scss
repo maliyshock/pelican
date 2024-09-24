@@ -7,7 +7,7 @@
 	transform: translate(-40%, 40%);
 
 	&__value-container {
-		transform: translate(calc(-50% + 6px), calc(50% - 20px));
+		transform: translate(calc(-50% + 0.12em), calc(50% - 0.85em));
 		left: 50%;
 		top: 50%;
 	}

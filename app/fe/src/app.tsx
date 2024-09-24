@@ -1,6 +1,6 @@
 import "./css/app.scss";
 import { useCallback, useEffect, useState } from "react";
-import { Background, Controls, ReactFlow, useEdgesState, useNodesState, useReactFlow, NodeChange } from "@xyflow/react";
+import { Background, Controls, NodeChange, ReactFlow, useEdgesState, useNodesState, useReactFlow } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import CustomNode from "./components/custom-node";
 import { useCenterCamera } from "./hooks/use-center-camera.ts";
@@ -9,17 +9,17 @@ import { useEdges } from "./hooks/use-edges.ts";
 import { Header } from "./components/ui/header/header.tsx";
 import { useKeyListener } from "./hooks/use-key-listener.ts";
 import { useOnConnect } from "./hooks/use-on-connect.ts";
-import { useNodes } from "./hooks/use-nodes.ts";
 import { useCraftingManager } from "./hooks/use-crafting-manager.ts";
 import useStore from "~/store/use-store.ts";
 import { MakeChoice } from "~/components/make-choice/make-choice.tsx";
 import { INIT_NODES } from "~/constants";
 import { Talk } from "~/components/talk";
 import { ConnectionLine } from "~/components/connection-line/connection-line.tsx";
-import { useCollisionManager } from "~/hooks/use-collision-manager.tsx";
+import { useCollisionManager } from "~/hooks/use-collision-manager.ts";
 import { GameNode } from "@pelican/constants";
+import { BorderNode } from "~/components/border-node";
 
-const nodeTypes = { node: CustomNode };
+const nodeTypes = { node: CustomNode, border: BorderNode };
 const edgeTypes = {
   "custom-edge": CustomEdge,
 };
@@ -28,6 +28,7 @@ function App() {
   const [nodes, , onNodesChange] = useNodesState(INIT_NODES);
   const { items } = useStore(state => state.choice);
   const { setNodeChanges } = useStore(state => state.nodeChanges);
+  const { size: mapSize } = useStore(state => state.mapSize);
   const setScreenSize = useStore(state => state.setScreenSize);
   const screenSize = useStore(state => state.screenSize);
   const { companionId } = useStore(state => state.talk);
@@ -110,10 +111,6 @@ function App() {
           </defs>
         </svg>
         <ReactFlow
-          translateExtent={[
-            [-1800, -1200],
-            [1800, 1200],
-          ]}
           ref={ref}
           connectionLineComponent={ConnectionLine}
           edges={edges}
@@ -121,6 +118,7 @@ function App() {
           isValidConnection={isValidConnection}
           nodes={nodes}
           nodeTypes={nodeTypes}
+          translateExtent={mapSize}
           onConnect={onConnect}
           onEdgesChange={onEdgesChange}
           onEdgesDelete={handleOnEdgesDelete}

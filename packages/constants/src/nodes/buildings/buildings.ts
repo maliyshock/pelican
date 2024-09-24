@@ -9,6 +9,7 @@ export const TEST_STRUCTURE_ENTITY: GameNodeData = {
   health: 10,
   type: "building",
   roles: ["building"],
+  draggable: true,
 };
 
 export const FIRE_PLACE: GameNodeData = {
@@ -26,4 +27,5 @@ export const FIRE_PLACE: GameNodeData = {
     speed: 2000,
   },
   price: 5,
+  draggable: true,
 };

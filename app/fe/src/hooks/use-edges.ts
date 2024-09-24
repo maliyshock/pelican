@@ -49,6 +49,7 @@ export function useEdges() {
   const onReconnect = useCallback(
     (oldEdge: Edge, newConnection: Connection) => {
       edgeUpdateSuccessful.current = true;
+      console.log("newConnection", newConnection);
       setEdges(els => reconnectEdge(oldEdge, newConnection, els));
     },
     [setEdges],

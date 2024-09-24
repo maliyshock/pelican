@@ -12,4 +12,5 @@ export const RIVER: GameNodeData = {
   price: 1,
   description:
     "the planet's restless vein, carving paths through valleys and forests, sustaining life along its journey, and offering endless opportunities for exploration and adventure for those who dare to follow its flow",
+  draggable: true,
 };

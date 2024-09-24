@@ -11,4 +11,5 @@ export const APPLE: GameNodeData = {
   price: 2,
   nutrition: 2,
   health: 1,
+  draggable: true,
 };

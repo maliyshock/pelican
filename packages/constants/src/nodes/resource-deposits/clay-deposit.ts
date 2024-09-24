@@ -11,4 +11,5 @@ export const CLAY_DEPOSIT: GameNodeData = {
   roles: ["resource-deposit"],
   health: 3,
   price: 1,
+  draggable: true,
 };

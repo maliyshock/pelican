@@ -11,4 +11,5 @@ export const BERRY: GameNodeData = {
   price: 2,
   nutrition: 1,
   health: 1,
+  draggable: true,
 };

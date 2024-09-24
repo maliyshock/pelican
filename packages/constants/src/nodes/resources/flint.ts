@@ -9,4 +9,5 @@ export const FLINT: GameNodeData = {
   title: "Flint",
   roles: ["resource"],
   price: 2,
+  draggable: true,
 };

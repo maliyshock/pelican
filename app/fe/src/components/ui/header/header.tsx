@@ -1,5 +1,5 @@
 import { Clocks } from "~/components/clocks/clocks.tsx";
-import "./header.css";
+import "./header.scss";
 import { Coin } from "~/components/ui/icons/coin.tsx";
 import { Icon } from "~/components/ui/icons/icon/icon.tsx";
 import useStore from "~/store/use-store.ts";

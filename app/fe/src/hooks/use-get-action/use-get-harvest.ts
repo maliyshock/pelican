@@ -16,7 +16,7 @@ export function useGetHarvest() {
       const randomItem = nodesBank?.length ? nodesBank[getRandomNum(nodesBank?.length - 1)] : undefined;
 
       if (randomItem) {
-        const newNode = createNode({ position: { x: targetNode.position.x, y: targetNode.position.y, strict: false }, data: randomItem });
+        const newNode = createNode({ type: "node", position: { x: targetNode.position.x, y: targetNode.position.y, strict: false }, data: randomItem });
 
         newNodes.push(newNode);
       } else {

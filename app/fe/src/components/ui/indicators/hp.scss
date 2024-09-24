@@ -7,12 +7,12 @@
 	transform: translate(40%, 40%);
 
 	&__value-container {
-		transform: translate(-50%, calc(50% - 15px));
+		transform: translate(-50%, calc(50% - 0.7em));
 		left: 50%;
 		top: 50%;
 
 		&.simple {
-			transform: translate(-50%, calc(50% - 20px));
+			transform: translate(-50%, calc(50% - 0.8em));
 		}
 	}
 }

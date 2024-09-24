@@ -9,4 +9,5 @@ export const SOIL: GameNodeData = {
   title: "Soil",
   roles: ["resource"],
   price: 2,
+  draggable: true,
 };
