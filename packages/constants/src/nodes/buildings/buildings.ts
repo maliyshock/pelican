@@ -13,8 +13,8 @@ export const TEST_STRUCTURE_ENTITY: GameNodeData = {
 };
 
 export const FIRE_PLACE: GameNodeData = {
-  inputs: [createSocket({ id: "source_0", type: "fuel" })],
-  outputs: [createSocket({ id: "target_0", type: "heat" }), createSocket({ id: "target_1", type: "heat" })],
+  inputs: [createSocket({ id: "target_0", type: "fuel" })],
+  outputs: [createSocket({ id: "source_0", type: "heat" }), createSocket({ id: "source_1", type: "heat" })],
   img: createImg("fire-place"),
   title: "Fire Place",
   type: "building",

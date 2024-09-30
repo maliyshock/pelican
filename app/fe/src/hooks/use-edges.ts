@@ -5,8 +5,8 @@ import { GameNode } from "@pelican/constants";
 import { useConnectionManager } from "~/hooks/use-connection-manager/use-connection-manager.ts";
 
 export function useEdges() {
-  const { getNode, deleteElements, getEdges, getNodes, setEdges } = useReactFlow();
-  const nodes = getNodes<GameNode>();
+  const { getNode, deleteElements, getEdges, getNodes, setEdges } = useReactFlow<GameNode>();
+  const nodes = getNodes();
   const manageConnection = useConnectionManager();
 
   const edgeUpdateSuccessful = useRef(true);
@@ -20,7 +20,7 @@ export function useEdges() {
         const source = getNode(connection.source) as GameNode;
         const target = getNode(connection.target) as GameNode;
 
-        const hasCycle = (node, visited = new Set()) => {
+        const hasCycle = (node: GameNode, visited = new Set()) => {
           if (visited.has(node.id)) return false;
           visited.add(node.id);
           const outGoers = getOutgoers(node, nodes, edges);
@@ -49,7 +49,6 @@ export function useEdges() {
   const onReconnect = useCallback(
     (oldEdge: Edge, newConnection: Connection) => {
       edgeUpdateSuccessful.current = true;
-      console.log("newConnection", newConnection);
       setEdges(els => reconnectEdge(oldEdge, newConnection, els));
     },
     [setEdges],
