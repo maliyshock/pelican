@@ -8,7 +8,7 @@ const selector = (s: ReactFlowState) => ({
 
 function BackgroundComponent({
   id,
-  gap = 400,
+  gap = 600,
   offset = 0,
   color = "#000", // Default color to ensure visibility
   bgColor = "#fff",

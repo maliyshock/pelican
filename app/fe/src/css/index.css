@@ -98,3 +98,7 @@ svg {
         paint-order: fill stroke;
     }
 }
+
+.bg image{
+    opacity: 0.5;
+}
