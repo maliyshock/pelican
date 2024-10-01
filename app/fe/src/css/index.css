@@ -2,6 +2,7 @@
     --almost-black: #242424;
     --almost-white: #f9f9f9;
     --green: #00E175;
+    --grass-green: #87C44F;
     --yellow: #ffc900;
     --orange: #ffb600;
     --blue: #00a6ff;
@@ -32,7 +33,9 @@ body {
     place-items: center;
     min-width: 320px;
     min-height: 100vh;
-    background-color: var(--yellow);
+    /*background-color: var(--yellow);*/
+    /*background-color: var(--grass-green);*/
+    background-color: black;
 }
 
 .img {

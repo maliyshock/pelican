@@ -12,12 +12,13 @@ import { useOnConnect } from "./hooks/use-on-connect.ts";
 import { useCraftingManager } from "./hooks/use-crafting-manager.ts";
 import useStore from "~/store/use-store.ts";
 import { MakeChoice } from "~/components/make-choice/make-choice.tsx";
-import { INIT_NODES } from "~/constants";
+import { INIT_NODES, MAP_SIZE_WIDTH } from "~/constants";
 import { Talk } from "~/components/talk";
 import { ConnectionLine } from "~/components/connection-line/connection-line.tsx";
 import { useCollisionManager } from "~/hooks/use-collision-manager.ts";
 import { GameNode } from "@pelican/constants";
 import { BorderNode } from "~/components/border-node";
+import { CustomBackground } from "~/components/background";
 
 const nodeTypes = { node: CustomNode, border: BorderNode };
 const edgeTypes = {
@@ -82,7 +83,7 @@ function App() {
   }, [companionId, items.length, setIsOpen]);
 
   return (
-    <div className="app">
+    <div className="app" style={{ maxWidth: `${MAP_SIZE_WIDTH}px` }}>
       {companionId !== undefined && <Talk companionId={companionId} />}
       {items.length > 0 && <MakeChoice />}
       <div className="node-sandbox">
@@ -127,7 +128,7 @@ function App() {
           onReconnectEnd={onReconnectEnd}
           onReconnectStart={onReconnectStart}
         >
-          <Background />
+          <CustomBackground bgColor={"#87C44F"} className="bg" />
           <Controls />
         </ReactFlow>
       </div>
